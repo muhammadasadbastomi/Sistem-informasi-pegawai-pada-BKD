@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//middleware auth
+Route::get('/admin/index', 'adminController@index')->name('adminIndex');
+//batas middleware auth
