@@ -161,7 +161,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link ">
+                <a href="{{Route('instansiIndex')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Instansi</p>
                 </a>

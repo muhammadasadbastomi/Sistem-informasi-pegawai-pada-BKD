@@ -29,4 +29,7 @@ Route::get('/kecamatan/index', 'adminController@kecamatanIndex')
 Route::get('/kelurahan/index', 'adminController@kelurahanIndex')
        ->name('kelurahanIndex');
 
+Route::get('/instasi/index', 'adminController@instansiIndex')
+       ->name('instansiIndex');
+
 //batas middleware auth

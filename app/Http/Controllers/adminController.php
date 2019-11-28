@@ -18,4 +18,8 @@ class adminController extends Controller
         return view('admin.kelurahan.index');
     }
 
+    public function instansiIndex(){
+        return view('admin.instansi.index');
+    }
+
 }
