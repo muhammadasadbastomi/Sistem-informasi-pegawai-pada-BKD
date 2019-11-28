@@ -32,4 +32,7 @@ Route::get('/kelurahan/index', 'adminController@kelurahanIndex')
 Route::get('/instasi/index', 'adminController@instansiIndex')
        ->name('instansiIndex');
 
+Route::get('/unitKerja/index', 'adminController@unitKerjaIndex')
+       ->name('unitKerjaIndex');
+
 //batas middleware auth

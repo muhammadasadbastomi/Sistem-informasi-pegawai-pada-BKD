@@ -5,11 +5,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Intansi</h1>
+            <h1 class="m-0 text-dark">Data Unit Kerja</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Data Intansi</a></li>
+              <li class="breadcrumb-item"><a href="#">Data Unit Kerja</a></li>
             </ol>
           </div>
         </div>
@@ -33,28 +33,28 @@
                 <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Kode Instansi</th>
-                  <th>Nama Instansi</th>
-                  <th>Alamat</th>
-                  <th>Kelurahan</th>
+                  <th>Kode Unit Kerja</th>
+                  <th>Nama Unit Kerja</th>
+                  <th>Instansi</th>
+                  <th>Keterangan</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                   <td>B12</td>
-                  <td>Dinas Sosial</td>
-                  <td>Jl.Gotong Royong</td>
-                  <td>Mentaos</td>
+                  <td>UPT Parkir</td>
+                  <td>Dinas Perhubungan</td>
+                  <td>Mengelola pajak retribusi parkir</td>
                   <td class="text-center"><a href="" class="btn btn-primary"> <i class="fas fa-edit"></i> </a> <a href="" class="btn btn-danger"> <i class="fas fa-trash"></i> </a></td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Kode Instansi</th>
-                  <th>Nama Instansi</th>
-                  <th>Alamat</th>
-                  <th>Kelurahan</th>
+                  <th>Kode Unit Kerja</th>
+                  <th>Nama Unit Kerja</th>
+                  <th>Instansi</th>
+                  <th>Keterangan</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </tfoot>
@@ -80,12 +80,12 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Instansi</label><input type="text" id="kd_kelurahan" name="kd_kelurahan" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Instansi</label><input type="text" id="nama_kelurahan" name="nama_kelurahan" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="" id="" class="form-control   "></textarea></div>
-                    <div class="form-group"><label  class=" form-control-label">Kelurahan</label>
+                    <div class="form-group"><label  class=" form-control-label">Kode Unit Kerja</label><input type="text" id="kd_kelurahan" name="kd_kelurahan" placeholder="Uji ..." class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Unit Kerja</label><input type="text" id="nama_kelurahan" name="nama_kelurahan" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Keterangan</label><textarea name="" id="" class="form-control"></textarea></div>
+                    <div class="form-group"><label  class=" form-control-label">Instansi</label>
                     <select name="" id="" class="form-control">
-                        <option value="">Ini ngambil dari data Kelurahan</option>
+                        <option value="">Ini ngambil dari data kecamatan</option>
                     </select>
                     </div>
             <div class="modal-footer">

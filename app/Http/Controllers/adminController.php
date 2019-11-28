@@ -22,4 +22,8 @@ class adminController extends Controller
         return view('admin.instansi.index');
     }
 
+    public function unitKerjaIndex(){
+        return view('admin.unitKerja.index');
+    }
+
 }
