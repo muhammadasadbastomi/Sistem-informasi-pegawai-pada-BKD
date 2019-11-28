@@ -20,5 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //middleware auth
-Route::get('/admin/index', 'adminController@index')->name('adminIndex');
+Route::get('/admin/index', 'adminController@index')
+       ->name('adminIndex');
+
+Route::get('/kecamatan/index', 'adminController@kecamatanIndex')
+       ->name('kecamatanIndex');
+
 //batas middleware auth
