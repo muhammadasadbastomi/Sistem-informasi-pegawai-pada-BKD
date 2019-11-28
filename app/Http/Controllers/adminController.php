@@ -26,4 +26,7 @@ class adminController extends Controller
         return view('admin.unitKerja.index');
     }
 
+    public function pangkatIndex(){
+        return view('admin.pangkat.index');
+    }
 }
