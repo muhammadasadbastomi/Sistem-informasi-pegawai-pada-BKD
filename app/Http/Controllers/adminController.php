@@ -13,5 +13,9 @@ class adminController extends Controller
     public function kecamatanIndex(){
         return view('admin.kecamatan.index');
     }
-    
+
+    public function kelurahanIndex(){
+        return view('admin.kelurahan.index');
+    }
+
 }
