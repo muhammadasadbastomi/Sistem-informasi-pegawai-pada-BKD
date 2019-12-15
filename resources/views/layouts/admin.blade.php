@@ -204,6 +204,7 @@
 <script src="{{asset('admin/dist/js/adminlte.min.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
+<script src="{{asset('js/sweetalert/sweetalert.all.min.js')}}"></script>
 @yield('script')
 </body>
 </html>
