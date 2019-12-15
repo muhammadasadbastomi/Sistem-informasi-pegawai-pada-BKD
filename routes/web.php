@@ -1,6 +1,16 @@
 <?php
 
 
+Route::namespace('API')->prefix('api')->name('API.')->group(function(){
+       Route::prefix('kecamatan')->name('kecamatan.')->group(function(){
+              Route::get('', 'KecamatanController@get')->name('get');
+              Route::get('{uuid}', 'KecamatanController@find')->name('find');
+              Route::post('', 'KecamatanController@create')->name('create');
+              Route::put('{uuid}', 'KecamatanController@update')->name('update');
+              Route::delete('{uuid}', 'KecamatanController@delete')->name('delete');
+              });
+});
+
 Route::get('/', function () {
     return view('auth/login');
 });
