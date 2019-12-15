@@ -41,11 +41,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>B12</td>
-                  <td>Banjarbaru Utara</td>
-                  <td class="text-center"><a href="" class="btn btn-primary"> <i class="fas fa-edit"></i> </a> <a href="" class="btn btn-danger"> <i class="fas fa-trash"></i> </a></td>
-                </tr>
                 </tbody>
                 <tfoot>
                 <tr>
