@@ -225,12 +225,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-<<<<<<< HEAD
         'HCrypt' => App\Helpers\CryptHelper::class,
-=======
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
->>>>>>> 09426a6b0a1fd2dadad54000dffe9e93c35afe24
 
     ],
 
