@@ -38,6 +38,10 @@ class adminController extends Controller
         return view('admin.pangkat.index');
     }
 
+    public function jabatanIndex(){
+        return view('admin.jabatan.index');
+    }
+
     public function kecamatanCetak(){
         $kecamatan=kecamatan::all();
         $tgl= Carbon::now()->format('d-m-Y');
