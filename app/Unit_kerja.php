@@ -11,6 +11,11 @@ class Unit_kerja extends Model
     ];
 
     protected $hidden = [
-        'id','instansi_id'
+        'id'
     ];
+
+    public function instansi()
+    {
+        return $this->belongsTo('App\Instansi');
+    }
 }

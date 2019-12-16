@@ -13,7 +13,7 @@ class UnitController extends APIController
     public function get(){
         $unit_kerja = json_decode(redis::get("unit_kerja::all"));
         if (!$unit_kerja) {
-            $unit_kerja = unit_kerja::all();
+            $unit_kerja = unit_kerja::with('instansi')->get();
             if (!$unit_kerja) {
                 return $this->returnController("error", "failed get unit kerja data");
             }

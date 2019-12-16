@@ -13,7 +13,7 @@ class InstansiController extends APIController
     public function get(){
         $instansi = json_decode(redis::get("instansi::all"));
         if (!$instansi) {
-            $instansi = instansi::all();
+            $instansi = instansi::with('kelurahan')->get();
             if (!$instansi) {
                 return $this->returnController("error", "failed get instansi data");
             }

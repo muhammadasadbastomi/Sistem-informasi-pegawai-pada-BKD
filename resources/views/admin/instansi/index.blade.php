@@ -30,7 +30,7 @@
               <div class="card-body">
                 <br>
                 <div class="card-body">
-                <table id="datatable" class="table table-bordered table-striped">
+                <table id="datatable" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
                   <th>Kode instansi</th>
@@ -73,8 +73,8 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode instansi</label><input type="text" id="kd_instansi" name="kd_instansi" placeholder="Kose instansi ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama instansi</label><input type="text" id="instansi" name="instansi" placeholder="nama instansi" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode instansi</label><input type="text" id="kode_instansi" name="kode_instansi" placeholder="Kose instansi ..." class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama instansi</label><input type="text" id="nama" name="nama" placeholder="nama instansi" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control   "></textarea></div>
                     <div class="form-group"><label  class=" form-control-label">Kelurahan</label>
                     <select name="kelurahan_id" id="kelurahan_id" class="form-control">
@@ -149,7 +149,7 @@ function hapus(uuid, nama){
     $('#tambah').click(function(){
         $('.modal-title').text('Tambah Data');
         $('#kode_instansi').val('');
-        $('#instansi').val('');
+        $('#nama').val('');
         $('#alamat').val('');
         $('#kelurahan_id').val('');    
         $('#btn-form').text('Simpan Data');
@@ -164,7 +164,7 @@ function hapus(uuid, nama){
                 $('.modal-title').text('Edit Data');
                 $('#id').val(returnData.data.uuid);
                 $('#kode_instansi').val(returnData.data.kode_instansi);
-                $('#instansi').val(returnData.data.instansi);
+                $('#nama').val(returnData.data.nama);
                 $('#alamat').val(returnData.data.alamat);
                 $('#kelurahan_id').val(returnData.data.kelurahan.uuid);    
                 $('#btn-form').text('Ubah Data');
@@ -189,12 +189,13 @@ $(document).ready(function() {
         columns: [
             {"data": "kode_instansi"},
             {"data": "nama"},
-            {"data": "bidang.nama"},
+            {"data": "alamat"},
+            {"data": "kelurahan.kelurahan"},
             {data: null , render : function ( data, type, row, meta ) {
                 var uuid = row.uuid;
                 var nama = row.nama;
                 return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash"></i></button>':
+                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
             data;
             }}
         ]
