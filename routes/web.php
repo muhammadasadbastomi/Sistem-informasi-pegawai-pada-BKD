@@ -23,6 +23,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'InstansiController@update')->name('update');
               Route::delete('{uuid}', 'InstansiController@delete')->name('delete');
               });
+       Route::prefix('unit')->name('unit.')->group(function(){
+              Route::get('', 'UnitController@get')->name('get');
+              Route::get('{uuid}', 'UnitController@find')->name('find');
+              Route::post('', 'UnitController@create')->name('create');
+              Route::put('{uuid}', 'UnitController@update')->name('update');
+              Route::delete('{uuid}', 'UnitController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {
