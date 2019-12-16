@@ -9,6 +9,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'KecamatanController@update')->name('update');
               Route::delete('{uuid}', 'KecamatanController@delete')->name('delete');
               });
+       Route::prefix('kelurahan')->name('kelurahan.')->group(function(){
+              Route::get('', 'KelurahanController@get')->name('get');
+              Route::get('{uuid}', 'KelurahanController@find')->name('find');
+              Route::post('', 'KelurahanController@create')->name('create');
+              Route::put('{uuid}', 'KelurahanController@update')->name('update');
+              Route::delete('{uuid}', 'KelurahanController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {
