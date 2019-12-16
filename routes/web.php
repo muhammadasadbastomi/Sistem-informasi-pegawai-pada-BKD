@@ -88,4 +88,7 @@ Route::get('/unitKerja/cetak', 'adminController@unitKerjaCetak')
 Route::get('/pangkat/index', 'adminController@pangkatIndex')
        ->name('pangkatIndex');
 
+Route::get('/jabatan/index', 'adminController@jabatanIndex')
+       ->name('jabatanIndex');
+
 //batas middleware auth
