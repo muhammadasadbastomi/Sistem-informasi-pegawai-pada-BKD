@@ -16,6 +16,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'KelurahanController@update')->name('update');
               Route::delete('{uuid}', 'KelurahanController@delete')->name('delete');
               });
+       Route::prefix('instansi')->name('instansi.')->group(function(){
+              Route::get('', 'InstansiController@get')->name('get');
+              Route::get('{uuid}', 'InstansiController@find')->name('find');
+              Route::post('', 'InstansiController@create')->name('create');
+              Route::put('{uuid}', 'InstansiController@update')->name('update');
+              Route::delete('{uuid}', 'InstansiController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {
