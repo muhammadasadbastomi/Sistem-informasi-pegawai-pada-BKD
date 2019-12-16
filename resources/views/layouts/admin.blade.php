@@ -145,7 +145,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link ">
+                <a href="{{Route('diklatIndex')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>program Diklat</p>
                 </a>
