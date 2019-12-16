@@ -157,7 +157,7 @@ function hapus(uuid, nama){
                 $('#penyelenggara').val(returnData.data.penyelenggara);
                 $('#waktu').val(returnData.data.waktu);
                 $('#btn-form').text('Ubah Data');
-                $('#mediumModal').modal('show');
+                $('#mediumModal').modal('show'); 
             }
         })
     }
