@@ -51,6 +51,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'DiklatController@update')->name('update');
               Route::delete('{uuid}', 'DiklatController@delete')->name('delete');
               });
+       Route::prefix('pendidikan')->name('pendidikan.')->group(function(){
+              Route::get('', 'PendidikanController@get')->name('get');
+              Route::get('{uuid}', 'PendidikanController@find')->name('find');
+              Route::post('', 'PendidikanController@create')->name('create');
+              Route::put('{uuid}', 'PendidikanController@update')->name('update');
+              Route::delete('{uuid}', 'PendidikanController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {
