@@ -13,4 +13,14 @@ class Kelurahan extends Model
     protected $hidden = [
         'id','kecamatan_id'
     ];
+
+    public function kecamatan()
+    {
+        return $this->BelongsTo('App\Kecamatan');
+    }
+
+    public function instansi()
+    {
+        return $this->HasMany('App\Instansi');
+    }
 }

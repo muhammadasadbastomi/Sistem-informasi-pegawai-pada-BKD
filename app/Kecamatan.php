@@ -13,4 +13,9 @@ class Kecamatan extends Model
     protected $hidden = [
         'id'
     ];
+
+    public function kelurahan()
+    {
+        return $this->HasMany('App\Kelurahan');
+    }
 }

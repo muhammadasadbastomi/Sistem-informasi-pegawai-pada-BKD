@@ -13,4 +13,9 @@ class Instansi extends Model
     protected $hidden = [
         'id','kelurahan_id'
     ];
+
+    public function kelurahan()
+    {
+        return $this->BelongsTo('App\Kelurahan');
+    }
 }
