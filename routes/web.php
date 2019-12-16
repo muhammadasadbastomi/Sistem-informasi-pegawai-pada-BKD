@@ -30,6 +30,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'UnitController@update')->name('update');
               Route::delete('{uuid}', 'UnitController@delete')->name('delete');
               });
+       Route::prefix('golongan')->name('golongan.')->group(function(){
+              Route::get('', 'GolonganController@get')->name('get');
+              Route::get('{uuid}', 'GolonganController@find')->name('find');
+              Route::post('', 'GolonganController@create')->name('create');
+              Route::put('{uuid}', 'GolonganController@update')->name('update');
+              Route::delete('{uuid}', 'GolonganController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {
