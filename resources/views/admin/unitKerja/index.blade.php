@@ -24,7 +24,7 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="#" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('unitKerjaCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
                 </div>
             </div>
               <div class="card-body">

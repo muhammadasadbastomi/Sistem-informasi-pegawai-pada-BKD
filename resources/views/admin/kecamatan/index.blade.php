@@ -32,7 +32,7 @@
               <div class="card-body">
                 <br>
                 <div class="card-body">
-                <table id="datatable" class="table table-bordered table-striped">
+                <table id="datatable" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
                   <th>Kode Kecamatan</th>

@@ -56,9 +56,13 @@ Route::get('/kelurahan/cetak', 'adminController@kelurahanCetak')
 
 Route::get('/instasi/index', 'adminController@instansiIndex')
        ->name('instansiIndex');
+Route::get('/instasi/cetak', 'adminController@instansiCetak')
+       ->name('instansiCetak');
 
 Route::get('/unitKerja/index', 'adminController@unitKerjaIndex')
        ->name('unitKerjaIndex');
+Route::get('/unitKerja/cetak', 'adminController@unitKerjaCetak')
+       ->name('unitKerjaCetak');
 
 Route::get('/pangkat/index', 'adminController@pangkatIndex')
        ->name('pangkatIndex');
