@@ -71,8 +71,8 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Kecamatan</label><input type="text" id="kd_kecamatan" name="name" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Kecamatan</label><input type="text" id="nama_kecamatan" name="price" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode Kecamatan</label><input type="text" id="kode_kecamatan" name="kode_kecamatan" placeholder="Uji ..." class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Kecamatan</label><input type="text" id="kecamatan" name="kecamatan" placeholder="" class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -125,8 +125,8 @@ function hapus(uuid, nama){
     }
     $('#tambah').click(function(){
         $('.modal-title').text('Tambah Data');
-        $('#kd_kecamatan').val('');
-        $('#nama_kecamatan').val('');  
+        $('#kode_kecamatan').val('');
+        $('#kecamatan').val('');  
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
@@ -138,7 +138,8 @@ function hapus(uuid, nama){
             success : function(returnData) {
                 $('.modal-title').text('Edit Data');
                 $('#id').val(returnData.data.uuid);
-                $('#nama_kecamatan').val(returnData.data.kode_kecamatan);
+                $('#kode_kecamatan').val(returnData.data.kode_kecamatan);
+                $('#kecamatan').val(returnData.data.kecamatan);
                 $('#btn-form').text('Ubah Data');
                 $('#mediumModal').modal('show');
             }
