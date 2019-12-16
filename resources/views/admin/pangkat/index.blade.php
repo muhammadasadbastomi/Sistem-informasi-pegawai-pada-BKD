@@ -70,7 +70,7 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Golongan</label><input type="text" id="kode_golongan" name="kode_golongan" placeholder="" class="form-control"></div
+                    <div class="form-group"><label  class=" form-control-label">Kode Golongan</label><input type="text" id="kode_golongan" name="kode_golongan" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Pangkat / Golongan</label><input type="text" id="golongan" name="golongan" placeholder="" class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
