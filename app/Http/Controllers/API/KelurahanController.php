@@ -13,7 +13,7 @@ class KelurahanController extends APIController
     public function get(){
         $kelurahan = json_decode(redis::get("kelurahan::all"));
         if (!$kelurahan) {
-            $kelurahan = kelurahan::all();
+            $kelurahan = kelurahan::with('kecamatan')->get();
             if (!$kelurahan) {
                 return $this->returnController("error", "failed get kelurahan data");
             }

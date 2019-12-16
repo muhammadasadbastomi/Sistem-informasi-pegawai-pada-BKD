@@ -30,7 +30,7 @@
               <div class="card-body">
                 <br>
                 <div class="card-body">
-                <table id="datatable" class="table table-bordered table-striped">
+                <table id="datatable" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
                   <th>Kode Kelurahan</th>
@@ -77,8 +77,8 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Kelurahan</label><input type="text" id="kd_kelurahan" name="kd_kelurahan" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Kelurahan</label><input type="text" id="nama_kelurahan" name="nama_kelurahan" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode Kelurahan</label><input type="text" id="kode_kelurahan" name="kode_kelurahan" placeholder="Uji ..." class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Kelurahan</label><input type="text" id="kelurahan" name="kelurahan" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Kecamatan</label>
                     <select name="kecamatan_id" id="kecamatan_id" class="form-control">
                         <option value="">-- pilih kecamatan --</option>
@@ -107,7 +107,7 @@ function getKecamatan(){
             success : function(returnData) {
                 $.each(returnData.data, function (index, value) {
 				$('#kecamatan_id').append(
-					'<option value="'+value.uuid+'">'+value.nama+'</option>'
+					'<option value="'+value.uuid+'">'+value.kecamatan+'</option>'
 				)
 			})
         }
@@ -190,13 +190,13 @@ $(document).ready(function() {
         },
         columns: [
             {"data": "kode_kelurahan"},
-            {"data": "nama"},
-            {"data": "bidang.nama"},
+            {"data": "kelurahan"},
+            {"data": "kecamatan.kecamatan"},
             {data: null , render : function ( data, type, row, meta ) {
                 var uuid = row.uuid;
                 var nama = row.nama;
                 return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash"></i></button>':
+                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
             data;
             }}
         ]
