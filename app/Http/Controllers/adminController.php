@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Carbon\Carbon;
+Use App\kecamatan;
+
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -29,4 +33,12 @@ class adminController extends Controller
     public function pangkatIndex(){
         return view('admin.pangkat.index');
     }
+
+    public function kecamatanCetak(){
+        $kecamatan=kecamatan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.kecamatanKeseluruhan', ['kecamatan'=>$kecamatan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data kecamatan.pdf');
+      }
 }

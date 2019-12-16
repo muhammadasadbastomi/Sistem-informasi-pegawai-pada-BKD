@@ -46,6 +46,8 @@ Route::get('/admin/index', 'adminController@index')
 
 Route::get('/kecamatan/index', 'adminController@kecamatanIndex')
        ->name('kecamatanIndex');
+Route::get('/kecamatan/cetak', 'adminController@kecamatanCetak')
+       ->name('kecamatanCetak');
 
 Route::get('/kelurahan/index', 'adminController@kelurahanIndex')
        ->name('kelurahanIndex');
