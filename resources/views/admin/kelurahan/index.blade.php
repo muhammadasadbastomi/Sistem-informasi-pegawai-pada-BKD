@@ -98,59 +98,64 @@
 @section('script')
 
 <script>
-getKecamatan();
-function getKecamatan(){
-    $.ajax({
-            type: "GET",
-            url: "{{ url('/api/kecamatan')}}",
-            beforeSend: false,
-            success : function(returnData) {
-                $.each(returnData.data, function (index, value) {
-				$('#kecamatan_id').append(
-					'<option value="'+value.uuid+'">'+value.kecamatan+'</option>'
-				)
-			})
-        }
-    })
-}
-function hapus(uuid, nama){
-    var csrf_token=$('meta[name="csrf_token"]').attr('content');
-    Swal.fire({
-                title: 'apa anda yakin?',
-                text: " Menghapus  Data kelurahan " + nama,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'hapus data',
-                cancelButtonText: 'batal',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url : "{{ url('/api/kelurahan')}}" + '/' + uuid,
-                        type : "POST",
-                        data : {'_method' : 'DELETE', '_token' :csrf_token},
-                        success: function (response) {
-                            Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Data Berhasil Dihapus',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    $('#datatable').DataTable().ajax.reload(null, false);
-                },
-            })
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-                Swal.fire(
-                'Dibatalkan',
-                'data batal dihapus',
-                'error'
-                )
+    //function get data kecamatan
+    getKecamatan = () => {
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/kecamatan')}}",
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#kecamatan_id').append(
+                        '<option value="'+value.uuid+'">'+value.kecamatan+'</option>'
+                    )
+                })
             }
         })
     }
+
+    //function hapus
+    hapus = (uuid, nama)=> {
+        let csrf_token=$('meta[name="csrf_token"]').attr('content');
+        Swal.fire({
+                    title: 'apa anda yakin?',
+                    text: " Menghapus  Data kelurahan " + nama,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'hapus data',
+                    cancelButtonText: 'batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url : "{{ url('/api/kelurahan')}}" + '/' + uuid,
+                            type : "POST",
+                            data : {'_method' : 'DELETE', '_token' :csrf_token},
+                            success: function (response) {
+                                Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Data Berhasil Dihapus',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        $('#datatable').DataTable().ajax.reload(null, false);
+                    },
+                })
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Dibatalkan',
+                    'data batal dihapus',
+                    'error'
+                    )
+                }
+            })
+    }
+
+    //event btn tambah 
     $('#tambah').click(function(){
+        getKecamatan();
         $('.modal-title').text('Tambah Data');
         $('#kode_kelurahan').val('');
         $('#kelurahan').val('');
@@ -158,7 +163,9 @@ function hapus(uuid, nama){
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
-    function edit(uuid){
+
+    //event btn edit click
+    edit = uuid =>{
         $.ajax({
             type: "GET",
             url: "{{ url('/api/kelurahan')}}" + '/' + uuid,
@@ -174,82 +181,87 @@ function hapus(uuid, nama){
             }
         })
     }
-$(document).ready(function() {
-    $('#datatable').DataTable( {
-        responsive: true,
-        processing: true,
-        serverSide: false,
-        searching: true,
-        ajax: {
-            "type": "GET",
-            "url": "{{route('API.kelurahan.get')}}",
-            "dataSrc": "data",
-            "contentType": "application/json; charset=utf-8",
-            "dataType": "json",
-            "processData": true
-        },
-        columns: [
-            {"data": "kode_kelurahan"},
-            {"data": "kelurahan"},
-            {"data": "kecamatan.kecamatan"},
-            {data: null , render : function ( data, type, row, meta ) {
-                var uuid = row.uuid;
-                var nama = row.nama;
-                return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
-            data;
-            }}
-        ]
-    });
-    $("form").submit(function (e) {
-        e.preventDefault()
-        var form = $('#modal-body form');
-        if($('.modal-title').text() == 'Edit Data'){
-            var url = '{{route("API.kelurahan.update", '')}}'
-            var id = $('#id').val();
-            $.ajax({
-                url: url+'/'+id,
-                type: "put",
-                data: $(this).serialize(),
-                success: function (response) {
-                    form.trigger('reset');
-                    $('#mediumModal').modal('hide');
-                    $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Tersimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                error:function(response){
-                    console.log(response);
-                }
-            })
-        }else{
-            $.ajax({
-                url: "{{Route('API.kelurahan.create')}}",
-                type: "post",
-                data: $(this).serialize(),
-                success: function (response) {
-                    form.trigger('reset');
-                    $('#mediumModal').modal('hide');
-                    $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Disimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                error:function(response){
-                    console.log(response);
-                }
-            })
-        }
-    } );
-    } );
+
+    $(document).ready(function() {
+        
+        // function data table render 
+        $('#datatable').DataTable( {
+            responsive: true,
+            processing: true,
+            serverSide: false,
+            searching: true,
+            ajax: {
+                "type": "GET",
+                "url": "{{route('API.kelurahan.get')}}",
+                "dataSrc": "data",
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json",
+                "processData": true
+            },
+            columns: [
+                {"data": "kode_kelurahan"},
+                {"data": "kelurahan"},
+                {"data": "kecamatan.kecamatan"},
+                {data: null , render : function ( data, type, row, meta ) {
+                    let uuid = row.uuid;
+                    let nama = row.nama;
+                    return type === 'display'  ?
+                    '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                data;
+                }}
+            ]
+        });
+
+        //event form submit
+        $("form").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
+            if($('.modal-title').text() == 'Edit Data'){
+                let url = '{{route("API.kelurahan.update", '')}}'
+                let id = $('#id').val();
+                $.ajax({
+                    url: url+'/'+id,
+                    type: "put",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Tersimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }else{
+                $.ajax({
+                    url: "{{Route('API.kelurahan.create')}}",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }
+        } );
+        } );
     </script>
 @endsection
