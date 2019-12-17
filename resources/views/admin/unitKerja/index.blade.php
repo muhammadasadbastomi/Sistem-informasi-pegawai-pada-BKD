@@ -94,24 +94,26 @@
 @endsection
 @section('script')
 <script>
-getinstansi();
-function getinstansi(){
-    $.ajax({
-            type: "GET",
-            url: "{{ url('/api/instansi')}}", 
-            beforeSend: false,
-            success : function(returnData) {
-                $.each(returnData.data, function (index, value) {
-				$('#instansi_id').append(
-					'<option value="'+value.uuid+'">'+value.nama+'</option>'
-				)
-			})
-        }
-    })
-}
-function hapus(uuid, nama){
-    var csrf_token=$('meta[name="csrf_token"]').attr('content');
-    Swal.fire({
+    //get data instansi
+    getinstansi = () =>{
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/instansi')}}", 
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#instansi_id').append(
+                        '<option value="'+value.uuid+'">'+value.nama+'</option>'
+                    )
+                })
+            }
+        })
+    }
+
+    //function hapus
+    hapus = (uuid, nama)=>{
+        let csrf_token=$('meta[name="csrf_token"]').attr('content');
+        Swal.fire({
                 title: 'apa anda yakin?',
                 text: " Menghapus  Data unit " + nama,
                 showCancelButton: true,
@@ -146,7 +148,10 @@ function hapus(uuid, nama){
             }
         })
     }
+
+    //event btn tambah klik
     $('#tambah').click(function(){
+        getInstansi();
         $('.modal-title').text('Tambah Data');
         $('#kode_unit').val('');
         $('#unit').val('');
@@ -155,7 +160,9 @@ function hapus(uuid, nama){
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
-    function edit(uuid){
+
+    //event btn edit klik 
+    edit = uuid =>{
         $.ajax({
             type: "GET",
             url: "{{ url('/api/unit')}}" + '/' + uuid,
@@ -172,84 +179,88 @@ function hapus(uuid, nama){
             }
         })
     }
-$(document).ready(function() {
-    $('#datatable').DataTable( {
-        responsive: true,
-        processing: true,
-        serverSide: false,
-        searching: true,
-        ajax: {
-            "type": "GET",
-            "url": "{{route('API.unit.get')}}",
-            "dataSrc": "data",
-            "contentType": "application/json; charset=utf-8",
-            "dataType": "json",
-            "processData": true
-        },
-        columns: [
-            {"data": "kode_unit"},
-            {"data": "nama"},
-            {"data": "instansi.nama"},
-            {"data": "alamat"},
-            {data: null , render : function ( data, type, row, meta ) {
-                var uuid = row.uuid;
-                var nama = row.nama;
-                return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
-            data;
-            }}
-        ]
-    });
-    $("form").submit(function (e) {
-        e.preventDefault()
-        var form = $('#modal-body form');
-        if($('.modal-title').text() == 'Edit Data'){
-            var url = '{{route("API.unit.update", '')}}'
-            var id = $('#id').val();
-            $.ajax({
-                url: url+'/'+id,
-                type: "put",
-                data: $(this).serialize(),
-                success: function (response) {
-                    form.trigger('reset');
-                    $('#mediumModal').modal('hide');
-                    $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Tersimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                error:function(response){
-                    console.log(response);
-                }
-            })
-        }else{
-            $.ajax({
-                url: "{{Route('API.unit.create')}}",
-                type: "post",
-                data: $(this).serialize(),
-                success: function (response) {
-                    form.trigger('reset');
-                    $('#mediumModal').modal('hide');
-                    $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Disimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                error:function(response){
-                    console.log(response);
-                }
-            })
-        }
-    } );
-    } );
-    </script>
+
+    $(document).ready(function() {
+
+        //function datatable render
+        $('#datatable').DataTable( {
+            responsive: true,
+            processing: true,
+            serverSide: false,
+            searching: true,
+            ajax: {
+                "type": "GET",
+                "url": "{{route('API.unit.get')}}",
+                "dataSrc": "data",
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json",
+                "processData": true
+            },
+            columns: [
+                {"data": "kode_unit"},
+                {"data": "nama"},
+                {"data": "instansi.nama"},
+                {"data": "alamat"},
+                {data: null , render : function ( data, type, row, meta ) {
+                    let uuid = row.uuid;
+                    let nama = row.nama;
+                    return type === 'display'  ?
+                    '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                data;
+                }}
+            ]
+        });
+
+        //event form submit
+        $("form").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
+            if($('.modal-title').text() == 'Edit Data'){
+                let url = '{{route("API.unit.update", '')}}'
+                let id = $('#id').val();
+                $.ajax({
+                    url: url+'/'+id,
+                    type: "put",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Tersimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }else{
+                $.ajax({
+                    url: "{{Route('API.unit.create')}}",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }
+        } );
+        } );
 </script>
 @endsection
