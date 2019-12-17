@@ -94,59 +94,65 @@
 @endsection
 @section('script')
 <script>
-getKelurahan();
-function getKelurahan(){
-    $.ajax({
-            type: "GET",
-            url: "{{ url('/api/kelurahan')}}",
-            beforeSend: false,
-            success : function(returnData) {
-                $.each(returnData.data, function (index, value) {
-				$('#kelurahan_id').append(
-					'<option value="'+value.uuid+'">'+value.kelurahan+'</option>'
-				)
-			})
-        }
-    })
-}
-function hapus(uuid, nama){
-    var csrf_token=$('meta[name="csrf_token"]').attr('content');
-    Swal.fire({
-                title: 'apa anda yakin?',
-                text: " Menghapus  Data instansi " + nama,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'hapus data',
-                cancelButtonText: 'batal',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url : "{{ url('/api/instansi')}}" + '/' + uuid,
-                        type : "POST",
-                        data : {'_method' : 'DELETE', '_token' :csrf_token},
-                        success: function (response) {
-                            Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Data Berhasil Dihapus',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    $('#datatable').DataTable().ajax.reload(null, false);
-                },
-            })
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-                Swal.fire(
-                'Dibatalkan',
-                'data batal dihapus',
-                'error'
-                )
+
+    //function get data kelurahan
+    getKelurahan = () =>{
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/kelurahan')}}",
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#kelurahan_id').append(
+                        '<option value="'+value.uuid+'">'+value.kelurahan+'</option>'
+                    )
+                })
             }
         })
     }
+
+    //function hapus
+    hapus = (uuid, nama)=>{
+        let csrf_token=$('meta[name="csrf_token"]').attr('content');
+        Swal.fire({
+                    title: 'apa anda yakin?',
+                    text: " Menghapus  Data instansi " + nama,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'hapus data',
+                    cancelButtonText: 'batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url : "{{ url('/api/instansi')}}" + '/' + uuid,
+                            type : "POST",
+                            data : {'_method' : 'DELETE', '_token' :csrf_token},
+                            success: function (response) {
+                                Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Data Berhasil Dihapus',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        $('#datatable').DataTable().ajax.reload(null, false);
+                    },
+                })
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                    Swal.fire(
+                    'Dibatalkan',
+                    'data batal dihapus',
+                    'error'
+                    )
+                }
+            })
+        }
+
+    //event btn tambah klik
     $('#tambah').click(function(){
+        getKelurahan()
         $('.modal-title').text('Tambah Data');
         $('#kode_instansi').val('');
         $('#nama').val('');
@@ -155,7 +161,9 @@ function hapus(uuid, nama){
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
-    function edit(uuid){
+
+    //function btn edit klik
+    edit = uuid =>{
         $.ajax({
             type: "GET",
             url: "{{ url('/api/instansi')}}" + '/' + uuid,
@@ -172,40 +180,44 @@ function hapus(uuid, nama){
             }
         })
     }
-$(document).ready(function() {
-    $('#datatable').DataTable( {
-        responsive: true,
-        processing: true,
-        serverSide: false,
-        searching: true,
-        ajax: {
-            "type": "GET",
-            "url": "{{route('API.instansi.get')}}",
-            "dataSrc": "data",
-            "contentType": "application/json; charset=utf-8",
-            "dataType": "json",
-            "processData": true
-        },
-        columns: [
-            {"data": "kode_instansi"},
-            {"data": "nama"},
-            {"data": "alamat"},
-            {"data": "kelurahan.kelurahan"},
-            {data: null , render : function ( data, type, row, meta ) {
-                var uuid = row.uuid;
-                var nama = row.nama;
-                return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
-            data;
-            }}
-        ]
+
+    // function datatable render
+    $(document).ready(function() {
+        $('#datatable').DataTable( {
+            responsive: true,
+            processing: true,
+            serverSide: false,
+            searching: true,
+            ajax: {
+                "type": "GET",
+                "url": "{{route('API.instansi.get')}}",
+                "dataSrc": "data",
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json",
+                "processData": true
+            },
+            columns: [
+                {"data": "kode_instansi"},
+                {"data": "nama"},
+                {"data": "alamat"},
+                {"data": "kelurahan.kelurahan"},
+                {data: null , render : function ( data, type, row, meta ) {
+                    let uuid = row.uuid;
+                    let nama = row.nama;
+                    return type === 'display'  ?
+                    '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                data;
+                }}
+            ]
     });
+
+    //event form submit
     $("form").submit(function (e) {
         e.preventDefault()
-        var form = $('#modal-body form');
+        let form = $('#modal-body form');
         if($('.modal-title').text() == 'Edit Data'){
-            var url = '{{route("API.instansi.update", '')}}'
-            var id = $('#id').val();
+            let url = '{{route("API.instansi.update", '')}}'
+            let id = $('#id').val();
             $.ajax({
                 url: url+'/'+id,
                 type: "put",
