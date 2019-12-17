@@ -85,99 +85,109 @@
  </div> 
 @endsection
 @section('script')
-<script>
-function hapus(uuid, nama){
-    var csrf_token=$('meta[name="csrf_token"]').attr('content');
-    Swal.fire({
-                title: 'apa anda yakin?',
-                text: " Menghapus  Data kecamatan " + nama,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'hapus data',
-                cancelButtonText: 'batal',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url : "{{ url('/api/kecamatan')}}" + '/' + uuid,
-                        type : "POST",
-                        data : {'_method' : 'DELETE', '_token' :csrf_token},
-                        success: function (response) {
-                            Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Data Berhasil Dihapus',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    $('#datatable').DataTable().ajax.reload(null, false);
+    <script>
+
+        //fungsi hapus 
+        const hapus = (uuid, nama) => {
+            let csrf_token=$('meta[name="csrf_token"]').attr('content');
+            Swal.fire({
+                        title: 'apa anda yakin?',
+                        text: " Menghapus  Data kecamatan " + nama,
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'hapus data',
+                        cancelButtonText: 'batal',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.value) {
+                            $.ajax({
+                                url : "{{ url('/api/kecamatan')}}" + '/' + uuid,
+                                type : "POST",
+                                data : {'_method' : 'DELETE', '_token' :csrf_token},
+                                success: function (response) {
+                                    Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Data Berhasil Dihapus',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            $('#datatable').DataTable().ajax.reload(null, false);
+                        },
+                    })
+                    } else if (result.dismiss === swal.DismissReason.cancel) {
+                        Swal.fire(
+                        'Dibatalkan',
+                        'data batal dihapus',
+                        'error'
+                        )
+                    }
+                })
+        }
+
+        //event btn tambah
+        $('#tambah').click(function(){
+            $('.modal-title').text('Tambah Data');
+            $('#kode_kecamatan').val('');
+            $('#kecamatan').val('');  
+            $('#btn-form').text('Simpan Data');
+            $('#mediumModal').modal('show');
+        })
+        
+        //function btn edit klik
+        const edit = uuid =>{
+            $.ajax({
+                    type: "GET",
+                    url: "{{ url('/api/kecamatan')}}" + '/' + uuid,
+                    beforeSend: false,
+                    success : function(returnData) {
+                        $('.modal-title').text('Edit Data');
+                        $('#id').val(returnData.data.uuid);
+                        $('#kode_kecamatan').val(returnData.data.kode_kecamatan);
+                        $('#kecamatan').val(returnData.data.kecamatan);
+                        $('#btn-form').text('Ubah Data');
+                        $('#mediumModal').modal('show');
+                    }
+                })
+        }
+
+        //function datatable render
+        $(document).ready(function() {
+            $('#datatable').DataTable( {
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching : true,
+                paging    : true,
+                ajax: {
+                    "type": "GET",
+                    "url": "{{route('API.kecamatan.get')}}",
+                    "dataSrc": "data",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "processData": true
                 },
-            })
-            } else if (result.dismiss === swal.DismissReason.cancel) {
-                Swal.fire(
-                'Dibatalkan',
-                'data batal dihapus',
-                'error'
-                )
-            }
-        })
-    }
-    $('#tambah').click(function(){
-        $('.modal-title').text('Tambah Data');
-        $('#kode_kecamatan').val('');
-        $('#kecamatan').val('');  
-        $('#btn-form').text('Simpan Data');
-        $('#mediumModal').modal('show');
-    })
-    function edit(uuid){
-        $.ajax({
-            type: "GET",
-            url: "{{ url('/api/kecamatan')}}" + '/' + uuid,
-            beforeSend: false,
-            success : function(returnData) {
-                $('.modal-title').text('Edit Data');
-                $('#id').val(returnData.data.uuid);
-                $('#kode_kecamatan').val(returnData.data.kode_kecamatan);
-                $('#kecamatan').val(returnData.data.kecamatan);
-                $('#btn-form').text('Ubah Data');
-                $('#mediumModal').modal('show');
-            }
-        })
-    }
-$(document).ready(function() {
-    $('#datatable').DataTable( {
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        searching : true,
-        paging    : true,
-        ajax: {
-            "type": "GET",
-            "url": "{{route('API.kecamatan.get')}}",
-            "dataSrc": "data",
-            "contentType": "application/json; charset=utf-8",
-            "dataType": "json",
-            "processData": true
-        },
-        columns: [
-            {"data": "kode_kecamatan"},
-            {"data": "kecamatan"},
-            {data: null , render : function ( data, type, row, meta ) {
-                var uuid = row.uuid;
-                var nama = row.nama;
-                return type === 'display'  ?
-                '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
-            data;
-            }}
-        ]
-    });
+                columns: [
+                    {"data": "kode_kecamatan"},
+                    {"data": "kecamatan"},
+                    {data: null , render : function ( data, type, row, meta ) {
+                        let uuid = row.uuid;
+                        let nama = row.nama;
+                        return type === 'display'  ?
+                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
+                    data;
+                    }}
+                ]
+            });
+
+    // event form submit         
     $("form").submit(function (e) {
         e.preventDefault()
-        var form = $('#modal-body form');
+        let form = $('#modal-body form');
         if($('.modal-title').text() == 'Edit Data'){
-            var url = '{{route("API.kecamatan.update", '')}}'
-            var id = $('#id').val();
+            let url = '{{route("API.kecamatan.update", '')}}'
+            let id = $('#id').val();
             $.ajax({
                 url: url+'/'+id,
                 type: "put",
@@ -222,5 +232,5 @@ $(document).ready(function() {
         }
     } );
     } );
-    </script>
+</script>
 @endsection
