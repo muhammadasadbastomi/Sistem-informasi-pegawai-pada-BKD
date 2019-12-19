@@ -91,6 +91,10 @@ Route::get('/unitKerja/index', 'adminController@unitKerjaIndex')
        ->name('unitKerjaIndex');
 Route::get('/unitKerja/cetak', 'adminController@unitKerjaCetak')
        ->name('unitKerjaCetak');
+Route::get('/unitKerja/filter', 'adminController@filterUnitData')
+       ->name('filterUnitData');
+Route::post('/unitKerja/filter', 'adminController@filterUnitDataCetak')
+       ->name('filterUnitDataCetak');
 
 Route::get('/pangkat/index', 'adminController@pangkatIndex')
        ->name('pangkatIndex');

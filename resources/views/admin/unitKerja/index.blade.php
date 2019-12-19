@@ -25,6 +25,7 @@
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
                     <a href="{{Route('unitKerjaCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('filterUnitData')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak filter data</a>
                 </div>
             </div>
               <div class="card-body">
@@ -95,7 +96,7 @@
 @section('script')
 <script>
     //get data instansi
-    getinstansi = () =>{
+    getInstansi = () =>{
         $.ajax({
                 type: "GET",
                 url: "{{ url('/api/instansi')}}", 

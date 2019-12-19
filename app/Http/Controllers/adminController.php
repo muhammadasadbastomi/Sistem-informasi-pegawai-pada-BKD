@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use HCrypt;
 use PDF;
 use Carbon\Carbon;
 Use App\kecamatan;
@@ -32,6 +32,10 @@ class adminController extends Controller
 
     public function unitKerjaIndex(){
         return view('admin.unitKerja.index');
+    }
+    public function filterUnitData(){
+        $instansi = instansi::all();
+        return view('admin.unitKerja.filter',compact('instansi'));
     }
 
     public function pangkatIndex(){
@@ -67,6 +71,15 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.instansiKeseluruhan', ['instansi'=>$instansi,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Instansi.pdf');
+      }
+    public function filterUnitDataCetak(Request $request){
+        $id = HCrypt::decrypt($request->instansi_id);
+        $unit=unit_kerja::where('instansi_id', $id)->get();
+        $instansi = instansi::findOrFail($id);
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.unitKerjaFilter', ['unit'=>$unit,'instansi'=>$instansi,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Unit Filter.pdf');
       }
 
       public function unitKerjaCetak(){
