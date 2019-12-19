@@ -30,6 +30,11 @@ class adminController extends Controller
         return view('admin.instansi.index');
     }
 
+    public function instansiFilter(){
+        $kelurahan = kelurahan::all();
+        return view('admin.instansi.filter',compact('kelurahan'));
+    }
+
     public function unitKerjaIndex(){
         return view('admin.unitKerja.index');
     }
@@ -71,6 +76,15 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.instansiKeseluruhan', ['instansi'=>$instansi,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Instansi.pdf');
+      }
+    public function instansiFilterCetak(Request $request){
+        $id = HCrypt::decrypt($request->kelurahan_id);
+        $instansi=instansi::where('kelurahan_id', $id)->get();
+        $kelurahan = kelurahan::findOrFail($id);        
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.instansifilter', ['instansi'=>$instansi,'kelurahan'=>$kelurahan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Instansi per kelurahan.pdf');
       }
     public function filterUnitDataCetak(Request $request){
         $id = HCrypt::decrypt($request->instansi_id);

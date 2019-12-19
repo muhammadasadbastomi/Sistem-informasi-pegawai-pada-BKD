@@ -25,6 +25,7 @@
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
                     <a href="{{Route('instansiCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('instansiFilter')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter</a>
                 </div>
             </div>
               <div class="card-body">

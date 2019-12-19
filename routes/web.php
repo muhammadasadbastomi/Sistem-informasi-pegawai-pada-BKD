@@ -86,6 +86,10 @@ Route::get('/instasi/index', 'adminController@instansiIndex')
        ->name('instansiIndex');
 Route::get('/instasi/cetak', 'adminController@instansiCetak')
        ->name('instansiCetak');
+Route::get('/instasi/filter', 'adminController@instansiFilter')
+       ->name('instansiFilter');
+Route::post('/instasi/filter', 'adminController@instansiFilterCetak')
+       ->name('instansiFilterCetak');
 
 Route::get('/unitKerja/index', 'adminController@unitKerjaIndex')
        ->name('unitKerjaIndex');
