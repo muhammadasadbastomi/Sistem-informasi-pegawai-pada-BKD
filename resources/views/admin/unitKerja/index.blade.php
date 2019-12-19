@@ -74,9 +74,9 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Unit Kerja</label><input type="text" id="kode_unit" name="kode_unit" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Unit Kerja</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode Unit Kerja</label><input type="text" id="kode_unit" name="kode_unit" placeholder="Uji ..." class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Unit Kerja</label><input type="text" id="nama" name="nama" placeholder="" class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control" required></textarea></div>
                     <div class="form-group"><label  class=" form-control-label">unit</label>
                     <select name="instansi_id" id="instansi_id" class="form-control">
                         <option value="">-- pilih intansi --</option>

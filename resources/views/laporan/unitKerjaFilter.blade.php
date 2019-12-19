@@ -67,7 +67,7 @@
 <body>
     <div class="header">
             <div class="logo">
-                    <img  class="pemko" src="img/logo.png" " >
+                    <img  class="pemko" src="img/logo.png" >
             </div>
             <div class="headtext">
                 <h3 style="margin:0px;">PEMERINTAH KABUPATEN BALANGAN</h3>

@@ -73,9 +73,9 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode instansi</label><input type="text" id="kode_instansi" name="kode_instansi" placeholder="Kose instansi ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama instansi</label><input type="text" id="nama" name="nama" placeholder="nama instansi" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control   "></textarea></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode instansi</label><input type="text" id="kode_instansi" name="kode_instansi" placeholder="Kose instansi ..." class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama instansi</label><input type="text" id="nama" name="nama" placeholder="nama instansi" class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control" required></textarea></div>
                     <div class="form-group"><label  class=" form-control-label">Kelurahan</label>
                     <select name="kelurahan_id" id="kelurahan_id" class="form-control">
                         <option value="">-- pilih kelurahan --</option>

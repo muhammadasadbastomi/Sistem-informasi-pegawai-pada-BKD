@@ -71,8 +71,8 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Kecamatan</label><input type="text" id="kode_kecamatan" name="kode_kecamatan" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Kecamatan</label><input type="text" id="kecamatan" name="kecamatan" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode Kecamatan</label><input type="text" id="kode_kecamatan" name="kode_kecamatan" placeholder="Uji ..." class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Kecamatan</label><input type="text" id="kecamatan" name="kecamatan" placeholder="" class="form-control" required></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>

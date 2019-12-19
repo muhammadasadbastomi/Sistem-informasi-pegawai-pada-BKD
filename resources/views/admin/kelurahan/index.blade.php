@@ -77,8 +77,8 @@
             <div class="modal-body">
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Kelurahan</label><input type="text" id="kode_kelurahan" name="kode_kelurahan" placeholder="Uji ..." class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Kelurahan</label><input type="text" id="kelurahan" name="kelurahan" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Kode Kelurahan</label><input type="text" id="kode_kelurahan" name="kode_kelurahan" placeholder="Uji ..." class="form-control" required></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama Kelurahan</label><input type="text" id="kelurahan" name="kelurahan" placeholder="" class="form-control"required></div>
                     <div class="form-group"><label  class=" form-control-label">Kecamatan</label>
                     <select name="kecamatan_id" id="kecamatan_id" class="form-control">
                         <option value="">-- pilih kecamatan --</option>
