@@ -61,7 +61,7 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
 });
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('depan');
 });
 
 Auth::routes();
