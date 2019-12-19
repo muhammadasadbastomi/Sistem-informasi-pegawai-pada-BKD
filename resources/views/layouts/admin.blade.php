@@ -157,7 +157,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link ">
+                <a href="{{Route('pendidikanIndex')}}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Pendidikan Formal</p>
                 </a>
