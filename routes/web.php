@@ -116,6 +116,8 @@ Route::post('/unitKerja/filter', 'adminController@filterUnitDataCetak')
 
 Route::get('/pangkat/index', 'adminController@pangkatIndex')
        ->name('pangkatIndex');
+Route::get('/pangkat/cetak', 'adminController@pangkatCetak')
+       ->name('pangkatCetak');
 
 Route::get('/jabatan/index', 'adminController@jabatanIndex')
        ->name('jabatanIndex');

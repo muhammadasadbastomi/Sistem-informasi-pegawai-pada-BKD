@@ -8,6 +8,7 @@ Use App\kecamatan;
 Use App\kelurahan;
 Use App\instansi;
 Use App\Unit_kerja;
+Use App\Golongan;
 
 
 use Illuminate\Http\Request;
@@ -106,5 +107,13 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.unitKerjaKeseluruhan', ['unit'=>$unit,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Unit.pdf');
+      }
+
+      public function pangkatCetak(){
+        $golongan=golongan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.golonganKeseluruhan', ['golongan'=>$golongan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data golonngan / pangkat.pdf');
       }
 }

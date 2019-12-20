@@ -9,7 +9,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Data Pangkat</a></li>
+              <li class="breadcrumb-item"><a href="">Data Pangkat</a></li>
             </ol>
           </div>
         </div>
@@ -24,7 +24,7 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="#" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('pangkatCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
                 </div>
             </div>
               <div class="card-body">
@@ -85,7 +85,7 @@
 @section('script')
 <script>
     //fungsi hapus
-    hapus(uuid, nama){
+    hapus =(uuid, nama)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
             Swal.fire({
                     title: 'apa anda yakin?',
