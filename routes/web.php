@@ -65,6 +65,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::put('{uuid}', 'KaryawanController@update')->name('update');
               Route::delete('{uuid}', 'KaryawanController@delete')->name('delete');
               });
+       Route::prefix('berita')->name('berita.')->group(function(){
+              Route::get('', 'BeritaController@get')->name('get');
+              Route::get('{uuid}', 'BeritaController@find')->name('find');
+              Route::post('', 'BeritaController@create')->name('create');
+              Route::put('{uuid}', 'BeritaController@update')->name('update');
+              Route::delete('{uuid}', 'BeritaController@delete')->name('delete');
+              });
 });
 
 Route::get('/', function () {

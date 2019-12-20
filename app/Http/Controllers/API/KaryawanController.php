@@ -62,6 +62,7 @@ class KaryawanController extends APIController
 
         $merge = (['user' => $user, 'karyawan' => $karyawan]);
         Redis::del("karyawan:all");
+        Redis::set("karyawan:all");
         return $this->returnController("ok", $merge);
     }
 
