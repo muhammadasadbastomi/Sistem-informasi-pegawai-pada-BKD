@@ -126,6 +126,9 @@ Route::get('/jabatan/cetak', 'adminController@jabatanCetak')
 
 Route::get('/diklat/index', 'adminController@diklatIndex')
        ->name('diklatIndex');
+Route::get('/diklat/cetak', 'adminController@diklatCetak')
+       ->name('diklatCetak');
+
 Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
        ->name('pendidikanIndex');
 
