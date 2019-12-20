@@ -2,6 +2,13 @@
 
 
 Route::namespace('API')->prefix('api')->name('API.')->group(function(){
+       Route::prefix('user')->name('user.')->group(function(){
+              Route::get('', 'UserController@get')->name('get');
+              Route::get('{uuid}', 'UserController@find')->name('find');
+              Route::post('', 'UserController@create')->name('create');
+              Route::put('{uuid}', 'UserController@update')->name('update');
+              Route::delete('{uuid}', 'UserController@delete')->name('delete');
+              });
        Route::prefix('kecamatan')->name('kecamatan.')->group(function(){
               Route::get('', 'KecamatanController@get')->name('get');
               Route::get('{uuid}', 'KecamatanController@find')->name('find');
