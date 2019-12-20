@@ -67,7 +67,7 @@
 <body>
     <div class="header">
             <div class="logo">
-                <img  class="pemko" src="img/logo.png" >
+                    <img  class="pemko" src="img/logo.png" >
             </div>
             <div class="headtext">
                 <h3 style="margin:0px;">PEMERINTAH KABUPATEN BALANGAN</h3>
@@ -78,30 +78,24 @@
     </div>
     <div class="container">
         <div class="isi">
-        <h2 style="text-align:center;text-transform: uppercase;">DATA DIKLAT</h2>
+        <h2 style="text-align:center;text-transform: uppercase;">DATA PENDIDIKAN</h2>
                 <table  class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kode DIKLAT</th>
-                                <th>Nama Diklat</th>
-                                <th>Tempat</th>
-                                <th>Penyelenggara </th>
-                                <th>Waktu</th>
+                                <th>Kode Pendididkan</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($diklat as $p)
+                            @foreach($pendidikan as $p)
                             <tr>
                                 @php
                                 $no=1;
                                 @endphp
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $p->Kode_diklat }}</td>
+                                <td>{{ $p->kode_pendidikan}}</td>
                                 <td>{{ $p->nama }}</td>
-                                <td>{{ $p->tempat }}</td>
-                                <td>{{ $p->penyelenggara }}</td>
-                                <td>{{ $p->waktu }}</td>
                             </tr>
                             @endforeach
                         </tfoot>
@@ -117,6 +111,6 @@
                       <h5>NIP.</h5>
                       </div>
                     </div>
-                </div>
+        </div>
             </body>
 </html>

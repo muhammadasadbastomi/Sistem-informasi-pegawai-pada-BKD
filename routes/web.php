@@ -131,5 +131,7 @@ Route::get('/diklat/cetak', 'adminController@diklatCetak')
 
 Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
        ->name('pendidikanIndex');
+Route::get('/pendidikan/cetak', 'adminController@pendidikanCetak')
+       ->name('pendidikanCetak');
 
 //batas middleware auth

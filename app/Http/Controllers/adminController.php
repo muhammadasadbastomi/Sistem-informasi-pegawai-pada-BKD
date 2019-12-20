@@ -11,6 +11,7 @@ Use App\Unit_kerja;
 Use App\Golongan;
 Use App\Jabatan;
 Use App\Diklat;
+Use App\Pendidikan;
 
 use Illuminate\Http\Request;
 
@@ -132,5 +133,13 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.diklatKeseluruhan', ['diklat'=>$diklat,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Diklat.pdf');
+      }
+
+      public function pendidikanCetak(){
+        $pendidikan=pendidikan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pendidikanKeseluruhan', ['pendidikan'=>$pendidikan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data pendidikan.pdf');
       }
 }
