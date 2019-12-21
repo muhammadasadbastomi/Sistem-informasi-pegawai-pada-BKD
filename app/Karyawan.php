@@ -7,18 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Karyawan extends Model
 {
     protected $fillable = [
-        'uuid','NIP', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'telepon'
+        'uuid','NIP', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'jk','agama',
+        'status_pegawai', 'status_kawin', 'golongan_darah','unit_kerja_id'
     ];
     protected $hidden = [
-        'id', 'user_id'
+        'id', 'unit_kerja_id'
     ];
 
-    public function user(){
-      return $this->BelongsTo('App\User');
-    }
-
-    public function berita()
+    public function unit_kerja()
     {
-        return $this->HasMany('App\Berita');
+    return $this->belongsTo('App\Unit_kerja');
     }
 }

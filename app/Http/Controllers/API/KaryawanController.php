@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Karyawan;
-use App\User;
+use App\Unit_kerja;
 use HCrypt;
 
 class KaryawanController extends APIController
@@ -14,7 +14,7 @@ class KaryawanController extends APIController
     public function get(){
         $karyawan = json_decode(redis::get("karyawan::all"));
         if (!$karyawan) {
-            $karyawan = karyawan::with('user')->get();
+            $karyawan = karyawan::all();
             if (!$karyawan) {
                 return $this->returnController("error", "failed get karyawan data");
             }
@@ -40,30 +40,24 @@ class KaryawanController extends APIController
     }
 
     public function create(Request $req){
-        $user = User::create($req->all());
+        $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
+        $unit_kerja = Unit_kerja::findOrFail($unit_kerja_id);
 
-        $user_id= $user->id;
-        $uuid = HCrypt::encrypt($user_id);
-        $setuuid = User::findOrFail($user_id);
-        $setuuid->uuid = $uuid;
-        $setuuid->update();
-
-        $karyawan = $user->karyawan()->create($req->all());
+        $karyawan = $unit_kerja->karyawan()->create($req->all());
 
         $karyawan_id= $karyawan->id;
         $uuid = HCrypt::encrypt($karyawan_id);
         $setuuid = Karyawan::findOrFail($karyawan_id);
         $setuuid->uuid = $uuid;
+
         $setuuid->update();
 
-        if (!$user && $karyawan) {
+        if (!$karyawan) {
             return $this->returnController("error", "failed create data karyawan");
         }
 
-        $merge = (['user' => $user, 'karyawan' => $karyawan]);
         Redis::del("karyawan:all");
-        Redis::set("karyawan:all");
-        return $this->returnController("ok", $merge);
+        return $this->returnController("ok", $karyawan);
     }
 
     public function update($uuid, Request $req){
@@ -72,12 +66,12 @@ class KaryawanController extends APIController
             return $this->returnController("error", "failed decrypt uuid");
         }
 
-        $pelanggan = pelanggan::findOrFail($id);
-        $user_id = $pelanggan->user_id;
-        $user = User::findOrFail($user_id);
+        $karyawan = karyawan::findOrFail($id);
+        
         if (!$user){
                 return $this->returnController("error", "failed find data pelanggan");
             }
+        
         if($req->foto != null){
                 $FotoExt  = $req->foto->getClientOriginalExtension();
                 $FotoName = $req->user_id.' - '.$req->name;
@@ -97,23 +91,14 @@ class KaryawanController extends APIController
             }
 
            $user->update();
-           $pelanggan->NIP     = $req->NIP;
-           $pelanggan->tempat_lahir    = $req->tempat_lahir;
-           $pelanggan->tanggal_lahir    = $req->tanggal_lahir;
-           $pelanggan->alamat    = $req->alamat;
-           $pelanggan->telepon    = $req->telepon;
-           $pelanggan->update();
-        if (!$user && $karyawan) {
+           
+        if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
-        $merge = (['user' => $user, 'karyawan' => $karyawan]);
-
-        Redis::del("user:all");
-        Redis::set("user:$user_id", $u_user);
         Redis::del("karyawan:all");
-        Redis::set("karyawan:$id", $u_karyawan);
+        Redis::set("karyawan:$id", $karyawan);
 
-        return $this->returnController("ok", $merge);
+        return $this->returnController("ok", $karyawan);
     }
 
     public function delete($uuid){

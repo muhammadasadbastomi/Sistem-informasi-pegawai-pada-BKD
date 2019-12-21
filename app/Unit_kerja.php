@@ -18,4 +18,9 @@ class Unit_kerja extends Model
     {
         return $this->belongsTo('App\Instansi');
     }
+
+    public function karyawan()
+    {
+        return $this->HasMany('App\Karyawan');
+    }
 }

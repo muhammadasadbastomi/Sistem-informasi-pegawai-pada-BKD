@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Berita extends Model
 {
     protected $fillable = [
-        'uuid','karyawan_id','judul','foto','isi'
+        'uuid','user_id','judul','foto','isi'
     ];
 
     protected $hidden = [
-        'id','karyawan_id'
+        'id','user_id'
     ];
 
-    public function karyawan()
+    public function user()
     {
-        return $this->BelongsTo('App\Karyawan');
+        return $this->BelongsTo('App\User');
     }
 }

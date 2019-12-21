@@ -13,7 +13,7 @@ class BeritaController extends APIController
     public function get(){
         $berita = json_decode(redis::get("berita::all"));
         if (!$berita) {
-            $berita = berita::with('karyawan')->get();
+            $berita = berita::with('user')->get();
             if (!$berita) {
                 return $this->returnController("error", "failed get berita data");
             }
@@ -29,7 +29,7 @@ class BeritaController extends APIController
         }
         $berita = Redis::get("berita:$id");
         if (!$berita) {
-            $berita = berita::with('karyawan')->where('id',$id)->first();
+            $berita = berita::with('user')->where('id',$id)->first();
             if (!$berita){
                 return $this->returnController("error", "failed find data berita");
             }
@@ -43,7 +43,7 @@ class BeritaController extends APIController
         $berita = new berita;
         // decrypt foreign key id
         $id = Auth::id();
-        $berita->karyawan_id = $id;
+        $berita->user_id = $id;
         $berita->judul = $req->judul;
         if($req->foto != null){
             $FotoExt  = $req->foto->getClientOriginalExtension();
@@ -79,7 +79,7 @@ class BeritaController extends APIController
         }
         $berita = berita::findOrFail($id);
         $id = Auth::id();
-        $berita->karyawan_id = $id;
+        $berita->user_id = $id;
         $berita->judul = $req->judul;
         if($req->foto != null){
             $FotoExt  = $req->foto->getClientOriginalExtension();
@@ -94,7 +94,7 @@ class BeritaController extends APIController
         if (!$berita) {
             return $this->returnController("error", "failed find data berita");
         }
-        $berita = berita::with('karyawan')->where('id',$id)->first();
+        $berita = berita::with('user')->where('id',$id)->first();
         Redis::del("berita:all");
         Redis::set("berita:$id", $berita);
         return $this->returnController("ok", $berita);
