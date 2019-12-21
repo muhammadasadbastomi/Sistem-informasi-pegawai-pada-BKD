@@ -84,7 +84,8 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
 Route::get('/', function () {
     return view('depan');
 });
-
+Route::get('/berita/depan', 'adminController@beritaDepan')
+       ->name('beritaDepan');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -123,13 +124,26 @@ Route::post('/unitKerja/filter', 'adminController@filterUnitDataCetak')
 
 Route::get('/pangkat/index', 'adminController@pangkatIndex')
        ->name('pangkatIndex');
+Route::get('/pangkat/cetak', 'adminController@pangkatCetak')
+       ->name('pangkatCetak');
 
 Route::get('/jabatan/index', 'adminController@jabatanIndex')
        ->name('jabatanIndex');
+Route::get('/jabatan/cetak', 'adminController@jabatanCetak')
+       ->name('jabatanCetak');
 
 Route::get('/diklat/index', 'adminController@diklatIndex')
        ->name('diklatIndex');
+Route::get('/diklat/cetak', 'adminController@diklatCetak')
+       ->name('diklatCetak');
+
 Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
        ->name('pendidikanIndex');
+Route::get('/pendidikan/cetak', 'adminController@pendidikanCetak')
+       ->name('pendidikanCetak');
 
+Route::get('/berita/index', 'adminController@beritaIndex')
+       ->name('beritaIndex');
+Route::get('/berita/cetak', 'adminController@beritaCetak')
+       ->name('beritaCetak');
 //batas middleware auth

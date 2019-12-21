@@ -8,7 +8,10 @@ Use App\kecamatan;
 Use App\kelurahan;
 Use App\instansi;
 Use App\Unit_kerja;
-
+Use App\Golongan;
+Use App\Jabatan;
+Use App\Diklat;
+Use App\Pendidikan;
 
 use Illuminate\Http\Request;
 
@@ -18,6 +21,9 @@ class adminController extends Controller
         return view('admin.index');
     }
 
+    public function beritaDepan(){
+      return view('berita');
+    }
     public function kecamatanIndex(){
         return view('admin.kecamatan.index');
     }
@@ -57,6 +63,10 @@ class adminController extends Controller
 
     public function pendidikanIndex(){
         return view('admin.pendidikan.index');
+    }
+
+    public function beritaIndex(){
+        return view('admin.berita.index');
     }
 
     public function kecamatanCetak(){
@@ -106,5 +116,37 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.unitKerjaKeseluruhan', ['unit'=>$unit,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Unit.pdf');
+      }
+
+      public function pangkatCetak(){
+        $golongan=golongan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.golonganKeseluruhan', ['golongan'=>$golongan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data golonngan / pangkat.pdf');
+      }
+
+      public function jabatanCetak(){
+        $jabatan=jabatan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.jabatanKeseluruhan', ['jabatan'=>$jabatan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data jabatan.pdf');
+      }
+
+      public function diklatCetak(){
+        $diklat=diklat::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.diklatKeseluruhan', ['diklat'=>$diklat,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Diklat.pdf');
+      }
+
+      public function pendidikanCetak(){
+        $pendidikan=pendidikan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pendidikanKeseluruhan', ['pendidikan'=>$pendidikan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data pendidikan.pdf');
       }
 }

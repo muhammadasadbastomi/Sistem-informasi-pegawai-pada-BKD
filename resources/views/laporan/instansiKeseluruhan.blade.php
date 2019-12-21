@@ -72,7 +72,7 @@
             <div class="headtext">
                 <h3 style="margin:0px;">PEMERINTAH KABUPATEN BALANGAN</h3>
                 <h1 style="margin:0px;">BADAN KEPEGAWAIAN DAERAH</h1>
-                <p style="margin:0px;">Alamat : xxxxxxxx</p>
+                <p style="margin:0px;">Alamat : Batu Piring, South Paringin, Balangan Regency, South Kalimantan 71662</p>
             </div>
             <hr>
     </div>

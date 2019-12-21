@@ -1,15 +1,17 @@
 @extends('layouts.admin')
+
 @section('content')
+
 <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Pangkat</h1>
+            <h1 class="m-0 text-dark">Data berita</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="">Data Pangkat</a></li>
+              <li class="breadcrumb-item"><a href="#">Data Berita</a></li>
             </ol>
           </div>
         </div>
@@ -24,27 +26,26 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="{{Route('pangkatCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('beritaCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
                 </div>
             </div>
               <div class="card-body">
                 <br>
                 <div class="card-body">
-                <table id="datatable" class="table table-bordered table-striped">
+                <table id="datatable" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
-                  <th>Pangkat / Golongan</th>
-                  <th>Keterangan</th>
+                  <th>Tanggal</th>
+                  <th>Judul </th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Pangkat / Golongan</th>
-                  <th>Keterangan</th>
+                    <th>Tanggal</th>
+                  <th>Judul </th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </tfoot>
@@ -52,13 +53,14 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal fade" id="mediumModal"  role="dialog" >
-    <div class="modal-dialog modal-lg" >
+    <div class="modal-dialog modal-xl" >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="mediumModalLabel">Tambah Data</h5>
@@ -67,10 +69,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  method="post" action="">
+                <form  method="post" action="" enctype="multipart/form-data">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Kode Golongan</label><input type="text" id="kode_golongan" name="kode_golongan" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Pangkat / Golongan</label><input type="text" id="golongan" name="golongan" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Judul</label><input type="text" id="judul" name="judul"  class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Foto Berita</label><input type="file" name="foto" id="foto" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Isi</label><textarea class="form-control" name="isi" id="isi" rows="10"></textarea></div>
+
+ 
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -85,11 +90,11 @@
 @section('script')
 <script>
     //fungsi hapus
-    hapus =(uuid, nama)=>{
+    hapus = (uuid, nama)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
-            Swal.fire({
+        Swal.fire({
                     title: 'apa anda yakin?',
-                    text: " Menghapus  Data golongan " + nama,
+                    text: " Menghapus  Data berita " + nama,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -99,7 +104,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url : "{{ url('/api/golongan')}}" + '/' + uuid,
+                            url : "{{ url('/api/berita')}}" + '/' + uuid,
                             type : "POST",
                             data : {'_method' : 'DELETE', '_token' :csrf_token},
                             success: function (response) {
@@ -122,33 +127,33 @@
                 }
             })
         }
-        //event btn tambah klik
+        
+        //event btn klik
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#kode_golongan').val('');
-            $('#golongan').val('');  
-            $('#btn-form').text('Simpan Data');
+            $('#judul').val('');
+            $('#isi').val('');        
+            $('#btn-form').text('Simpan Berita');
             $('#mediumModal').modal('show');
         })
-
         //event btn edit klik
         edit = uuid =>{
             $.ajax({
                 type: "GET",
-                url: "{{ url('/api/golongan')}}" + '/' + uuid,
+                url: "{{ url('/api/berita')}}" + '/' + uuid,
                 beforeSend: false,
                 success : function(returnData) {
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
-                    $('#kode_golongan').val(returnData.data.kode_golongan);
-                    $('#golongan').val(returnData.data.golongan);
+                    $('#judul').val(returnData.data.judul);
+                    $('#isi').val(returnData.data.isi);
                     $('#btn-form').text('Ubah Data');
-                    $('#mediumModal').modal('show');
+                    $('#mediumModal').modal('show'); 
                 }
             })
         }
 
-        //fungsi datatable render         
+        //fungsi render datatable        
         $(document).ready(function() {
             $('#datatable').DataTable( {
                 responsive: true,
@@ -158,15 +163,15 @@
                 paging    : true,
                 ajax: {
                     "type": "GET",
-                    "url": "{{route('API.golongan.get')}}",
+                    "url": "{{route('API.berita.get')}}",
                     "dataSrc": "data",
                     "contentType": "application/json; charset=utf-8",
                     "dataType": "json",
                     "processData": true
                 },
                 columns: [
-                    {"data": "kode_golongan"},
-                    {"data": "golongan"},
+                    {"data": "created_at"},
+                    {"data": "judul"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
                         let nama = row.nama;
@@ -176,13 +181,13 @@
                     }}
                 ]
             });
-            
-            //event form submit
+
+            //event form submit        
             $("form").submit(function (e) {
                 e.preventDefault()
                 let form = $('#modal-body form');
                 if($('.modal-title').text() == 'Edit Data'){
-                    let url = '{{route("API.golongan.update", '')}}'
+                    let url = '{{route("API.berita.update", '')}}'
                     let id = $('#id').val();
                     $.ajax({
                         url: url+'/'+id,
@@ -206,7 +211,7 @@
                     })
                 }else{
                     $.ajax({
-                        url: "{{Route('API.golongan.create')}}",
+                        url: "{{Route('API.berita.create')}}",
                         type: "post",
                         data: $(this).serialize(),
                         success: function (response) {

@@ -67,7 +67,7 @@
 <body>
     <div class="header">
             <div class="logo">
-                    <img  class="pemko" src="img/logo.png" " >
+                    <img  class="pemko" src="img/logo.png" >
             </div>
             <div class="headtext">
                 <h3 style="margin:0px;">PEMERINTAH KABUPATEN BALANGAN</h3>
@@ -78,26 +78,24 @@
     </div>
     <div class="container">
         <div class="isi">
-        <h2 style="text-align:center;text-transform: uppercase;">DATA UNIT KERJA</h2>
+        <h2 style="text-align:center;text-transform: uppercase;">DATA JABATAN</h2>
                 <table  class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kode Unit Kerja</th>
-                                <th>Nama Unit Kerja</th>
-                                <th>Alamat</th>
+                                <th>Kode Jabatan</th>
+                                <th>Jabatan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($unit as $p)
+                            @foreach($jabatan as $p)
                             <tr>
                                 @php
                                 $no=1;
                                 @endphp
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $p->kode_unit }}</td>
-                                <td>{{ $p->nama }}</td>
-                                <td>{{ $p->alamat }}</td>
+                                <td>{{ $p->kode_jabatan }}</td>
+                                <td>{{ $p->jabatan }}</td>
                             </tr>
                             @endforeach
                         </tfoot>
