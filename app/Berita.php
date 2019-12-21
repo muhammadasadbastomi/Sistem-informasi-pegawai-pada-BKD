@@ -11,11 +11,11 @@ class Berita extends Model
     ];
 
     protected $hidden = [
-        'id','karyawan_id'
+        'id'
     ];
 
-    public function karyawan()
+    public function User()
     {
-        return $this->BelongsTo('App\Karyawan');
+        return $this->BelongsTo('App\User');
     }
 }

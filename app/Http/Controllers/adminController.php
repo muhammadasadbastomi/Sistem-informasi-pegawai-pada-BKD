@@ -21,6 +21,9 @@ class adminController extends Controller
         return view('admin.index');
     }
 
+    public function beritaDepan(){
+      return view('berita');
+    }
     public function kecamatanIndex(){
         return view('admin.kecamatan.index');
     }
@@ -60,6 +63,10 @@ class adminController extends Controller
 
     public function pendidikanIndex(){
         return view('admin.pendidikan.index');
+    }
+
+    public function beritaIndex(){
+        return view('admin.berita.index');
     }
 
     public function kecamatanCetak(){

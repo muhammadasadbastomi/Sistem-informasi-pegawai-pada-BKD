@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Berita;
 use HCrypt;
+use Auth;
 
 class BeritaController extends APIController
 {
@@ -43,16 +44,16 @@ class BeritaController extends APIController
         $berita = new berita;
         // decrypt foreign key id
         $id = Auth::id();
-        $berita->karyawan_id = $id;
+        $berita->karyawan_id = 1;
         $berita->judul = $req->judul;
         if($req->foto != null){
             $FotoExt  = $req->foto->getClientOriginalExtension();
             $FotoName = $req->judul.' - '.$id;
             $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/berita', $foto);
+            $req->foto->move('img/berita', $foto);
             $berita->foto       = $foto;
             }else {
-                $berita->foto  = $berita->foto;
+                $berita->foto  = 'default.jpg';
             }
         $berita->isi = $req->isi;
 

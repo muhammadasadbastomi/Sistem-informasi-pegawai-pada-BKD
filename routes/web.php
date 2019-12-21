@@ -77,7 +77,8 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
 Route::get('/', function () {
     return view('depan');
 });
-
+Route::get('/berita/depan', 'adminController@beritaDepan')
+       ->name('beritaDepan');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -134,4 +135,8 @@ Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
 Route::get('/pendidikan/cetak', 'adminController@pendidikanCetak')
        ->name('pendidikanCetak');
 
+Route::get('/berita/index', 'adminController@beritaIndex')
+       ->name('beritaIndex');
+Route::get('/berita/cetak', 'adminController@beritaCetak')
+       ->name('beritaCetak');
 //batas middleware auth
