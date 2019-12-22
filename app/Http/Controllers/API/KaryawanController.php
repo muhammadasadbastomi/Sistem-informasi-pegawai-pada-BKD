@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -85,6 +86,10 @@ class KaryawanController extends APIController
         
         $foto = karyawan::findOrFail($id);
         if($req->foto != null){
+                $image_path = '/images/karyawan/'.$foto->foto;  // Value is not URL but directory file path
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
+                }
                 $FotoExt  = $req->foto->getClientOriginalExtension();
                 $FotoName = $karyawan->id.' - '.$req->nama;
                 $foto   = $FotoName.'.'.$FotoExt;
