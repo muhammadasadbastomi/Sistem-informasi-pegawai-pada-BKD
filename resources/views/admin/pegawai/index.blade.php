@@ -248,12 +248,13 @@
                 searching : true,
                 paging    : true,
                 ajax: {
-                    "type": "GET",
-                    "url": "{{route('API.karyawan.get')}}",
-                    "dataSrc": "data",
-                    "contentType": "application/json; charset=utf-8",
-                    "dataType": "json",
-                    "processData": true
+                    "type"          : "GET",
+                    "url"           : "{{route('API.karyawan.get')}}",
+                    "dataSrc"       : "data",
+                    "contentType"   : "false",
+                    "enctype"       : 'multipart/form-data',
+                    "dataType"      : "json",
+                    "processData"   : true
                 },
                 columns: [
                     {"data": "NIP"},
@@ -303,7 +304,10 @@
                     $.ajax({
                         url: "{{Route('API.karyawan.create')}}",
                         type: "post",
-                        data: $(this).serialize(),
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');

@@ -52,10 +52,11 @@ class KaryawanController extends APIController
         $setuuid = Karyawan::findOrFail($karyawan_id);
         $setuuid->uuid = $uuid;
         if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
             $FotoName = $karyawan_id.' - '.$req->nama;
             $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('img/karyawan', $foto);
+            $img->move('img/karyawan', $foto);
             $setuuid->foto       = $foto;
             }else {
                 $setuuid->foto       = 'default.jpg';
@@ -117,7 +118,7 @@ class KaryawanController extends APIController
         Redis::del("karyawan:all");
         Redis::set("karyawan:$id", $karyawan);
 
-        return $this->returnController("ok", $karyawan);
+        return $this->returnController("ok", $karyawan); 
     }
 
     public function delete($uuid){
