@@ -132,7 +132,7 @@
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
                 </form>
             </div>
-        </div>
+        </div> 
     </div>
     </div>
     </div>  
