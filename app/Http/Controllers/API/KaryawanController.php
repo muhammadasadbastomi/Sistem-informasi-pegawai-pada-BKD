@@ -127,7 +127,6 @@ class KaryawanController extends APIController
         }
 
         $karyawan = karyawan::find($id);
-        $karyawan = karyawan::find($karyawan->karyawan_id);
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
@@ -141,7 +140,7 @@ class KaryawanController extends APIController
         }
 
         Redis::del("karyawan:all");
-        Redis::del("karyawan:$karyawan->karyawan_id");
+        Redis::del("karyawan:$id");
 
         return $this->returnController("ok", "success delete data karyawan");
     }
