@@ -110,6 +110,7 @@
             }
         })
     }
+    getInstansi();
 
     //function hapus
     hapus = (uuid, nama)=>{
@@ -152,7 +153,6 @@
 
     //event btn tambah klik
     $('#tambah').click(function(){
-        getInstansi();
         $('.modal-title').text('Tambah Data');
         $('#kode_unit').val('');
         $('#unit').val('');

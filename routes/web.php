@@ -142,6 +142,13 @@ Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
 Route::get('/pendidikan/cetak', 'adminController@pendidikanCetak')
        ->name('pendidikanCetak');
 
+Route::get('/pegawai/index', 'adminController@pegawaiIndex')
+       ->name('pegawaiIndex');
+Route::get('/pegawai/detail', 'adminController@pegawaiDetail')
+       ->name('pegawaiDetail');
+Route::get('/pegawai/cetak', 'adminController@pegawaiCetak')
+       ->name('pegawaiCetak');
+
 Route::get('/berita/index', 'adminController@beritaIndex')
        ->name('beritaIndex');
 Route::get('/berita/cetak', 'adminController@beritaCetak')

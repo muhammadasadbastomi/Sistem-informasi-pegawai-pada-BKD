@@ -113,6 +113,7 @@
             }
         })
     }
+    getKecamatan();
 
     //function hapus
     hapus = (uuid, nama)=> {
@@ -122,7 +123,7 @@
                     text: " Menghapus  Data kelurahan " + nama,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
+                    cancelButtonColor: '#d33',  
                     confirmButtonText: 'hapus data',
                     cancelButtonText: 'batal',
                     reverseButtons: true
@@ -155,7 +156,6 @@
 
     //event btn tambah 
     $('#tambah').click(function(){
-        getKecamatan();
         $('.modal-title').text('Tambah Data');
         $('#kode_kelurahan').val('');
         $('#kelurahan').val('');

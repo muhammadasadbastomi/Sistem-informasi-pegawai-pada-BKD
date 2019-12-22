@@ -18,7 +18,7 @@
     <div class="fl_right">
       <ul class="nospace">
         <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-        <li><a href="#">Login</a></li>
+        <li><a href="{{Route('login')}}">Login</a></li>
       </ul>
     </div>
   </div>

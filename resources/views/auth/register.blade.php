@@ -8,9 +8,10 @@
       <br>
       <p class="login-box-msg"> BKD Kab balangan</p>
 
-      <form action="../../index3.html" method="post">
+      <form method="POST" action="{{ route('register') }}">
+                            @csrf
         <div class="input-group mb-3">
-        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" username="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus placeholder="username">
             @error('username')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -23,7 +24,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" username="password" required autocomplete="new-password">
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="password">
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -36,7 +37,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-        <input id="password-confirm" type="password" class="form-control" username="password_confirmation" required autocomplete="new-password">
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="re-password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -56,6 +57,7 @@
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
           </div>
+
           <!-- /.col -->
         </div>
       </form>
