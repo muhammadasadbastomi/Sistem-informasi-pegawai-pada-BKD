@@ -55,7 +55,7 @@ class KaryawanController extends APIController
             $FotoExt  = $req->foto->getClientOriginalExtension();
             $FotoName = $karyawan_id.' - '.$req->nama;
             $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/karyawan', $foto);
+            $req->foto->move('img/karyawan', $foto);
             $setuuid->foto       = $foto;
             }else {
                 $setuuid->foto       = 'default.jpg';
@@ -99,18 +99,7 @@ class KaryawanController extends APIController
                     $karyawan->foto  = $karyawan->foto;
                 }
         $foto->update();
-            // $karyawan->nama            = $req->nama;
-            // $karyawan->NIP            = $req->NIP;
-            // $karyawan->tempat_lahir    = $req->tempat_lahir;
-            // $karyawan->tanggal_lahir    = $req->tanggal_lahir;
-            // $karyawan->alamat    = $req->alamat;
-            // $karyawan->jk    = $req->jk;
-            // $karyawan->agama    = $req->agama;
-            // $karyawan->status_pegawai    = $req->status_pegawai;
-            // $karyawan->status_kawin    = $req->status_kawin;
-            // $karyawan->golongan_darah    = $req->golongan_darah;
-        //    $karyawan->update();
-           
+            
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
