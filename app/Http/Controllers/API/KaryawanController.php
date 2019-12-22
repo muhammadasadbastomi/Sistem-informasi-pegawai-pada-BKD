@@ -55,7 +55,7 @@ class KaryawanController extends APIController
             $FotoExt  = $req->foto->getClientOriginalExtension();
             $FotoName = $karyawan_id.' - '.$req->nama;
             $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/karyawan', $foto);
+            $req->foto->move('img/karyawan', $foto);
             $setuuid->foto       = $foto;
             }else {
                 $setuuid->foto       = 'default.jpg';

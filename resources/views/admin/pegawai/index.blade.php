@@ -35,6 +35,7 @@
                         <thead>
                         <tr>
                             <th>NIP</th>
+                            <th>Nama</th>
                             <th>Tempat Lahir</th>
                             <th>tanggal lahir</th>
                             <th>Jenis Kelamin</th>
@@ -47,6 +48,7 @@
                         <tfoot>
                             <tr>
                                 <th>NIP</th>
+                                <th>Nama</th>
                                 <th>Tempat Lahir</th>
                                 <th>tanggal lahir</th>
                                 <th>Jenis Kelamin</th>
@@ -80,7 +82,7 @@
                         </select>
                     </div>
                     <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="anma" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tanggal Lahir</label><input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="penyelenggara Diklat" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
@@ -255,6 +257,7 @@
                 },
                 columns: [
                     {"data": "NIP"},
+                    {"data": "nama"},
                     {"data": "tempat_lahir"},
                     {"data": "tanggal_lahir"},
                     {"data": "jk"},
