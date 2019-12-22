@@ -1,17 +1,15 @@
 @extends('layouts.admin')
-
 @section('content')
-
 <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Pegawai</h1>
+            <h1 class="m-0 text-dark">Data Users</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Data Pegawai</a></li>
+              <li class="breadcrumb-item"><a href="#">Data Users</a></li>
             </ol>
           </div>
         </div>
@@ -26,41 +24,37 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="{{Route('pegawaiCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('diklatCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
                 </div>
             </div>
+              <div class="card-body">
                 <br>
                 <div class="card-body">
-                    <table id="datatable" class="table table-bordered table-striped text-center">
-                        <thead>
-                        <tr>
-                            <th>Unit Kerja</th>
-                            <th>NIP</th>
-                            <th>Nama</th>
-                            <th>Tempat Lahir</th>
-                            <th>tanggal lahir</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Status Pegawai</th>
-                            <th class="text-center">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Unit Kerja</th>
-                                <th>NIP</th>
-                                <th>Nama</th>
-                                <th>Tempat Lahir</th>
-                                <th>tanggal lahir</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Status Pegawai</th>
-                                <th class="text-center">Aksi</th>
-                            </tr>
-                        </tfoot>
-                </table>
+                <table id="datatable" class="table table-bordered table-striped text-center">
+                <thead>
+                <tr>
+                  <th>Kode diklat</th>
+                  <th>Nama diklat</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Kode diklat</th>
+                  <th>Nama diklat</th>
+                  <th>Tempat</th>
+                  <th>Penyelenggara</th>
+                  <th>Waktu</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+                </tfoot>
+              </table>
                 </div>
               </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -76,57 +70,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  method="post" action="" enctype="multipart/form-data">
+                <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
-                        <select name="unit_id" id="unit_id" class="form-control">
-                            <option value="">-- pilih unit kerja --</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Tanggal Lahir</label><input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="penyelenggara Diklat" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
-                    <label class="form-control-label" for="jk">Jenis Kelamin</label> 
-
-                        <div class="row" style="margin-left:15px">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input class="form-check-input" type="radio" name="jk" id="jk1" value="Laki-laki" checked>
-                                    <label class="form-check-label" for="jk">
-                                        Laki - laki
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input class="form-check-input" type="radio" name="jk" id="jk2" value="Perempuan" checked>
-                                    <label class="form-check-label" for="jk">
-                                        Perempuan
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    <div class="form-group"><label  class=" form-control-label">Agama</label><input type="text" id="agama" name="agama" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Status Kepegawaian</label>
-                        <select name="status_pegawai" id="status_pegawai" class="form-control">
-                            <option value="">-- pilih Status Kepegawaian --</option>
-                            <option value="PNS">PNS</option>
-                            <option value="PTT">PTT</option>
-                            <option value="Kontrak">Kontrak</option>
-
-                        </select>
-                    </div>                    
-                    <div class="form-group"><label  class=" form-control-label">Status Perkawinan</label>
-                        <select name="status_kawin" id="status_kawin" class="form-control">
-                            <option value="">-- pilih Status Perkawinan --</option>
-                            <option value="Menikah">Menikah</option>
-                            <option value="Belum Menikah">Belum Menikah</option>
-                            <option value="janda/Duda"> janda / Duda</ optio n >
-                        </select>
-                    </div>
-                    <div class="form-group"><label  class=" form-control-label">golongan Darah</label><input type="text" id="golongan_darah" name="golongan_darah" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Foto</label><input type="file" id="foto" name="foto" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Username</label><input type="text" id="username" name="username" placeholder="Uji ..." class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">password</label><input type="text" id="password" name="password"  class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -140,22 +87,6 @@
 @endsection
 @section('script')
 <script>
-        //function get data kecamatan
-        getUnit = () => {
-        $.ajax({
-                type: "GET",
-                url: "{{ url('/api/unit')}}",
-                beforeSend: false,
-                success : function(returnData) {
-                    $.each(returnData.data, function (index, value) {
-                    $('#unit_id').append(
-                        '<option value="'+value.uuid+'">'+value.nama+'</option>'
-                    )
-                })
-            }
-        })
-    }
-    getUnit();
     //fungsi hapus
     hapus = (uuid, nama)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
@@ -171,7 +102,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url : "{{ url('/api/karyawan')}}" + '/' + uuid,
+                            url : "{{ url('/api/diklat')}}" + '/' + uuid,
                             type : "POST",
                             data : {'_method' : 'DELETE', '_token' :csrf_token},
                             success: function (response) {
@@ -195,27 +126,27 @@
             })
         }
         
-        //event btn klikx   
+        //event btn klik
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#kode_karyawan').val('');
+            $('#kode_diklat').val('');
             $('#nama').val('');
             $('#tempat').val('');  
             $('#penyelenggara').val('');
             $('#waktu').val('');        
-            $('#btn-form').text('Simpan Data');xml_error_string
+            $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
         //event btn edit klik
         edit = uuid =>{
             $.ajax({
                 type: "GET",
-                url: "{{ url('/api/karyawan')}}" + '/' + uuid,
+                url: "{{ url('/api/diklat')}}" + '/' + uuid,
                 beforeSend: false,
                 success : function(returnData) {
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
-                    $('#kode_karyawan').val(returnData.data.kode_karyawan);
+                    $('#kode_diklat').val(returnData.data.kode_diklat);
                     $('#nama').val(returnData.data.nama);
                     $('#tempat').val(returnData.data.tempat);
                     $('#penyelenggara').val(returnData.data.penyelenggara);
@@ -236,14 +167,14 @@
                 paging    : true,
                 ajax: {
                     "type": "GET",
-                    "url": "{{route('API.karyawan.get')}}",
+                    "url": "{{route('API.diklat.get')}}",
                     "dataSrc": "data",
                     "contentType": "application/json; charset=utf-8",
                     "dataType": "json",
                     "processData": true
                 },
                 columns: [
-                    {"data": "kode_karyawan"},
+                    {"data": "kode_diklat"},
                     {"data": "nama"},
                     {"data": "tempat"},
                     {"data": "penyelenggara"},
@@ -263,7 +194,7 @@
                 e.preventDefault()
                 let form = $('#modal-body form');
                 if($('.modal-title').text() == 'Edit Data'){
-                    let url = '{{route("API.karyawan.update", '')}}'
+                    let url = '{{route("API.diklat.update", '')}}'
                     let id = $('#id').val();
                     $.ajax({
                         url: url+'/'+id,
@@ -287,7 +218,7 @@
                     })
                 }else{
                     $.ajax({
-                        url: "{{Route('API.karyawan.create')}}",
+                        url: "{{Route('API.diklat.create')}}",
                         type: "post",
                         data: $(this).serialize(),
                         success: function (response) {

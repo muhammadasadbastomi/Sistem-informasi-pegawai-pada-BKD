@@ -73,9 +73,13 @@ class adminController extends Controller
     return view('admin.pegawai.detail');
   }
 
-    public function beritaIndex(){
-        return view('admin.berita.index');
-    }
+  public function beritaIndex(){
+      return view('admin.berita.index');
+  }
+
+  public function adminIndex(){
+    return view('admin.users.index');
+  }
 
     public function kecamatanCetak(){
         $kecamatan=kecamatan::all();

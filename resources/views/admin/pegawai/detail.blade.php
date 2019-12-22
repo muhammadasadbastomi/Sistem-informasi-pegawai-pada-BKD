@@ -90,7 +90,7 @@
                   <li class="nav-item"><a class="nav-link active" href="#biodata" data-toggle="tab">Biodata</a></li>
                   <li class="nav-item"><a class="nav-link " href="#SKP" data-toggle="tab">SKP</a></li>
                   <li class="nav-item"><a class="nav-link" href="#pendidikan" data-toggle="tab">Pendidikan formal</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#dilat" data-toggle="tab">DIklat yang diikuti</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#diklat" data-toggle="tab">DIklat yang diikuti</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -103,9 +103,57 @@
                   </div>
                   <div class="tab-pane" id="pendidikan">
                     <label for=""> pendidikan Formal</label>
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-primary" id="tambahPendidikan"> + Tambah Pendidikan</button>
+                    </div>
+                    <br>
+                    <table id="tablependidikan" class="table table-bordered table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Unit Kerja</th>
+                            <th>NIP</th>
+                            <th>Tempat Lahir</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Unit Kerja</th>
+                                <th>NIP</th>
+                                <th>Tempat Lahir</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </tfoot>
+                </table>
                   </div>
                   <div class="tab-pane" id="diklat">
                     <label for=""> Diklat yang diikuti</label>
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-primary" id="tambahDiklat"> + Tambah diklat</button>
+                    </div>
+                    <br>
+                    <table id="tablediklat" class="table table-bordered table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>Unit Kerja</th>
+                            <th>NIP</th>
+                            <th>Tempat Lahir</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Unit Kerja</th>
+                                <th>NIP</th>
+                                <th>Tempat Lahir</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </tfoot>
+                </table>
                   </div>
                   <!-- /.tab-pane -->
                 </div>
@@ -117,7 +165,69 @@
       </div>
     </section>
     </div>
+    <div class="modal fade" id="mediumModal"  role="dialog" >
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  method="post" action="" enctype="multipart/form-data">
+                    <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
+                        <select name="unit_id" id="unit_id" class="form-control">
+                            <option value="">-- pilih unit kerja --</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
+                <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>  
+ </div> 
 @endsection
 @section('script')
+    <script>
+         //fungsi render datatable        
+         $(document).ready(function() {
+            $('#tablependidikan').DataTable( {
+                responsive: true,
+                processing: true,
+                searching : true,
+                paging    : true
+            });
 
+            $('#tablediklat').DataTable( {
+                responsive: true,
+                processing: true,
+                searching : true,
+                paging    : true
+            });
+         });
+
+        //event btn klik
+        $('#tambahPendidikan').click(function(){
+            $('.modal-title').text('Tambah Data');
+            $('#kode_karyawan').val('');
+            $('#nama').val('');      
+            $('#btn-form').text('Simpan Data');
+            $('#mediumModal').modal('show');
+        })
+
+            //event btn klik
+            $('#tambahDiklat').click(function(){
+            $('.modal-title').text('Tambah Data'); 
+            $('#btn-form').text('Simpan Data');
+            $('#mediumModal').modal('show');
+        })
+    </script>
 @endsection

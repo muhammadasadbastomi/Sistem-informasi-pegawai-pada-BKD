@@ -179,6 +179,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{Route('adminIndex')}}" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Admin
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>

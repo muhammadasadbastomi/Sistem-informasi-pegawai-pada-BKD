@@ -153,4 +153,9 @@ Route::get('/berita/index', 'adminController@beritaIndex')
        ->name('beritaIndex');
 Route::get('/berita/cetak', 'adminController@beritaCetak')
        ->name('beritaCetak');
+
+Route::get('/admin/index', 'adminController@adminIndex')
+       ->name('adminIndex');
+Route::get('/admin/cetak', 'adminController@adminCetak')
+       ->name('adminCetak');
 //batas middleware auth
