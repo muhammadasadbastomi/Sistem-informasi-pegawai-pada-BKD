@@ -34,9 +34,7 @@
                     <table id="datatable" class="table table-bordered table-striped text-center">
                         <thead>
                         <tr>
-                            <th>Unit Kerja</th>
                             <th>NIP</th>
-                            <th>Nama</th>
                             <th>Tempat Lahir</th>
                             <th>tanggal lahir</th>
                             <th>Jenis Kelamin</th>
@@ -48,9 +46,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Unit Kerja</th>
                                 <th>NIP</th>
-                                <th>Nama</th>
                                 <th>Tempat Lahir</th>
                                 <th>tanggal lahir</th>
                                 <th>Jenis Kelamin</th>
@@ -79,11 +75,12 @@
                 <form  method="post" action="" enctype="multipart/form-data">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
-                        <select name="unit_id" id="unit_id" class="form-control">
+                        <select name="unit_kerja_id" id="unit_kerja_id" class="form-control">
                             <option value="">-- pilih unit kerja --</option>
                         </select>
                     </div>
                     <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="anma" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tanggal Lahir</label><input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="penyelenggara Diklat" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
@@ -148,7 +145,7 @@
                 beforeSend: false,
                 success : function(returnData) {
                     $.each(returnData.data, function (index, value) {
-                    $('#unit_id').append(
+                    $('#unit_kerja_id').append(
                         '<option value="'+value.uuid+'">'+value.nama+'</option>'
                     )
                 })
@@ -198,12 +195,19 @@
         //event btn klikx   
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#kode_karyawan').val('');
+            $('#unit_id').val('');
+            $('#NIP').val('');
             $('#nama').val('');
-            $('#tempat').val('');  
-            $('#penyelenggara').val('');
-            $('#waktu').val('');        
-            $('#btn-form').text('Simpan Data');xml_error_string
+            $('#tempat_lahir').val('');  
+            $('#tanggal_lahir').val('');
+            $('#alamat').val('');   
+            $('#jk').val('');        
+            $('#status_pegawai').val('');     
+            $('#status_kawin').val('');    
+            $('#golongan_darah').val('');                     
+            $('#agama').val('');                     
+            $('#foto').val('');                                     
+            $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
         //event btn edit klik
@@ -215,11 +219,18 @@
                 success : function(returnData) {
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
-                    $('#kode_karyawan').val(returnData.data.kode_karyawan);
+                    $('#unit_id').val(returnData.data.unit_kerja.uuid);
+                    $('#NIP').val(returnData.data.NIP);
                     $('#nama').val(returnData.data.nama);
-                    $('#tempat').val(returnData.data.tempat);
-                    $('#penyelenggara').val(returnData.data.penyelenggara);
-                    $('#waktu').val(returnData.data.waktu);
+                    $('#tempat_lahir').val(returnData.data.tempat_lahir);  
+                    $('#tanggal_lahir').val(returnData.data.tanggal_lahir);
+                    $('#alamat').val(returnData.data.alamat);   
+                    $('#jk').val('');        
+                    $('#status_pegawai').val(returnData.data.status_pegawai);     
+                    $('#status_kawin').val(returnData.data.status_kawin);    
+                    $('#golongan_darah').val(returnData.data.golongan_darah);                     
+                    $('#agama').val(returnData.data.agama);                     
+                    $('#foto').val(returnData.data.foto);                      
                     $('#btn-form').text('Ubah Data');
                     $('#mediumModal').modal('show'); 
                 }
@@ -243,11 +254,11 @@
                     "processData": true
                 },
                 columns: [
-                    {"data": "kode_karyawan"},
-                    {"data": "nama"},
-                    {"data": "tempat"},
-                    {"data": "penyelenggara"},
-                    {"data": "waktu"},
+                    {"data": "NIP"},
+                    {"data": "tempat_lahir"},
+                    {"data": "tanggal_lahir"},
+                    {"data": "jk"},
+                    {"data": "status_pegawai"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
                         let nama = row.nama;
