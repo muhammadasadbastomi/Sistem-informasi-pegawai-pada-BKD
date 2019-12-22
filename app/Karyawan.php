@@ -11,7 +11,7 @@ class Karyawan extends Model
         'status_pegawai', 'status_kawin', 'golongan_darah','unit_kerja_id',
     ];
     protected $hidden = [
-        'id', 'unit_kerja_id'
+        'id', 
     ];
 
     public function unit_kerja()
