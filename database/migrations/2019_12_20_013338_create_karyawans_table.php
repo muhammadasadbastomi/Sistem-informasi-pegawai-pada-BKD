@@ -17,6 +17,7 @@ class CreateKaryawansTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedbigInteger('unit_kerja_id');
             $table->text('uuid')->nullable();
+            $table->string('nama')->length('100');
             $table->string('NIP')->length('25');
             $table->string('tempat_lahir')->length(255);
             $table->date('tanggal_lahir');
