@@ -166,7 +166,7 @@
       </li>
     </ul>
     <br>
-    <p class="center"><a class="{{Route('beritaDepan')}}" href="#">berita Lain &raquo;</a></p>
+    <p class="center"><a href="{{Route('beritaDepan')}}">berita Lain &raquo;</a></p>
   </section>
 </div>
 <!-- ################################################################################################ -->

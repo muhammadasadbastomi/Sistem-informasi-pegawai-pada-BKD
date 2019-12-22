@@ -8,9 +8,10 @@
       <br>
       <p class="login-box-msg"> BKD Kab balangan</p>
 
-      <form action="../../index3.html" method="post">
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
         <div class="input-group mb-3">
-        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="username" autofocus>
             @error('username')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -18,12 +19,12 @@
             @enderror
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="password">
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -54,7 +55,7 @@
       <br>
       <br>
       <p class="mb-0 text-center">
-        <a href="register.html" class="text-center">belum Punya Akun ? klik disni ... </a>
+        <a href="{{Route('register')}}" class="text-center">belum Punya Akun ? klik disni ... </a>
       </p>
     </div>
     <!-- /.login-card-body -->
