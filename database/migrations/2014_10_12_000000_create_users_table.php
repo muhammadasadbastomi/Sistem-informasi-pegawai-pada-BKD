@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->text('uuid')->nullable();
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('foto')->length('255')->default('default.jpg');
+            $table->string('foto')->length('255')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

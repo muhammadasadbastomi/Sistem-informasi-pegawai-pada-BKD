@@ -40,33 +40,45 @@ class UserController extends APIController
     }
 
     public function create(Request $req){
-        $user = new User;
+        $user = User::create($req->all());
+        // $user = new User;
 
-        if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $id.' - '.$req->name;
-            $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/user', $foto);
-            $user->foto       = $foto;
-            }else {
+        // if($req->foto != null){
+        //     $FotoExt  = $req->foto->getClientOriginalExtension();
+        //     $FotoName = $id.' - '.$req->name;
+        //     $foto   = $FotoName.'.'.$FotoExt;
+        //     $req->foto->move('images/user', $foto);
+        //     $user->foto       = $foto;
+        //     }else {
                 
-            }
+        //     }
             
-        $user->name            = $req->name;
-        $user->email    = $req->email;
-        if($req->password != null){
-            $password       = Hash::make($req->password);
-            $user->password = $password;
-        }else{
-            $user->password = $user->password;
-        }
+        // $user->name            = $req->name;
+        // $user->email    = $req->email;
+        // if($req->password != null){
+        //     $password       = Hash::make($req->password);
+        //     $user->password = $password;
+        // }else{
+        //     $user->password = $user->password;
+        // }
 
-        $user->save();
+        // $user->save();
 
         $user_id= $user->id;
         $uuid = HCrypt::encrypt($user_id);
         $setuuid = User::findOrFail($user_id);
         $setuuid->uuid = $uuid;
+        if($req->foto != null){
+            $FotoExt  = $req->foto->getClientOriginalExtension();
+            $FotoName = $id.' - '.$req->name;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $req->foto->move('images/user', $foto);
+            $setuuid->foto       = $foto;
+            }else {
+                $setuuid->foto       = 'default.jpg';
+            }
+        $setuuid->password = Hash::make($setuuid->password);
+
         $setuuid->update();
 
         if (!$user) {
@@ -88,26 +100,46 @@ class UserController extends APIController
         if (!$user){
                 return $this->returnController("error", "failed find data user");
             }
-        if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $id.' - '.$req->name;
-            $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/user', $foto);
-            $user->foto       = $foto;
-            }else {
-                $user->foto  = $user->foto;
-            }
 
-        $user->name            = $req->name;
-        $user->email    = $req->email;
+        $user->fill($req->all())->save();
+        
+        $foto = user::findOrFail($id);
+        if($req->foto != null){
+                $FotoExt  = $req->foto->getClientOriginalExtension();
+                $FotoName = $foto->id.' - '.$req->nama;
+                $foto   = $FotoName.'.'.$FotoExt;
+                $req->foto->move('images/user', $foto);
+                $foto->foto       = $foto;
+                }else {
+                    $foto->foto  = $foto->foto;
+                }
         if($req->password != null){
             $password       = Hash::make($req->password);
-            $user->password = $password;
+            $foto->password = $password;
         }else{
-            $user->password = $user->password;
+            $foto->password = $foto->password;
         }
+        $foto->update();
+        // if($req->foto != null){
+        //     $FotoExt  = $req->foto->getClientOriginalExtension();
+        //     $FotoName = $id.' - '.$req->name;
+        //     $foto   = $FotoName.'.'.$FotoExt;
+        //     $req->foto->move('images/user', $foto);
+        //     $user->foto       = $foto;
+        //     }else {
+        //         $user->foto  = $user->foto;
+        //     }
 
-        $user->update();
+        // $user->name            = $req->name;
+        // $user->email    = $req->email;
+        // if($req->password != null){
+        //     $password       = Hash::make($req->password);
+        //     $user->password = $password;
+        // }else{
+        //     $user->password = $user->password;
+        // }
+
+        // $user->update();
 
         if (!$user){
             return $this->returnController("error", "failed update data user");
