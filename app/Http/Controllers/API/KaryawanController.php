@@ -62,6 +62,7 @@ class KaryawanController extends APIController
                 $setuuid->foto       = 'default.jpg';
             }
 
+            
         $setuuid->update();
 
         if (!$karyawan) {
