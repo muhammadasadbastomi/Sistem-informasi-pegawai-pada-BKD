@@ -41,29 +41,7 @@ class UserController extends APIController
 
     public function create(Request $req){
         $user = User::create($req->all());
-        // $user = new User;
-
-        // if($req->foto != null){
-        //     $FotoExt  = $req->foto->getClientOriginalExtension();
-        //     $FotoName = $id.' - '.$req->name;
-        //     $foto   = $FotoName.'.'.$FotoExt;
-        //     $req->foto->move('images/user', $foto);
-        //     $user->foto       = $foto;
-        //     }else {
-                
-        //     }
-            
-        // $user->name            = $req->name;
-        // $user->email    = $req->email;
-        // if($req->password != null){
-        //     $password       = Hash::make($req->password);
-        //     $user->password = $password;
-        // }else{
-        //     $user->password = $user->password;
-        // }
-
-        // $user->save();
-
+        
         $user_id= $user->id;
         $uuid = HCrypt::encrypt($user_id);
         $setuuid = User::findOrFail($user_id);
@@ -119,27 +97,7 @@ class UserController extends APIController
             $foto->password = $foto->password;
         }
         $foto->update();
-        // if($req->foto != null){
-        //     $FotoExt  = $req->foto->getClientOriginalExtension();
-        //     $FotoName = $id.' - '.$req->name;
-        //     $foto   = $FotoName.'.'.$FotoExt;
-        //     $req->foto->move('images/user', $foto);
-        //     $user->foto       = $foto;
-        //     }else {
-        //         $user->foto  = $user->foto;
-        //     }
-
-        // $user->name            = $req->name;
-        // $user->email    = $req->email;
-        // if($req->password != null){
-        //     $password       = Hash::make($req->password);
-        //     $user->password = $password;
-        // }else{
-        //     $user->password = $user->password;
-        // }
-
-        // $user->update();
-
+        
         if (!$user){
             return $this->returnController("error", "failed update data user");
         }

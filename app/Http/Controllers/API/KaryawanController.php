@@ -14,7 +14,7 @@ class KaryawanController extends APIController
     public function get(){
         $karyawan = json_decode(redis::get("karyawan::all"));
         if (!$karyawan) {
-            $karyawan = karyawan::all();
+            $karyawan = karyawan::with('unit_kerja')->get();
             if (!$karyawan) {
                 return $this->returnController("error", "failed get karyawan data");
             }
@@ -30,7 +30,7 @@ class KaryawanController extends APIController
         }
         $karyawan = Redis::get("karyawan:$id");
         if (!$karyawan) {
-            $karyawan = karyawan::with('karyawan')->where('id',$id)->first();
+            $karyawan = karyawan::with('unit_kerja')->where('id',$id)->first();
             if (!$karyawan){
                 return $this->returnController("error", "failed find data karyawan");
             }
@@ -52,7 +52,7 @@ class KaryawanController extends APIController
         $setuuid->uuid = $uuid;
         if($req->foto != null){
             $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $id.' - '.$req->name;
+            $FotoName = $karyawan_id.' - '.$req->nama;
             $foto   = $FotoName.'.'.$FotoExt;
             $req->foto->move('images/karyawan', $foto);
             $setuuid->foto       = $foto;
