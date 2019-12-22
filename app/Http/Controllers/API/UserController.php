@@ -70,8 +70,8 @@ class UserController extends APIController
         $setuuid->uuid = $uuid;
         if($req->foto != null){
             $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $id.' - '.$req->name;
-            $foto   = $FotoName.'.'.$FotoExt;
+            $FotoName = $user_id.' - '.$req->username;
+            $foto   = $FotoName.'.';
             $req->foto->move('images/user', $foto);
             $setuuid->foto       = $foto;
             }else {
@@ -86,7 +86,6 @@ class UserController extends APIController
         }
 
         Redis::del("user:all");
-        Redis::set("user:all");
         return $this->returnController("ok", $user);
     }
 
