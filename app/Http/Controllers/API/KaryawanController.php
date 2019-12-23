@@ -15,7 +15,7 @@ class KaryawanController extends APIController
     public function get(){
         $karyawan = json_decode(redis::get("karyawan::all"));
         if (!$karyawan) {
-            $karyawan = karyawan::with('unit_kerja')->get();
+            $karyawan = karyawan::with('unit_kerja','golongan','jabatan')->get();
             if (!$karyawan) {
                 return $this->returnController("error", "failed get karyawan data");
             }
@@ -31,7 +31,7 @@ class KaryawanController extends APIController
         }
         $karyawan = Redis::get("karyawan:$id");
         if (!$karyawan) {
-            $karyawan = karyawan::with('unit_kerja')->where('id',$id)->first();
+            $karyawan = karyawan::with('unit_kerja','golongan','jabatan')->where('id',$id)->first();
             if (!$karyawan){
                 return $this->returnController("error", "failed find data karyawan");
             }
@@ -77,7 +77,7 @@ class KaryawanController extends APIController
 
     public function update($uuid, Request $req){
         $id = HCrypt::decrypt($uuid);
-        $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
+
         if (!$id) {
             return $this->returnController("error", "failed decrypt uuid");
         }
@@ -87,35 +87,41 @@ class KaryawanController extends APIController
         if (!$karyawan){
                 return $this->returnController("error", "failed find data pelanggan");
             }
+        // decrypt uuid from $req
+        $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
+        $golongan_id = HCrypt::decrypt($req->golongan_id);
+        $jabatan_id = HCrypt::decrypt($req->jabatan_id);
 
-            $karyawan->unit_kerja_id    =  $unit_kerja_id;
-            $karyawan->NIP              =  $req->NIP;
-            $karyawan->nama             =  $req->nama;
-            $karyawan->tempat_lahir     =  $req->tempat_lahir;
-            $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
-            $karyawan->alamat           =  $req->alamat;
-            $karyawan->jk               =  $req->jk;
-            $karyawan->status_pegawai   =  $req->status_pegawai;
-            $karyawan->status_kawin     =  $req->status_kawin;
-            $karyawan->golongan_darah   =  $req->golongan_darah;
-            if($req->foto != null){
-                $img = $req->file('foto');
-                $FotoExt  = $img->getClientOriginalExtension();
-                $FotoName = $req->NIP.' - '.$karyawan->nama;
-                $foto   = $FotoName.'.'.$FotoExt;
-                $img->move('img/karyawan', $foto);
-                $karyawan->foto       = $foto;
-            }else{
-                    $karyawan->foto       = $karyawan->foto;
-            }
+        $karyawan->unit_kerja_id    =  $unit_kerja_id;
+        $karyawan->golongan_id      =  $golongan_id;
+        $karyawan->jabatan_id       =  $jabatan_id;
+        $karyawan->NIP              =  $req->NIP;
+        $karyawan->nama             =  $req->nama;
+        $karyawan->tempat_lahir     =  $req->tempat_lahir;
+        $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
+        $karyawan->alamat           =  $req->alamat;
+        $karyawan->jk               =  $req->jk;
+        $karyawan->status_pegawai   =  $req->status_pegawai;
+        $karyawan->status_kawin     =  $req->status_kawin;
+        $karyawan->golongan_darah   =  $req->golongan_darah;
+        if($req->foto != null){
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $req->NIP.' - '.$karyawan->nama;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/karyawan', $foto);
+            $karyawan->foto       = $foto;
+        }else{
+            $karyawan->foto       = $karyawan->foto;
+        }
 
-            $karyawan->update();
+        $karyawan->update();
     
             
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
-        $karyawan = karyawan::with('unit_kerja')->where('id',$id)->first();
+        $karyawan = karyawan::with('unit_kerja','golongan','jabatan')->where('id',$id)->first();
         Redis::del("karyawan:all");
         Redis::set("karyawan:$id", $karyawan);
 
