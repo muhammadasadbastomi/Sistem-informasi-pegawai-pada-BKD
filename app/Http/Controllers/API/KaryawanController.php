@@ -41,28 +41,43 @@ class KaryawanController extends APIController
     }
 
     public function create(Request $req){
+        $karyawan = New Karyawan;
+        
+        // decrypt uuid from $req
         $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
-        $unit_kerja = Unit_kerja::findOrFail($unit_kerja_id);
+        $golongan_id = HCrypt::decrypt($req->golongan_id);
+        $jabatan_id = HCrypt::decrypt($req->jabatan_id);
 
-        $karyawan = $unit_kerja->karyawan()->create($req->all());
+        $karyawan->unit_kerja_id    =  $unit_kerja_id;
+        $karyawan->golongan_id      =  $golongan_id;
+        $karyawan->jabatan_id       =  $jabatan_id;
+        $karyawan->NIP              =  $req->NIP;
+        $karyawan->nama             =  $req->nama;
+        $karyawan->tempat_lahir     =  $req->tempat_lahir;
+        $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
+        $karyawan->alamat           =  $req->alamat;
+        $karyawan->jk               =  $req->jk;
+        $karyawan->status_pegawai   =  $req->status_pegawai;
+        $karyawan->status_kawin     =  $req->status_kawin;
+        $karyawan->golongan_darah   =  $req->golongan_darah;
+        if($req->foto != null){
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $req->NIP.' - '.$karyawan->nama;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/karyawan', $foto);
+            $karyawan->foto       = $foto;
+        }else{
+            
+        }
+
+        $karyawan->save();
         
         $karyawan_id= $karyawan->id;
         
         $uuid = HCrypt::encrypt($karyawan_id);
         $setuuid = Karyawan::findOrFail($karyawan_id);
         $setuuid->uuid = $uuid;
-        if($req->foto != null)
-        {
-            $img = $req->file('foto');
-            $FotoExt  = $img->getClientOriginalExtension();
-            $FotoName = $karyawan_id.' - '.$req->nama;
-            $foto   = $FotoName.'.'.$FotoExt;
-            $img->move('img/karyawan', $foto);
-                $setuuid->foto       = $foto;
-        }else{
-            $setuuid->foto       = 'default.jpg';
-        }
-
             
         $setuuid->update();
 
