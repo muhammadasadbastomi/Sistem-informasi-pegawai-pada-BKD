@@ -162,7 +162,7 @@ Route::get('/berita/index', 'adminController@beritaIndex')
 Route::get('/berita/cetak', 'adminController@beritaCetak')
        ->name('beritaCetak');
 
-Route::get('/admin/index', 'adminController@adminIndex')
+Route::get('/admin/data/index', 'adminController@adminIndex')
        ->name('adminIndex');
 Route::get('/admin/cetak', 'adminController@adminCetak')
        ->name('adminCetak');

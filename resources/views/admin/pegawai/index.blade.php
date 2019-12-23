@@ -79,13 +79,23 @@
             <div class="modal-body">
                 <form  method="post" action="" enctype="multipart/form-data">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
                         <select name="unit_kerja_id" id="unit_kerja_id" class="form-control">
                             <option value="">-- pilih unit kerja --</option>
                         </select>
                     </div>
-                    <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Golongan</label>
+                        <select name="golongan_id" id="golongan_id" class="form-control">
+                            <option value="">-- pilih Golongan --</option>
+                        </select>
+                    </div>                    
+                    <div class="form-group"><label  class=" form-control-label">Jabatan</label>
+                        <select name="jabatan_id" id="jabatan_id" class="form-control">
+                            <option value="">-- pilih Jabatan --</option>
+                        </select>
+                    </div>
                     <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tanggal Lahir</label><input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="penyelenggara Diklat" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
@@ -158,7 +168,38 @@
             }
         })
     }
+    getGolongan = () => {
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/golongan')}}",
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#golongan_id').append(
+                        '<option value="'+value.uuid+'">'+value.golongan+'</option>'
+                    )
+                })
+            }
+        })
+    }
+    getJabatan = () => {
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/jabatan')}}",
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#jabatan_id').append(
+                        '<option value="'+value.uuid+'">'+value.jabatan+'</option>'
+                    )
+                })
+            }
+        })
+    }
     getUnit();
+    getGolongan();
+    getJabatan();
+
     //fungsi hapus
     hapus = (uuid, nama)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
@@ -202,6 +243,8 @@
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
             $('#unit_kerja_id').val('');
+            $('#golongan_id').val('');
+            $('#jabatan_id').val('');
             $('#NIP').val('');
             $('#nama').val('');
             $('#tempat_lahir').val('');  
@@ -225,6 +268,8 @@
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
                     $('#unit_kerja_id').val(returnData.data.unit_kerja.uuid);
+                    $('#golongan_id').val(returnData.data.golongan.uuid);
+                    $('#jabatan_id').val(returnData.data.jabatan.uuid);
                     $('#NIP').val(returnData.data.NIP);
                     $('#nama').val(returnData.data.nama);
                     $('#tempat_lahir').val(returnData.data.tempat_lahir);  
