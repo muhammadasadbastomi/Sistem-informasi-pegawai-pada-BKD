@@ -28,31 +28,31 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{asset('admin/dist/img/user4-128x128.jpg')}}"
+                  <img class="profile-user-img img-fluid "
+                       src="{{asset('/img/karyawan/'.$karyawan->foto)}}"
                        alt="User profile picture">
                 </div>
 
-                <h3 class="profile-username text-center">Nina Mcintire</h3>
+                <h3 class="profile-username text-center">{{$karyawan->nama}}</h3>
 
-                <p class="text-muted text-center">Software Engineer</p>
+                <p class="text-muted text-center">{{$karyawan->unit_kerja->nama}} -{{$karyawan->unit_kerja->instansi->nama}}</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
-                    <b>Friends</b> <a class="float-right">13,287</a>
+                    <b>Status</b> <a class="float-right">{{$karyawan->status_pegawai}}</a>
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                <a href="#" class="btn btn-warning btn-block"><b>cetak profil</b></a>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
 
             <!-- About Me Box -->
-            <div class="card card-primary">
+            <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">About Me</h3>
+                <h3 class="card-title">Riwayat Pendidikan</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -97,6 +97,57 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="biodata">
                     <label for="">Biodata</label>
+                    <div class="row">
+                      <div class="col-xl-6">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <th>Nama</th>
+                              <td>: {{$karyawan->nama}}</td>
+                            </tr>
+                            <tr>
+                              <th>NIP</th>
+                              <td>: {{$karyawan->NIP}}</td>
+                            </tr>
+                            <tr>
+                              <th>Tempat - tanggal Lahir</th>
+                              <td>: {{$karyawan->tempat_lahir}} - {{$karyawan->tanggal_lahir}} </td>
+                            </tr>                            
+                            <tr>
+                              <th>Alamat</th>
+                              <td>: {{$karyawan->alamat}}</td>
+                            </tr>
+                            </tr>                            
+                            <tr>
+                              <th>Jenis kelamin</th>
+                              <td>: {{$karyawan->jk}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-xl-6">
+                      <table class="table">
+                          <tbody>
+                          <tr>
+                              <th>Agama</th>
+                              <td>: {{$karyawan->agama}}</td>
+                            </tr>                            <tr>
+                              <th>golongan Darah</th>
+                              <td>: {{$karyawan->golongan_darah}}</td>
+                            </tr>
+                            <tr>
+                              <th>Status Kepegawaian</th>
+                              <td>: {{$karyawan->status_pegawai}}</td>
+                            </tr>
+                            <tr>
+                              <th>Status Pernikahan</th>
+                              <td>: {{$karyawan->status_kawin}}</td>
+                            </tr>
+                           
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                   <div class="tab-pane" id="SKP">
                       <label for="">SKP</label>
@@ -159,6 +210,11 @@
                 </div>
                 <!-- /.tab-content -->
               </div><!-- /.card-body -->
+              <div class="card-footer">
+                <div class="text-right">
+                <a href="" class="btn btn-danger"> kembali</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
