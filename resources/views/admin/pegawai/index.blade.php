@@ -222,18 +222,16 @@
                 success : function(returnData) {
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
-                    $('#unit_id').val(returnData.data.unit_kerja.uuid);
+                    $('#unit_kerja_id').val(returnData.data.unit_kerja.uuid);
                     $('#NIP').val(returnData.data.NIP);
                     $('#nama').val(returnData.data.nama);
                     $('#tempat_lahir').val(returnData.data.tempat_lahir);  
                     $('#tanggal_lahir').val(returnData.data.tanggal_lahir);
                     $('#alamat').val(returnData.data.alamat);   
-                    $('#jk').val('');        
                     $('#status_pegawai').val(returnData.data.status_pegawai);     
                     $('#status_kawin').val(returnData.data.status_kawin);    
                     $('#golongan_darah').val(returnData.data.golongan_darah);                     
                     $('#agama').val(returnData.data.agama);                     
-                    $('#foto').val(returnData.data.foto);                      
                     $('#btn-form').text('Ubah Data');
                     $('#mediumModal').modal('show'); 
                 }
@@ -283,8 +281,11 @@
                     let id = $('#id').val();
                     $.ajax({
                         url: url+'/'+id,
-                        type: "put",
-                        data: $(this).serialize(),
+                        type: "post",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
