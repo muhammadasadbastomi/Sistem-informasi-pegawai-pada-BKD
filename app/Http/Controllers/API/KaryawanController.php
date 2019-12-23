@@ -75,6 +75,7 @@ class KaryawanController extends APIController
 
     public function update($uuid, Request $req){
         $id = HCrypt::decrypt($uuid);
+        $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
         if (!$id) {
             return $this->returnController("error", "failed decrypt uuid");
         }
@@ -84,23 +85,35 @@ class KaryawanController extends APIController
         if (!$karyawan){
                 return $this->returnController("error", "failed find data pelanggan");
             }
-        $karyawan->fill($req->all())->save();
-        
-        $foto = karyawan::findOrFail($id);
-        if($req->foto != null){
-                $image_path = '/images/karyawan/'.$foto->foto;  // Value is not URL but directory file path
-                if(File::exists($image_path)) {
-                    File::delete($image_path);
-                }
-                $FotoExt  = $req->foto->getClientOriginalExtension();
-                $FotoName = $karyawan->id.' - '.$req->nama;
+            $karyawan->unit_kerja_id    =  $unit_kerja_id;
+            $karyawan->NIP              =  $req->NIP;
+            $karyawan->nama             =  $req->nama;
+            $karyawan->tempat_lahir     =  $req->tempat_lahir;
+            $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
+            $karyawan->alamat           =  $req->alamat;
+            $karyawan->jk               =  $req->jk;
+            $karyawan->status_pegawai   =  $req->status_pegawai;
+            $karyawan->status_kawin     =  $req->status_kawin;
+            $karyawan->golongan_darah   =  $req->golongan_darah;
+            $karyawan->update();
+    
+            $karyawan_id= $karyawan->id;
+            
+            $uuid = HCrypt::encrypt($karyawan_id);
+            $setuuid = Karyawan::findOrFail($karyawan_id);
+            if($req->foto != null){
+                $img = $req->file('foto');
+                $FotoExt  = $img->getClientOriginalExtension();
+                $FotoName = $karyawan_id.' - '.$setuuid->nama;
                 $foto   = $FotoName.'.'.$FotoExt;
-                $req->foto->move('images/karyawan', $foto);
-                $foto->foto       = $foto;
+                $img->move('img/karyawan', $foto);
+                $setuuid->foto       = $foto;
                 }else {
-                    $karyawan->foto  = $karyawan->foto;
+                    $setuuid->foto       = 'default.jpg';
                 }
-        $foto->update();
+    
+                
+            $setuuid->update();
             
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
