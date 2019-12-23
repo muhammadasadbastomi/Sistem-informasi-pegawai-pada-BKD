@@ -193,9 +193,11 @@
                     let id = $('#id').val();
                     $.ajax({
                         url: url+'/'+id,
-                        type: "put",
-                        // data: $(this).serialize(),
+                        type: "post",
                         data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
