@@ -83,23 +83,18 @@ class UserController extends APIController
 
         $user->fill($req->all())->save();
         
-        $foto = user::findOrFail($id);
+        $photos = user::findOrFail($id);
         if($req->foto != null){
-                $FotoExt  = $req->foto->getClientOriginalExtension();
-                $FotoName = $foto->id.' - '.$req->nama;
-                $foto   = $FotoName.'.'.$FotoExt;
-                $req->foto->move('images/user', $foto);
-                $foto->foto       = $foto;
-                }else {
-                    $foto->foto  = $foto->foto;
-                }
-        if($req->password != null){
-            $password       = Hash::make($req->password);
-            $foto->password = $password;
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $user->id.' - '.$req->username;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/user', $foto);
+            $photos->foto       = $foto;
         }else{
-            $foto->password = $foto->password;
+                $photos->foto       = $photos->foto;
         }
-        $foto->update();
+        $photos->update();
         
         if (!$user){
             return $this->returnController("error", "failed update data user");
