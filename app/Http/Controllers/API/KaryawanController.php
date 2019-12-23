@@ -86,7 +86,10 @@ class KaryawanController extends APIController
         if (!$karyawan){
                 return $this->returnController("error", "failed find data pelanggan");
             }
-        $karyawan->fill($req->all())->save();
+        
+        $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
+        $unit_kerja = Unit_kerja::findOrFail($unit_kerja_id);
+        $karyawan = $unit_kerja->karyawan()->fill($req->all())->save();
         
         $foto = karyawan::findOrFail($id);
         if($req->foto != null){
