@@ -43,7 +43,7 @@
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-warning btn-block"><b>cetak profil</b></a>
+                <a href="#" class="btn btn-warning btn-block"><i class="fas fa-print"></i> cetak profil</a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -212,7 +212,7 @@
               </div><!-- /.card-body -->
               <div class="card-footer">
                 <div class="text-right">
-                <a href="" class="btn btn-danger"> kembali</a>
+                <a href="" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> kembali</a>
                 </div>
               </div>
             </div>
