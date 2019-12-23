@@ -198,7 +198,7 @@
         //event btn klikx   
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#unit_id').val('');
+            $('#unit_kerja_id').val('');
             $('#NIP').val('');
             $('#nama').val('');
             $('#tempat_lahir').val('');  

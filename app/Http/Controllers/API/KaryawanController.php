@@ -87,6 +87,7 @@ class KaryawanController extends APIController
         if (!$karyawan){
                 return $this->returnController("error", "failed find data pelanggan");
             }
+
             $karyawan->unit_kerja_id    =  $unit_kerja_id;
             $karyawan->NIP              =  $req->NIP;
             $karyawan->nama             =  $req->nama;
@@ -97,33 +98,24 @@ class KaryawanController extends APIController
             $karyawan->status_pegawai   =  $req->status_pegawai;
             $karyawan->status_kawin     =  $req->status_kawin;
             $karyawan->golongan_darah   =  $req->golongan_darah;
-            $karyawan->update();
-    
-            $karyawan_id= $karyawan->id;
-            
-            $uuid = HCrypt::encrypt($karyawan_id);
-            $setuuid = Karyawan::findOrFail($karyawan_id);
             if($req->foto != null){
-                $image_path = '/img/karyawan/'.$foto->foto;  // Value is not URL but directory file path
-                if(File::exists($image_path)) {
-                    File::delete($image_path);
-                }
                 $img = $req->file('foto');
                 $FotoExt  = $img->getClientOriginalExtension();
-                $FotoName = $karyawan_id.' - '.$setuuid->nama;
+                $FotoName = $req->NIP.' - '.$karyawan->nama;
                 $foto   = $FotoName.'.'.$FotoExt;
                 $img->move('img/karyawan', $foto);
-                $setuuid->foto       = $foto;
-                }else {
-                    $setuuid->foto       = 'default.jpg';
-                }
+                $karyawan->foto       = $foto;
+            }else{
+                    $karyawan->foto       = $karyawan->foto;
+            }
+
+            $karyawan->update();
     
-                
-            $setuuid->update();
             
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
+        $karyawan = karyawan::with('unit_kerja')->where('id',$id)->first();
         Redis::del("karyawan:all");
         Redis::set("karyawan:$id", $karyawan);
 
