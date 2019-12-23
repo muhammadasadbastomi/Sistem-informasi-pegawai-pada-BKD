@@ -144,7 +144,7 @@ Route::get('/pendidikan/cetak', 'adminController@pendidikanCetak')
 
 Route::get('/pegawai/index', 'adminController@pegawaiIndex')
        ->name('pegawaiIndex');
-Route::get('/pegawai/detail', 'adminController@pegawaiDetail')
+Route::get('/pegawai/detail/{uuid}', 'adminController@pegawaiDetail')
        ->name('pegawaiDetail');
 Route::get('/pegawai/cetak', 'adminController@pegawaiCetak')
        ->name('pegawaiCetak');

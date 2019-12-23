@@ -139,6 +139,7 @@
 @endsection
 @section('script')
 <script>
+
         //function get data kecamatan
         getUnit = () => {
         $.ajax({
@@ -267,7 +268,7 @@
                         let uuid = row.uuid;
                         let nama = row.nama;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
+                        ' <a href="/pegawai/detail/ '+uuid+'" class="btn btn-sm btn-outline-info"><i class="fas fa-eye"></i><a> <button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]

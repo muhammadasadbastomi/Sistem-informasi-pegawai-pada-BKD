@@ -12,6 +12,7 @@ Use App\Golongan;
 Use App\Jabatan;
 Use App\Diklat;
 Use App\Pendidikan;
+Use App\karyawan;
 
 use Illuminate\Http\Request;
 
@@ -67,10 +68,12 @@ class adminController extends Controller
 
     public function pegawaiIndex(){
       return view('admin.pegawai.index');
-  }
+    }
 
-  public function pegawaiDetail(){
-    return view('admin.pegawai.detail');
+  public function pegawaiDetail($uuid){
+    $id = HCrypt::decrypt($uuid);
+    $karyawan = karyawan::findOrFail($id);
+    return view('admin.pegawai.detail',compact('karyawan'));
   }
 
   public function beritaIndex(){
