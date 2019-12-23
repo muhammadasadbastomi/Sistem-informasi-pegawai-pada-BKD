@@ -46,15 +46,17 @@ class UserController extends APIController
         $uuid = HCrypt::encrypt($user_id);
         $setuuid = User::findOrFail($user_id);
         $setuuid->uuid = $uuid;
-        if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $user_id.' - '.$req->username;
-            $foto   = $FotoName.'.';
-            $req->foto->move('images/user', $foto);
+        if($req->foto != null)
+        {
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $user_id.' - '.$req->nama;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/user', $foto);
             $setuuid->foto       = $foto;
-            }else {
-                $setuuid->foto       = 'default.jpg';
-            }
+        }else{
+            
+        }
         $setuuid->password = Hash::make($setuuid->password);
 
         $setuuid->update();
@@ -64,6 +66,7 @@ class UserController extends APIController
         }
 
         Redis::del("user:all");
+        Redis::set("user:all",$user);
         return $this->returnController("ok", $user);
     }
 

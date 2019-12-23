@@ -72,7 +72,7 @@
                 <form  method="post" action="" enctype="multipart/form-data">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Judul</label><input type="text" id="judul" name="judul"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Foto Berita</label><input type="file" name="foto" id="foto" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Foto Berita</label><input type="file" id="foto" name="foto" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Isi</label><textarea class="form-control" name="isi" id="isi" rows="10"></textarea></div>
 
  
@@ -133,6 +133,7 @@
             $('.modal-title').text('Tambah Data');
             $('#judul').val('');
             $('#isi').val('');        
+            $('#foto').val('');
             $('#btn-form').text('Simpan Berita');
             $('#mediumModal').modal('show');
         })
@@ -146,7 +147,8 @@
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
                     $('#judul').val(returnData.data.judul);
-                    $('#isi').val(returnData.data.isi);
+                    $('#isi').val(returnData.data.isi);  
+                    // $('#foto').val(returnData.data.foto);
                     $('#btn-form').text('Ubah Data');
                     $('#mediumModal').modal('show'); 
                 }
@@ -192,7 +194,8 @@
                     $.ajax({
                         url: url+'/'+id,
                         type: "put",
-                        data: $(this).serialize(),
+                        // data: $(this).serialize(),
+                        data: new FormData(this),
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
@@ -213,7 +216,10 @@
                     $.ajax({
                         url: "{{Route('API.berita.create')}}",
                         type: "post",
-                        data: $(this).serialize(),
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');

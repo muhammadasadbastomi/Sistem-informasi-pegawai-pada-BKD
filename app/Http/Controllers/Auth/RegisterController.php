@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use HCrypt;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -62,9 +63,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $id = $user->id;
+        $setuuid =  User::findOrfail($id);
+        $setuuid->uuid = Hcrypt::encrypt($id);
+        $setuuid->update();
+
+        return $user;
+
     }
 }

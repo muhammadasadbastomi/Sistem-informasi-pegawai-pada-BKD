@@ -51,16 +51,17 @@ class KaryawanController extends APIController
         $uuid = HCrypt::encrypt($karyawan_id);
         $setuuid = Karyawan::findOrFail($karyawan_id);
         $setuuid->uuid = $uuid;
-        if($req->foto != null){
+        if($req->foto != null)
+        {
             $img = $req->file('foto');
             $FotoExt  = $img->getClientOriginalExtension();
             $FotoName = $karyawan_id.' - '.$req->nama;
             $foto   = $FotoName.'.'.$FotoExt;
             $img->move('img/karyawan', $foto);
-            $setuuid->foto       = $foto;
-            }else {
-                $setuuid->foto       = 'default.jpg';
-            }
+                $setuuid->foto       = $foto;
+        }else{
+            $setuuid->foto       = 'default.jpg';
+        }
 
             
         $setuuid->update();
@@ -70,6 +71,7 @@ class KaryawanController extends APIController
         }
 
         Redis::del("karyawan:all");
+        Redis::set("karyawan:all",$karyawan);
         return $this->returnController("ok", $karyawan);
     }
 
