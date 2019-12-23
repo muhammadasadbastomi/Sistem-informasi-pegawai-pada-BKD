@@ -24,7 +24,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="{{Route('adminIndex')}}" class="dropdown-item">
             <div class="media">
-              <img src="{{asset('admin/dist/img/user1-128x128.jpg')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="{{asset('img/user/Auth::user()->foto')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -80,10 +80,10 @@
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('/img/user/'.Auth::user()->foto) }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <a href="#" class="d-block">{{Auth::user()->username}}</a>
         </div>
       </div>
       <nav class="mt-2">

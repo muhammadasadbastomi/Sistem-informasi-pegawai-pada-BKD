@@ -91,7 +91,7 @@
                         <div class="row" style="margin-left:15px">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input class="form-check-input" type="radio" name="jk" id="jk1" value="Laki-laki" checked>
+                                    <input class="form-check-input" type="radio" name="jk" id="jk1" value="Laki-laki" >
                                     <label class="form-check-label" for="jk">
                                         Laki - laki
                                     </label>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input class="form-check-input" type="radio" name="jk" id="jk2" value="Perempuan" checked>
+                                    <input class="form-check-input" type="radio" name="jk" id="jk2" value="Perempuan" >
                                     <label class="form-check-label" for="jk">
                                         Perempuan
                                     </label>
@@ -204,7 +204,6 @@
             $('#tempat_lahir').val('');  
             $('#tanggal_lahir').val('');
             $('#alamat').val('');   
-            $('#jk').val('');        
             $('#status_pegawai').val('');     
             $('#status_kawin').val('');    
             $('#golongan_darah').val('');                     
@@ -227,7 +226,8 @@
                     $('#nama').val(returnData.data.nama);
                     $('#tempat_lahir').val(returnData.data.tempat_lahir);  
                     $('#tanggal_lahir').val(returnData.data.tanggal_lahir);
-                    $('#alamat').val(returnData.data.alamat);   
+                    $('#alamat').val(returnData.data.alamat);
+                    $("input[name=jk][value=" + returnData.data.jk + "]").attr('checked', 'checked');   
                     $('#status_pegawai').val(returnData.data.status_pegawai);     
                     $('#status_kawin').val(returnData.data.status_kawin);    
                     $('#golongan_darah').val(returnData.data.golongan_darah);                     
