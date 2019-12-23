@@ -26,7 +26,10 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="{{Route('pegawaiCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="{{Route('pegawaiCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data keseluruhan</a>
+                    <a href="{{Route('pegawaiFilterStatus')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter status</a>
+                    <a href="{{Route('pegawaiFilterUnit')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter unit</a>
+
                 </div>
             </div>
                 <br>

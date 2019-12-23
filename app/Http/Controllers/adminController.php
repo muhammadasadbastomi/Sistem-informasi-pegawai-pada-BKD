@@ -70,6 +70,15 @@ class adminController extends Controller
       return view('admin.pegawai.index');
     }
 
+    public function pegawaiFilterStatus(){
+      return view('admin.pegawai.filterStatus');
+    }
+
+    public function pegawaiFilterUnit(){
+      $unit = unit_kerja::all();
+      return view('admin.pegawai.filterUnit',compact('unit'));
+    }
+
   public function pegawaiDetail($uuid){
     $id = HCrypt::decrypt($uuid);
     $karyawan = karyawan::findOrFail($id);
@@ -163,5 +172,31 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.pendidikanKeseluruhan', ['pendidikan'=>$pendidikan,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data pendidikan.pdf');
+      }
+
+      public function pegawaiCetak(){
+        $karyawan=karyawan::all();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pegawaiKeseluruhan', ['karyawan'=>$karyawan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data karyawan.pdf');
+      }
+
+      public function pegawaiFilterStatusCetak(Request $request){
+        $pegawai=karyawan::where('status_pegawai', $request->status_pegawai)->get();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pegawaiFilterStatus', ['pegawai'=>$pegawai,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Pegawai Filter Status.pdf');
+      }
+
+      public function pegawaiFilterUnitCetak(Request $request){
+        $id = HCrypt::decrypt($request->unit_kerja_id);
+        $pegawai=karyawan::where('unit_kerja_id', $id)->get();
+        $unit_kerja = unit_kerja::findOrFail($id);
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pegawaiFilterUnit', ['pegawai'=>$pegawai,'unit_kerja'=>$unit_kerja,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Pegawai Filter Unit Kerja.pdf');
       }
 }
