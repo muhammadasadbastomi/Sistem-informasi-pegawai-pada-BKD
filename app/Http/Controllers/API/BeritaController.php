@@ -77,29 +77,27 @@ class BeritaController extends APIController
         if (!$id) {
             return $this->returnController("error", "failed decrypt uuid");
         }
-        // $user_id = Auth::id();
-        // $user = User::findOrFail($user_id);
-        // $berita = $user->berita()->fill($req->all())->save();
+
         $berita = berita::findOrFail($id);
-        $berita->fill($req->all())->save();
-        
-        $photos = berita::findOrFail($id);
-        if($req->foto != null)
-        {
-            $user_id = Auth::id();
-            $image_path = 'img/berita'.$photos->foto;  // Value is not URL but directory file path
-                if(File::exists($image_path)) {
-                    File::delete($image_path);
-                }
+
+        if (!$berita){
+            return $this->returnController("error", "failed find data pelanggan");
+        }
+
+        $berita->judul              =  $req->judul;
+        $berita->isi              =  $req->isi;
+        if($req->foto != null){
             $img = $req->file('foto');
             $FotoExt  = $img->getClientOriginalExtension();
-            $FotoName = $user_id.'-'.$berita_id.'-'.$req->judul;
+            $FotoName = $berita->judul;
             $foto   = $FotoName.'.'.$FotoExt;
             $img->move('img/berita', $foto);
-            $photos->foto       = $foto;
+            $berita->foto       = $foto;
         }else{
-            $photos->foto       = 'defauklt.jpg';
+            $berita->foto       = $berita->foto;
         }
+
+        $berita->update();
         
         if (!$berita) {
             return $this->returnController("error", "failed find data berita");
