@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Berita extends Model
 {
     protected $fillable = [
-        'uuid','user_id','judul','foto','isi'
+        'uuid','user_id','judul','isi'
     ];
 
     protected $hidden = [
