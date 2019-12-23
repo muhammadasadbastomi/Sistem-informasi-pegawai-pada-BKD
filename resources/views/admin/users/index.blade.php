@@ -24,7 +24,7 @@
                 <h5 class="card-title">Tabel Data</h5>
                 <div class="text-right">
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
-                    <a href="{{Route('diklatCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
+                    <a href="" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data</a>
                 </div>
             </div>
               <div class="card-body">
@@ -33,8 +33,7 @@
                 <table id="datatable" class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
-                  <th>Kode diklat</th>
-                  <th>Nama diklat</th>
+                  <th>Username</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -42,11 +41,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Kode diklat</th>
-                  <th>Nama diklat</th>
-                  <th>Tempat</th>
-                  <th>Penyelenggara</th>
-                  <th>Waktu</th>
+                  <th>Username</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </tfoot>
@@ -70,10 +65,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  method="post" action="">
+                <form  method="post" action="" enctype="multipart/form-data">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Username</label><input type="text" id="username" name="username" placeholder="Uji ..." class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">password</label><input type="text" id="password" name="password"  class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Foto</label><input type="file" id="foto" name="foto"  class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -92,7 +88,7 @@
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
         Swal.fire({
                     title: 'apa anda yakin?',
-                    text: " Menghapus  Data diklat " + nama,
+                    text: " Menghapus  Data user " + nama,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -102,7 +98,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url : "{{ url('/api/diklat')}}" + '/' + uuid,
+                            url : "{{ url('/api/user')}}" + '/' + uuid,
                             type : "POST",
                             data : {'_method' : 'DELETE', '_token' :csrf_token},
                             success: function (response) {
@@ -129,11 +125,8 @@
         //event btn klik
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#kode_diklat').val('');
-            $('#nama').val('');
-            $('#tempat').val('');  
-            $('#penyelenggara').val('');
-            $('#waktu').val('');        
+            $('#username').val('');
+            $('#password').val('');
             $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
@@ -141,16 +134,13 @@
         edit = uuid =>{
             $.ajax({
                 type: "GET",
-                url: "{{ url('/api/diklat')}}" + '/' + uuid,
+                url: "{{ url('/api/user')}}" + '/' + uuid,
                 beforeSend: false,
                 success : function(returnData) {
                     $('.modal-title').text('Edit Data');
                     $('#id').val(returnData.data.uuid);
-                    $('#kode_diklat').val(returnData.data.kode_diklat);
-                    $('#nama').val(returnData.data.nama);
-                    $('#tempat').val(returnData.data.tempat);
-                    $('#penyelenggara').val(returnData.data.penyelenggara);
-                    $('#waktu').val(returnData.data.waktu);
+                    $('#username').val(returnData.data.username);
+                    $('#password').val(returnData.data.password);
                     $('#btn-form').text('Ubah Data');
                     $('#mediumModal').modal('show'); 
                 }
@@ -167,18 +157,14 @@
                 paging    : true,
                 ajax: {
                     "type": "GET",
-                    "url": "{{route('API.diklat.get')}}",
+                    "url": "{{route('API.user.get')}}",
                     "dataSrc": "data",
                     "contentType": "application/json; charset=utf-8",
                     "dataType": "json",
                     "processData": true
                 },
                 columns: [
-                    {"data": "kode_diklat"},
-                    {"data": "nama"},
-                    {"data": "tempat"},
-                    {"data": "penyelenggara"},
-                    {"data": "waktu"},
+                    {"data": "username"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
                         let nama = row.nama;
@@ -194,12 +180,15 @@
                 e.preventDefault()
                 let form = $('#modal-body form');
                 if($('.modal-title').text() == 'Edit Data'){
-                    let url = '{{route("API.diklat.update", '')}}'
+                    let url = '{{route("API.user.update", '')}}'
                     let id = $('#id').val();
                     $.ajax({
                         url: url+'/'+id,
-                        type: "put",
-                        data: $(this).serialize(),
+                        type: "post",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
@@ -218,9 +207,12 @@
                     })
                 }else{
                     $.ajax({
-                        url: "{{Route('API.diklat.create')}}",
+                        url: "{{Route('API.user.create')}}",
                         type: "post",
-                        data: $(this).serialize(),
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
                         success: function (response) {
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
