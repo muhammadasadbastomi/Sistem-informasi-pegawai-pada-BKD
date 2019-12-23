@@ -15,13 +15,13 @@ class CreateBeritasTable extends Migration
     {
         Schema::create('beritas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('karyawan_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('uuid')->nullable();
             $table->string('judul')->length(100);
             $table->string('foto')->length('255')->default('default.jpg');
             $table->text('isi');
             $table->timestamps();
-            $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
