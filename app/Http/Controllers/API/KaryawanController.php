@@ -57,6 +57,7 @@ class KaryawanController extends APIController
         $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
         $karyawan->alamat           =  $req->alamat;
         $karyawan->jk               =  $req->jk;
+        $karyawan->agama            =  $req->agama;
         $karyawan->status_pegawai   =  $req->status_pegawai;
         $karyawan->status_kawin     =  $req->status_kawin;
         $karyawan->golongan_darah   =  $req->golongan_darah;

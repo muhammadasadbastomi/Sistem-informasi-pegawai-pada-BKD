@@ -122,23 +122,35 @@
                               <th>Jenis kelamin</th>
                               <td>: {{$karyawan->jk}}</td>
                             </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="col-xl-6">
-                      <table class="table">
-                          <tbody>
-                          <tr>
+                            <tr>
                               <th>Agama</th>
                               <td>: {{$karyawan->agama}}</td>
                             </tr>                            <tr>
                               <th>golongan Darah</th>
                               <td>: {{$karyawan->golongan_darah}}</td>
                             </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-xl-6">
+                      <table class="table">
+                          <tbody>
                             <tr>
                               <th>Status Kepegawaian</th>
                               <td>: {{$karyawan->status_pegawai}}</td>
                             </tr>
+                            <tr>
+                              <th>golongan</th>
+                              <td>: {{$karyawan->golongan->golongan}}</td>
+                            </tr>
+                            <tr>
+                              <th>unit / Dinas</th>
+                              <td>: {{$karyawan->unit_kerja->nama}} / {{$karyawan->unit_kerja->instansi->nama}}</td>
+                            </tr> 
+                            <tr>
+                              <th>jabatan</th>
+                              <td>: {{$karyawan->jabatan->jabatan}}</td>
+                            </tr>                             
                             <tr>
                               <th>Status Pernikahan</th>
                               <td>: {{$karyawan->status_kawin}}</td>
