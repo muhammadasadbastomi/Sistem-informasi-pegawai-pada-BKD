@@ -14,8 +14,8 @@ class Jabatan extends Model
         'id'
     ];
 
-    // public function golongan()
-    // {
-    //     return $this->belongsTo('App\Golongan');
-    // }
+    public function karyawan()
+    {
+        return $this->HasMany('App\Karyawan');
+    }
 }
