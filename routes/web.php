@@ -148,13 +148,21 @@ Route::get('/pegawai/detail/{uuid}', 'adminController@pegawaiDetail')
        ->name('pegawaiDetail');
 Route::get('/pegawai/cetak', 'adminController@pegawaiCetak')
        ->name('pegawaiCetak');
+Route::get('/pegawai/filter/status', 'adminController@pegawaiFilterStatus')
+       ->name('pegawaiFilterStatus');
+Route::post('/pegawai/filter/status', 'adminController@pegawaiFilterStatusCetak')
+       ->name('pegawaiFilterStatusCetak');
+Route::get('/pegawai/filter/unit', 'adminController@pegawaiFilterUnit')
+       ->name('pegawaiFilterUnit');
+Route::post('/pegawai/filter/unit', 'adminController@pegawaiFilterUnitCetak')
+       ->name('pegawaiFilterUnitCetak');
 
 Route::get('/berita/index', 'adminController@beritaIndex')
        ->name('beritaIndex');
 Route::get('/berita/cetak', 'adminController@beritaCetak')
        ->name('beritaCetak');
 
-Route::get('/admin/index', 'adminController@adminIndex')
+Route::get('/admin/data/index', 'adminController@adminIndex')
        ->name('adminIndex');
 Route::get('/admin/cetak', 'adminController@adminCetak')
        ->name('adminCetak');

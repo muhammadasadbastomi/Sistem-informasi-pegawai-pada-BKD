@@ -77,7 +77,7 @@
            style="opacity: .9">
       <span class="brand-text font-weight-light">SIMPEG BKD</span>
     </a>
-    <div class="sidebar">
+    <div class="sidebar"> 
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{ asset('/img/user/'.Auth::user()->foto) }}" class="img-circle elevation-2" alt="User Image">
