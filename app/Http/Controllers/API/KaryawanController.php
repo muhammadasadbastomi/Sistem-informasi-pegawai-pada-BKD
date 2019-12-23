@@ -88,28 +88,28 @@ class KaryawanController extends APIController
                 return $this->returnController("error", "failed find data pelanggan");
             }
 
-            $karyawan->unit_kerja_id    =  $unit_kerja_id;
-            $karyawan->NIP              =  $req->NIP;
-            $karyawan->nama             =  $req->nama;
-            $karyawan->tempat_lahir     =  $req->tempat_lahir;
-            $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
-            $karyawan->alamat           =  $req->alamat;
-            $karyawan->jk               =  $req->jk;
-            $karyawan->status_pegawai   =  $req->status_pegawai;
-            $karyawan->status_kawin     =  $req->status_kawin;
-            $karyawan->golongan_darah   =  $req->golongan_darah;
-            if($req->foto != null){
-                $img = $req->file('foto');
-                $FotoExt  = $img->getClientOriginalExtension();
-                $FotoName = $req->NIP.' - '.$karyawan->nama;
-                $foto   = $FotoName.'.'.$FotoExt;
-                $img->move('img/karyawan', $foto);
-                $karyawan->foto       = $foto;
-            }else{
-                    $karyawan->foto       = $karyawan->foto;
-            }
+        $karyawan->unit_kerja_id    =  $unit_kerja_id;
+        $karyawan->NIP              =  $req->NIP;
+        $karyawan->nama             =  $req->nama;
+        $karyawan->tempat_lahir     =  $req->tempat_lahir;
+        $karyawan->tanggal_lahir    =  $req->tanggal_lahir;
+        $karyawan->alamat           =  $req->alamat;
+        $karyawan->jk               =  $req->jk;
+        $karyawan->status_pegawai   =  $req->status_pegawai;
+        $karyawan->status_kawin     =  $req->status_kawin;
+        $karyawan->golongan_darah   =  $req->golongan_darah;
+        if($req->foto != null){
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $req->NIP.' - '.$karyawan->nama;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/karyawan', $foto);
+            $karyawan->foto       = $foto;
+        }else{
+                $karyawan->foto       = $karyawan->foto;
+        }
 
-            $karyawan->update();
+        $karyawan->update();
     
             
         if (!$karyawan) {
