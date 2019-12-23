@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Berita;
+use App\User;
 use HCrypt;
 use Auth;
 
@@ -40,36 +42,33 @@ class BeritaController extends APIController
     }
 
     public function create(Request $req){
-        // $seksi = Seksi::create($req->all());
-        $berita = new berita;
-        // decrypt foreign key id
-        $id = Auth::id();
-        $berita->user_id = $id;
-        $berita->judul = $req->judul;
-        if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $req->judul.' - '.$id;
-            $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('img/berita', $foto);
-            $berita->foto       = $foto;
-            }else {
-                $berita->foto  = 'default.jpg';
-            }
-        $berita->isi = $req->isi;
-
-        $berita->save();
-
-        //set uuid
-        $berita_id = $berita->id;
+        $user_id = Auth::id();
+        $user = User::findOrFail($user_id);
+        $berita = $user->berita()->create($req->all());
+        
+        $berita_id= $berita->id;
         $uuid = HCrypt::encrypt($berita_id);
         $setuuid = berita::findOrFail($berita_id);
         $setuuid->uuid = $uuid;
+        if($req->foto != null)
+        {
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $user_id.'-'.$berita_id.'-'.$req->judul;
+            $foto   = $FotoName.'.'.$FotoExt;
+            $img->move('img/berita', $foto);
+            $setuuid->foto       = $foto;
+        }else{
+            
+        }
+
         $setuuid->update();
+        
         if (!$berita) {
             return $this->returnController("error", "failed create data berita");
         }
         Redis::del("berita:all");
-        Redis::set("berita:all", $berita);
+        Redis::set("berita:all",$berita);
         return $this->returnController("ok", $berita);
     }
 
@@ -78,20 +77,30 @@ class BeritaController extends APIController
         if (!$id) {
             return $this->returnController("error", "failed decrypt uuid");
         }
+        // $user_id = Auth::id();
+        // $user = User::findOrFail($user_id);
+        // $berita = $user->berita()->fill($req->all())->save();
         $berita = berita::findOrFail($id);
-        $id = Auth::id();
-        $berita->user_id = $id;
-        $berita->judul = $req->judul;
-        if($req->foto != null){
-            $FotoExt  = $req->foto->getClientOriginalExtension();
-            $FotoName = $req->judul.' - '.$id;
+        $berita->fill($req->all())->save();
+        
+        $photos = berita::findOrFail($id);
+        if($req->foto != null)
+        {
+            $user_id = Auth::id();
+            $image_path = 'img/berita'.$photos->foto;  // Value is not URL but directory file path
+                if(File::exists($image_path)) {
+                    File::delete($image_path);
+                }
+            $img = $req->file('foto');
+            $FotoExt  = $img->getClientOriginalExtension();
+            $FotoName = $user_id.'-'.$berita_id.'-'.$req->judul;
             $foto   = $FotoName.'.'.$FotoExt;
-            $req->foto->move('images/berita', $foto);
-            $berita->foto       = $foto;
-            }else {
-            }
-        $berita->isi = $req->isi;
-        $berita->update();
+            $img->move('img/berita', $foto);
+            $photos->foto       = $foto;
+        }else{
+            $photos->foto       = 'defauklt.jpg';
+        }
+        
         if (!$berita) {
             return $this->returnController("error", "failed find data berita");
         }
