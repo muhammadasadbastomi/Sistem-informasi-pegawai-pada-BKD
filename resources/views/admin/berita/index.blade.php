@@ -89,6 +89,10 @@
 @endsection
 @section('script')
 <script>
+    $(function () {
+    // Summernote
+    $('#isi').summernote()
+  })
     //fungsi hapus
     hapus = (uuid, nama)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');

@@ -34,8 +34,8 @@
     </div>
     <nav id="mainav" class="fl_right">
       <ul class="clear">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="#">Berita</a></li>
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="{{Route('beritaDepan')}}">Berita</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Kontak </a></li>
       </ul>

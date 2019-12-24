@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{{asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/dist/css/adminlte.min.css')}}">
   <link rel="stylesheet" href="{{asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css')}}">
+  <link rel="stylesheet" href="{{asset('admin/plugins/summernote/summernote.css')}}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -24,7 +26,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="{{Route('adminIndex')}}" class="dropdown-item">
             <div class="media">
-              <img src="{{asset('img/user/Auth::user()->foto')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -213,6 +215,8 @@
 <script src="{{asset('admin/plugins/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js')}}"></script>
 <script src="{{asset('js/sweetalert/sweetalert.all.min.js')}}"></script>
+<script src="{{asset('admin/plugins/summernote/summernote.js')}}"></script>
+
 @yield('script')
 </body>
 </html>
