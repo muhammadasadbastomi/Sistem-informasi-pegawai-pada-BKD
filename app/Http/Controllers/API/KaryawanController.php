@@ -157,7 +157,10 @@ class KaryawanController extends APIController
 
         // Need to check realational
         // If there relation to other data, return error with message, this data has relation to other table(s)
-
+        $image_path = "img/karyawan/".$karyawan->foto;  // Value is not URL but directory file path
+        if(File::exists($image_path)) {
+        File::delete($image_path);
+        }
         $delete = $karyawan->delete();
         if (!$delete) {
             return $this->returnController("error", "failed delete data karyawan");
