@@ -13,18 +13,33 @@ Use App\Jabatan;
 Use App\Diklat;
 Use App\Pendidikan;
 Use App\karyawan;
+Use App\Berita;
+
 
 use Illuminate\Http\Request;
 
 class adminController extends Controller
 {
-    public function index(){
-        return view('admin.index');
+    public function depan(){
+        $berita = Berita::paginate(3);
+        return view('depan',compact('berita'));
     }
 
+    public function index(){
+      return view('admin.index');
+  }
+
     public function beritaDepan(){
-      return view('berita');
+      $berita = Berita::all();
+        return view('berita',compact('berita'));
     }
+
+    public function beritaDetail($uuid){
+        $id = HCrypt::decrypt($uuid);
+        $berita = Berita::findOrFail($id);
+        return view('beritaDetail',compact('berita'));
+    }
+
     public function kecamatanIndex(){
         return view('admin.kecamatan.index');
     }

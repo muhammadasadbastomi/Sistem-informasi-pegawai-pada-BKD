@@ -81,11 +81,13 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               });
 });
 
-Route::get('/', function () {
-    return view('depan');
-});
+
+Route::get('/', 'adminController@depan')
+       ->name('depan');
 Route::get('/berita/depan', 'adminController@beritaDepan')
        ->name('beritaDepan');
+Route::get('/berita/detail/{uuid}', 'adminController@beritaDetail')
+       ->name('beritaDetail');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

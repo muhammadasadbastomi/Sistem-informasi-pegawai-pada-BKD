@@ -20,105 +20,21 @@
       <p>Berita dan Informasi Kepegawaian dari BKD Kabupaten Balangan</p>
     </div>
     <ul class="nospace group" style="margin-bottom:30px">
-      <li class="one_third first">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 06/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">At molestie morbi fringilla a leo sed auctor&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 05/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Curabitur malesuada eros turpis quis libero non&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 04/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Scelerisque hendrerit velit sed non elit lorem&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third first">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 06/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">At molestie morbi fringilla a leo sed auctor&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 05/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Curabitur malesuada eros turpis quis libero non&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 04/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Scelerisque hendrerit velit sed non elit lorem&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third first">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 06/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">At molestie morbi fringilla a leo sed auctor&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 05/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Curabitur malesuada eros turpis quis libero non&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
-      <li class="one_third" style="margin-bottom:30px">
-        <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('depan/images/demo/320x220.png')}}" alt=""></a>
-          <div class="excerpttxt">
-            <ul>
-              <li><i class="fa fa-calendar-o"></i> 04/01/45</li>
-            </ul>
-            <h6 class="heading font-x1">Scelerisque hendrerit velit sed non elit lorem&hellip;</h6>
-            <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
-          </div>
-        </article>
-      </li>
+    @if($berita != null)
+        @foreach($berita as $p)
+          <li class="one_third" style="margin: 7px 2px;">
+            <article class="excerpt"><a href="#"><img class="inspace-10 borderedbox" src="{{asset('/img/berita/'.$p->foto)}}" alt="" style="height:250px !important;"></a>
+              <div class="excerpttxt">
+                <ul>
+                  <li><i class="fa fa-calendar-o"></i>{{$p->created_at}}</li>
+                </ul>
+                <h6 class="heading font-x1">{{$p->judul}}</h6>
+                <p><a class="btn" href="{{Route('beritaDetail',$p->uuid)}}">baca selengkapnya &raquo;</a></p>
+              </div>
+            </article>
+          </li>
+      @endforeach
+    @endif
     </ul>
     <br>
   </section>
