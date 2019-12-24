@@ -140,7 +140,7 @@
                   <li><i class="fa fa-calendar-o"></i>{{$p->created_at}}</li>
                 </ul>
                 <h6 class="heading font-x1">{{$p->judul}}</h6>
-                <p><a class="btn" href="#">baca selengkapnya &raquo;</a></p>
+                <p><a class="btn" href="{{Route('beritaDetail',$p->uuid)}}">baca selengkapnya &raquo;</a></p>
               </div>
             </article>
           </li>
