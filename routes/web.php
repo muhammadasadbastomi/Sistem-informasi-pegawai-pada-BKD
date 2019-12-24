@@ -1,6 +1,5 @@
 <?php
 
-
 Route::namespace('API')->prefix('api')->name('API.')->group(function(){
        Route::prefix('user')->name('user.')->group(function(){
               Route::get('', 'UserController@get')->name('get');
