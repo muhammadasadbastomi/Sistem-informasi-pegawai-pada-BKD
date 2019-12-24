@@ -84,11 +84,11 @@
 @section('script')
 <script>
     //fungsi hapus
-    hapus = (uuid, nama)=>{
+    hapus = (uuid, username)=>{
         let csrf_token=$('meta[name="csrf_token"]').attr('content');
         Swal.fire({
                     title: 'apa anda yakin?',
-                    text: " Menghapus  Data user " + nama,
+                    text: " Menghapus  Data user " + username,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -167,9 +167,9 @@
                     {"data": "username"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
-                        let nama = row.nama;
+                        let username = row.username;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
+                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + username + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
                     data;
                     }}
                 ]
