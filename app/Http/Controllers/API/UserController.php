@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\User;
 use HCrypt;
@@ -50,7 +51,7 @@ class UserController extends APIController
         {
             $img = $req->file('foto');
             $FotoExt  = $img->getClientOriginalExtension();
-            $FotoName = $user_id.' - '.$req->nama;
+            $FotoName = $user_id.' - '.$req->username;
             $foto   = $FotoName.'.'.$FotoExt;
             $img->move('img/user', $foto);
             $setuuid->foto       = $foto;
@@ -80,21 +81,26 @@ class UserController extends APIController
         if (!$user){
                 return $this->returnController("error", "failed find data user");
             }
-
-        $user->fill($req->all())->save();
         
-        $photos = user::findOrFail($id);
+        $user = user::findOrFail($id);
+        $user->username    =  $req->username;
+        if($req->password != null){
+            $user->password      =  Hash::make($req->password);    
+        }else{
+            $user->password      =  $user->password;
+        }
+        
         if($req->foto != null){
             $img = $req->file('foto');
             $FotoExt  = $img->getClientOriginalExtension();
             $FotoName = $user->id.' - '.$req->username;
             $foto   = $FotoName.'.'.$FotoExt;
             $img->move('img/user', $foto);
-            $photos->foto       = $foto;
+            $user->foto       = $foto;
         }else{
-                $photos->foto       = $photos->foto;
+                $user->foto       = $user->foto;
         }
-        $photos->update();
+        $user->update();
         
         if (!$user){
             return $this->returnController("error", "failed update data user");
@@ -120,7 +126,12 @@ class UserController extends APIController
         // Need to check realational
         // If there relation to other data, return error with message, this data has relation to other table(s)
 
+        $image_path = "img/user/".$user->foto;  // Value is not URL but directory file path
+        if(File::exists($image_path)) {
+        File::delete($image_path);
+        }
         $delete = $user->delete();
+        
         if (!$delete) {
             return $this->returnController("error", "failed delete data user");
         }
