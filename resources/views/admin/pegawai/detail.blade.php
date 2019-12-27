@@ -43,7 +43,7 @@
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-warning btn-block"><i class="fas fa-print"></i> cetak profil</a>
+                <a href="{{Route('pegawaiDetailCetak',$karyawan->uuid)}}" class="btn btn-warning btn-block"><i class="fas fa-print"></i> cetak profil</a>
               </div>
               <!-- /.card-body -->
             </div>
