@@ -136,6 +136,48 @@ class KaryawanController extends APIController
         return $this->returnController("ok", $pendidikan_karyawan);
     }
 
+    public function diklat_create(Request $req){
+        $diklat_karyawan = New diklat_karyawan;
+        
+        // decrypt uuid from $req
+        $karyawan_id = HCrypt::decrypt($req->id);
+        $diklat_id = HCrypt::decrypt($req->diklat_id);
+
+        $diklat_karyawan->karyawan_id      =  $karyawan_id;
+        $diklat_karyawan->diklat_id    =  $diklat_id;
+
+        $diklat_karyawan->save();
+        
+        $diklat_karyawan_id= $diklat_karyawan->id;
+        
+        $uuid = HCrypt::encrypt($diklat_karyawan_id);
+        $setuuid = diklat_karyawan::findOrFail($diklat_karyawan_id);
+        $setuuid->uuid = $uuid;
+            
+        $setuuid->update();
+
+        if (!$diklat_karyawan) {
+            return $this->returnController("error", "failed create data diklat_karyawan");
+        }
+
+        Redis::del("diklat_karyawan:all");
+        Redis::set("diklat_karyawan:all",$diklat_karyawan);
+        return $this->returnController("ok", $diklat_karyawan);
+    }
+
+    public function diklat_get($uuid){
+        $karyawan_id = HCrypt::decrypt($uuid);
+        $diklat_karyawan = json_decode(redis::get("diklat_karyawan::all"));
+        if (!$diklat_karyawan) {
+            $diklat_karyawan = diklat_karyawan::with('diklat')->where('karyawan_id', $karyawan_id)->get();
+            if (!$diklat_karyawan) {
+                return $this->returnController("error", "failed get diklat diklat_karyawan data");
+            }
+            Redis::set("diklat_karyawan:all", $diklat_karyawan);
+        }
+        return $this->returnController("ok", $diklat_karyawan);
+    }
+
     public function update($uuid, Request $req){
         $id = HCrypt::decrypt($uuid);
 
