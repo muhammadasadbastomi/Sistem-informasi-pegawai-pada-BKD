@@ -74,10 +74,12 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
        Route::prefix('pendidikan_karyawan')->name('pendidikan_karyawan.')->group(function(){
               Route::get('{uuid}', 'KaryawanController@pendidikan_get')->name('get');
               Route::post('', 'KaryawanController@pendidikan_create')->name('create');
+              Route::delete('{uuid}', 'KaryawanController@pendidikan_delete')->name('delete');
        });
        Route::prefix('diklat_karyawan')->name('diklat_karyawan.')->group(function(){
               Route::get('{uuid}', 'KaryawanController@diklat_get')->name('get');
               Route::post('', 'KaryawanController@diklat_create')->name('create');
+              Route::delete('{uuid}', 'KaryawanController@diklat_delete')->name('delete');
        });
        Route::prefix('berita')->name('berita.')->group(function(){
               Route::get('', 'BeritaController@get')->name('get');

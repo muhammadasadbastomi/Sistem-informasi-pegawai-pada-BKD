@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Pendidikan_karyawan;
+use App\Diklat_karyawan;
 use App\Pendidikan;
 use App\Karyawan;
 use App\Unit_kerja;
@@ -136,6 +137,30 @@ class KaryawanController extends APIController
         return $this->returnController("ok", $pendidikan_karyawan);
     }
 
+    public function pendidikan_delete($uuid){
+        $id = HCrypt::decrypt($uuid);
+        if (!$id) {
+            return $this->returnController("error", "failed decrypt uuid");
+        }
+
+        $pendidikan_karyawan = pendidikan_karyawan::find($id);
+        if (!$pendidikan_karyawan) {
+            return $this->returnController("error", "failed find data pendidikan karyawan");
+        }
+
+        // Need to check realational
+        // If there relation to other data, return error with message, this data has relation to other table(s)
+        $delete = $pendidikan_karyawan->delete();
+        if (!$delete) {
+            return $this->returnController("error", "failed delete data pendidikan karyawan");
+        }
+
+        Redis::del("pendidikan_karyawan:all");
+        Redis::del("pendidikan_karyawan:$id");
+
+        return $this->returnController("ok", "success delete data pendidikan karyawan");
+    }
+
     public function diklat_create(Request $req){
         $diklat_karyawan = New diklat_karyawan;
         
@@ -157,7 +182,7 @@ class KaryawanController extends APIController
         $setuuid->update();
 
         if (!$diklat_karyawan) {
-            return $this->returnController("error", "failed create data diklat_karyawan");
+            return $this->returnController("error", "failed create data diklat karyawan");
         }
 
         Redis::del("diklat_karyawan:all");
@@ -176,6 +201,30 @@ class KaryawanController extends APIController
             Redis::set("diklat_karyawan:all", $diklat_karyawan);
         }
         return $this->returnController("ok", $diklat_karyawan);
+    }
+
+    public function diklat_delete($uuid){
+        $id = HCrypt::decrypt($uuid);
+        if (!$id) {
+            return $this->returnController("error", "failed decrypt uuid");
+        }
+
+        $diklat_karyawan = diklat_karyawan::find($id);
+        if (!$diklat_karyawan) {
+            return $this->returnController("error", "failed find data diklat karyawan");
+        }
+
+        // Need to check realational
+        // If there relation to other data, return error with message, this data has relation to other table(s)
+        $delete = $diklat_karyawan->delete();
+        if (!$delete) {
+            return $this->returnController("error", "failed delete data diklat karyawan");
+        }
+
+        Redis::del("diklat_karyawan:all");
+        Redis::del("diklat_karyawan:$id");
+
+        return $this->returnController("ok", "success delete data diklat karyawan");
     }
 
     public function update($uuid, Request $req){
