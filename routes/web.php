@@ -72,6 +72,7 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::delete('{uuid}', 'KaryawanController@delete')->name('delete');
               });
        Route::prefix('pendidikan_karyawan')->name('pendidikan_karyawan.')->group(function(){
+              Route::get('{uuid}', 'KaryawanController@pendidikan_get')->name('get');
               Route::post('', 'KaryawanController@pendidikan_create')->name('create');
        });
        Route::prefix('berita')->name('berita.')->group(function(){

@@ -170,12 +170,10 @@
                         <button class="btn btn-sm btn-primary" id="tambahPendidikan"> + Tambah Pendidikan</button>
                     </div>
                     <br>
-                    <table id="tablependidikan" class="table table-bordered table-striped text-center">
+                    <table id="tablePendidikan" class="table table-bordered table-striped text-center">
                         <thead>
                         <tr>
-                            <th>Unit Kerja</th>
-                            <th>NIP</th>
-                            <th>Tempat Lahir</th>
+                            <th>Pendidikan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                         </thead>
@@ -183,9 +181,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Unit Kerja</th>
-                                <th>NIP</th>
-                                <th>Tempat Lahir</th>
+                                <th>Pendidikan</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </tfoot>
@@ -279,14 +275,34 @@
                   }
               })
           }
-          getPendidikan();
-         //fungsi render datatable        
-         $(document).ready(function() {
-            $('#tablependidikan').DataTable( {
+          getPendidikan();    
+        //fungsi render datatable        
+        $(document).ready(function() {
+            let karyawan_id = $('#id').val();
+            $('#tablePendidikan').DataTable( {
                 responsive: true,
                 processing: true,
+                serverSide: true,
                 searching : true,
-                paging    : true
+                paging    : true,
+                ajax: {
+                    "type": "GET",
+                    "url": "{{ url('/api/pendidikan_karyawan')}}" + '/' + karyawan_id,
+                    "dataSrc": "data",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "processData": true
+                },
+                columns: [
+                    {"data": "pendidikan.nama"},
+                    {data: null , render : function ( data, type, row, meta ) {
+                        let uuid = row.uuid;
+                        let nama = row.nama;
+                        return type === 'display'  ?
+                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                    data;
+                    }}
+                ]
             });
 
             $('#tablediklat').DataTable( {
@@ -347,7 +363,7 @@
                     success: function (response) {
                         form.trigger('reset');
                         $('#mediumModal').modal('hide');
-                        $('#datatable').DataTable().ajax.reload();
+                        $('#tablePendidikan').DataTable().ajax.reload();
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
