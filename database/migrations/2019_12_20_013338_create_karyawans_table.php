@@ -29,7 +29,7 @@ class CreateKaryawansTable extends Migration
             $table->string('status_pegawai')->length(25);
             $table->string('status_kawin')->length(25);
             $table->string('golongan_darah')->length(5);
-            $table->string('foto')->length('255')->nullable();
+            $table->string('foto')->length('255')->default('default.jpg');
             $table->foreign('unit_kerja_id')->references('id')->on('unit_kerjas')->onDelete('cascade');
             $table->foreign('golongan_id')->references('id')->on('golongans')->onDelete('cascade');
             $table->foreign('jabatan_id')->references('id')->on('jabatans')->onDelete('cascade');
