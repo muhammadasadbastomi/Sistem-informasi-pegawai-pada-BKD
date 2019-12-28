@@ -102,7 +102,7 @@ class KaryawanController extends APIController
 
         $pendidikan_karyawan->karyawan_id      =  $karyawan_id;
         $pendidikan_karyawan->pendidikan_id    =  $pendidikan_id;
-        // $pendidikan_karyawan->keterangan       =  $req->keterangan;
+        $pendidikan_karyawan->keterangan       =  $req->keterangan;
 
         $pendidikan_karyawan->save();
         
