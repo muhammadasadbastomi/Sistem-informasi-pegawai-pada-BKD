@@ -151,5 +151,4 @@
     <p class="center"><a href="{{Route('beritaDepan')}}">berita Lain &raquo;</a></p>
   </section>
 </div>
-<!-- ################################################################################################ -->
 @endsection

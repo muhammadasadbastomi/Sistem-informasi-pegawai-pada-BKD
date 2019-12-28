@@ -222,4 +222,13 @@ class adminController extends Controller
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data berita.pdf');
       }
+
+      public function pegawaiDetailCetak($uuid){
+        $id = HCrypt::decrypt($uuid);
+        $pegawai=karyawan::findOrFail($id);
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pegawaiDetail', ['pegawai'=>$pegawai,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data pegawai Detail.pdf');
+      }
 }

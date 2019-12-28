@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('content')
 
 <div class="content-wrapper">
@@ -44,7 +43,7 @@
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-warning btn-block"><i class="fas fa-print"></i> cetak profil</a>
+                <a href="{{Route('pegawaiDetailCetak',$karyawan->uuid)}}" class="btn btn-warning btn-block"><i class="fas fa-print"></i> cetak profil</a>
               </div>
               <!-- /.card-body -->
             </div>
@@ -218,6 +217,7 @@
                             </tr>
                         </tfoot>
                 </table>
+                <p id="getUrl"></p>
                   </div>
                   <!-- /.tab-pane -->
                 </div>
@@ -238,21 +238,20 @@
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">Tambah Data</h5>
+                <h5 class="modal-title" id="tambahPendidikan">Tambah Data</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form  method="post" action="" enctype="multipart/form-data">
-                    <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
-                        <select name="unit_id" id="unit_id" class="form-control">
+                    <div class="form-group"><input type="text" id="id" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
+                    <div class="form-group"><label  class=" form-control-label">Pendididan Formal</label>
+                        <select name="pendidikan_id" id="pendidikan_id" class="form-control">
                             <option value="">-- pilih unit kerja --</option>
                         </select>
                     </div>
-                    <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Keterangan</label><input type="text" id="keterangan" name="keterangan" placeholder="" class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -286,7 +285,6 @@
         //event btn klik
         $('#tambahPendidikan').click(function(){
             $('.modal-title').text('Tambah Data');
-            $('#kode_karyawan').val('');
             $('#nama').val('');      
             $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
@@ -298,5 +296,56 @@
             $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
+
+            //event form submit
+            $("form").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
+            if($('.modal-title').text() == 'Edit Data'){
+                let url = '{{route("API.kelurahan.update", '')}}'
+                let id = $('#id').val();
+                $.ajax({
+                    url: url+'/'+id,
+                    type: "put",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Tersimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }else{
+                $.ajax({
+                    url: "{{Route('API.pendidikan_karyawan.create')}}",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#mediumModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+            }
+        } );
     </script>
 @endsection

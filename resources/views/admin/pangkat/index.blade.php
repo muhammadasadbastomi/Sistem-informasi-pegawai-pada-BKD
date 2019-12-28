@@ -30,7 +30,7 @@
               <div class="card-body">
                 <br>
                 <div class="card-body">
-                <table id="datatable" class="table table-bordered table-striped">
+                <table id="datatable" class=" text-center table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>Pangkat / Golongan</th>
@@ -171,7 +171,7 @@
                         let uuid = row.uuid;
                         let nama = row.nama;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]
