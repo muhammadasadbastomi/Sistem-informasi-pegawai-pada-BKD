@@ -264,6 +264,20 @@
 @endsection
 @section('script')
     <script>
+            getKecamatan = () => {
+              $.ajax({
+                      type: "GET",
+                      url: "{{ url('/api/pendidikan')}}",
+                      beforeSend: false,
+                      success : function(returnData) {
+                          $.each(returnData.data, function (index, value) {
+                          $('#pendidikan_id').append(
+                              '<option value="'+value.uuid+'">'+value.nama+'</option>'
+                          )
+                      })
+                  }
+              })
+          }
          //fungsi render datatable        
          $(document).ready(function() {
             $('#tablependidikan').DataTable( {
