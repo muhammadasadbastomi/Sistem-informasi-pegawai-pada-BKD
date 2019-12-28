@@ -28,6 +28,7 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid "
+                  {{-- "{{ asset('/img/user/'.Auth::user()->foto) }}" --}}
                        src="{{asset('/img/karyawan/'.$karyawan->foto)}}"
                        alt="User profile picture">
                 </div>
