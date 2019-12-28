@@ -114,7 +114,7 @@ class KaryawanController extends APIController
             
         $setuuid->update();
 
-        if (!$pendidikan_karyawan) {}
+        if (!$pendidikan_karyawan) {
             return $this->returnController("error", "failed create data pendidikan_karyawan");
         }
 
