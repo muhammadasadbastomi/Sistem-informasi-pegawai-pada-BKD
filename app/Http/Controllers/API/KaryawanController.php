@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Pendidikan_karyawan;
+use App\Pendidikan;
 use App\Karyawan;
 use App\Unit_kerja;
 use HCrypt;
@@ -89,6 +91,36 @@ class KaryawanController extends APIController
         Redis::del("karyawan:all");
         Redis::set("karyawan:all",$karyawan);
         return $this->returnController("ok", $karyawan);
+    }
+
+    public function pendidikan_create(Request $req){
+        $pendidikan_karyawan = New pendidikan_karyawan;
+        
+        // decrypt uuid from $req
+        $karyawan_id = HCrypt::decrypt($req->karyawan_id);
+        $pendidikan_id = HCrypt::decrypt($req->pendidikan_id);
+
+        $pendidikan_karyawan->karyawan_id      =  $karyawan_id;
+        $pendidikan_karyawan->pendidikan_id    =  $pendidikan_id;
+        $pendidikan_karyawan->keterangan       =  $req->keterangan;
+
+        $pendidikan_karyawan->save();
+        
+        $pendidikan_karyawan_id= $pendidikan_karyawan->id;
+        
+        $uuid = HCrypt::encrypt($pendidikan_karyawan_id);
+        $setuuid = pendidikan_karyawan::findOrFail($pendidikan_karyawan_id);
+        $setuuid->uuid = $uuid;
+            
+        $setuuid->update();
+
+        if (!$pendidikan_karyawan) {}
+            return $this->returnController("error", "failed create data pendidikan_karyawan");
+        }
+
+        Redis::del("pendidikan_karyawan:all");
+        Redis::set("pendidikan_karyawan:all",$pendidikan_karyawan);
+        return $this->returnController("ok", $pendidikan_karyawan);
     }
 
     public function update($uuid, Request $req){
