@@ -18,6 +18,7 @@ class CreatePendidikanKaryawansTable extends Migration
             $table->unsignedBigInteger('karyawan_id');
             $table->unsignedBigInteger('pendidikan_id');
             $table->text('uuid')->nullable();
+            $table->string('keterangan')->length(100);
             $table->timestamps();
             $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
             $table->foreign('pendidikan_id')->references('id')->on('pendidikans')->onDelete('cascade');
