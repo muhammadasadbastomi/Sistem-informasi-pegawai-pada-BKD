@@ -33,4 +33,9 @@ class Karyawan extends Model
     {
     	return $this->belongsToMany('App\Pendidikan_karyawan');
     }
+
+    public function diklat_karyawan()
+    {
+    	return $this->belongsToMany('App\Diklat_karyawan');
+    }
 }
