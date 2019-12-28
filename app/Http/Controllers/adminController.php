@@ -12,7 +12,7 @@ Use App\Golongan;
 Use App\Jabatan;
 Use App\Diklat;
 Use App\Pendidikan;
-Use App\karyawan;
+Use App\Karyawan;
 Use App\Berita;
 
 
