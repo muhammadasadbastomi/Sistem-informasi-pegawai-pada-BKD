@@ -18,7 +18,6 @@ class CreatePendidikansTable extends Migration
             $table->text('uuid')->nullable();
             $table->string('kode_pendidikan')->length(30);
             $table->string('nama')->length(100);
-            $table->date('tahun_lulus');
             $table->timestamps();
         });
     }

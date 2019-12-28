@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pendidikan extends Model
 {
     protected $fillable = [
-        'uuid','kode_pendidikan','nama','tahun_lulus'
+        'uuid','kode_pendidikan','nama'
     ];
 
     protected $hidden = [
