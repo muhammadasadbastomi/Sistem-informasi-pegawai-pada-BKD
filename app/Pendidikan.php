@@ -13,4 +13,9 @@ class Pendidikan extends Model
     protected $hidden = [
         'id'
     ];
+
+    public function pendidikan_karyawan()
+    {
+    	return $this->belongsToMany('App\Pendidikan_karyawan');
+    }
 }
