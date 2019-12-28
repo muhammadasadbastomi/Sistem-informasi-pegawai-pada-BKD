@@ -35,7 +35,6 @@
                 <tr>
                   <th>Kode Pendidikan</th>
                   <th>Nama</th>
-                  <th>Tahun Lulus</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -46,7 +45,6 @@
                 <tr>
                 <th>Kode Pendidikan</th>
                   <th>Nama</th>
-                  <th>Tahun Lulus</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </tfoot>
@@ -73,10 +71,7 @@
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Kode Pendidikan</label><input type="text" id="kode_pendidikan" name="kode_pendidikan" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Pendidikan</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Tahun</label>
-                    <input type="date" name="tahun_lulus" id="tahun_lulus" class="form-control" >
-                    </div>                
+                    <div class="form-group"><label  class=" form-control-label">Nama Pendidikan</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>              
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -133,7 +128,6 @@
         $('.modal-title').text('Tambah Data');
         $('#kode_pendidikan').val('');
         $('#nama').val('');
-        $('#tahun_lulus').val();    
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
@@ -149,7 +143,6 @@
                 $('#id').val(returnData.data.uuid);
                 $('#kode_pendidikan').val(returnData.data.kode_pendidikan);
                 $('#nama').val(returnData.data.nama);
-                $('#tahun_lulus').val(returnData.data.nama);
                 $('#btn-form').text('Ubah Data');
                 $('#mediumModal').modal('show');
             }
@@ -175,7 +168,6 @@
             columns: [
                 {"data": "kode_pendidikan"},
                 {"data": "nama"},
-                {"data": "tahun_lulus"},
                 {data: null , render : function ( data, type, row, meta ) {
                     let uuid = row.uuid;
                     let nama = row.nama;

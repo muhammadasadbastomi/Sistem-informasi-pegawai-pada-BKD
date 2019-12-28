@@ -174,6 +174,7 @@
                         <thead>
                         <tr>
                             <th>Pendidikan</th>
+                            <th>Keterangan</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                         </thead>
@@ -182,6 +183,7 @@
                         <tfoot>
                             <tr>
                                 <th>Pendidikan</th>
+                                <th>Keterangan</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </tfoot>
@@ -193,12 +195,11 @@
                         <button class="btn btn-sm btn-primary" id="tambahDiklat"> + Tambah diklat</button>
                     </div>
                     <br>
-                    <table id="tablediklat" class="table table-bordered table-striped text-center">
+                    <table id="tableDiklat" class="table table-bordered table-striped text-center">
                         <thead>
                         <tr>
-                            <th>Unit Kerja</th>
-                            <th>NIP</th>
-                            <th>Tempat Lahir</th>
+                            <th>Diklat</th>
+                            <th>Waktu</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                         </thead>
@@ -206,10 +207,9 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Unit Kerja</th>
-                                <th>NIP</th>
-                                <th>Tempat Lahir</th>
-                                <th class="text-center">Aksi</th>
+                              <th>Diklat</th>
+                              <th>Waktu</th>
+                              <th class="text-center">Aksi</th>
                             </tr>
                         </tfoot>
                 </table>
@@ -230,7 +230,7 @@
       </div>
     </section>
     </div>
-    <div class="modal fade" id="mediumModal"  role="dialog" >
+    <div class="modal fade" id="pendidikanModal"  role="dialog" >
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header">
@@ -240,11 +240,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form  method="post" action="" enctype="multipart/form-data">
-                    <div class="form-group"><input type="text" id="id" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
+                <form id="form2" method="post" action="" enctype="multipart/form-data">
+                    <div class="form-group"><input type="hidden" id="id1" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
                     <div class="form-group"><label  class=" form-control-label">Pendididan Formal</label>
                         <select name="pendidikan_id" id="pendidikan_id" class="form-control">
-                            <option value="">-- pilih unit kerja --</option>
+                            <option value="">-- pilih Pendidikan --</option>
                         </select>
                     </div>
                     <div class="form-group"><label  class=" form-control-label">Keterangan</label><input type="text" id="keterangan" name="keterangan" placeholder="" class="form-control"></div>
@@ -257,10 +257,39 @@
     </div>
     </div>
     </div>  
+ </div>
+ <!-- modal diklat  -->
+ <div class="modal fade" id="diklatModal"  role="dialog" >
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahPendidikan">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="form1" method="post" action="" enctype="multipart/form-data">
+                <div class="form-group"><input type="hidden" id="id2" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
+                    <div class="form-group"><label  class=" form-control-label">Program Diklat</label>
+                        <select name="diklat_id" id="diklat_id" class="form-control">
+                            <option value="">-- pilih Diklat --</option>
+                        </select>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
+                <button id="btn-form-diklat" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>  
  </div> 
 @endsection
 @section('script')
     <script>
+    //===PENDIDIKAN ===//
             getPendidikan = () => {
               $.ajax({
                       type: "GET",
@@ -275,10 +304,103 @@
                   }
               })
           }
+          getDiklat = () => {
+              $.ajax({
+                      type: "GET",
+                      url: "{{ url('/api/diklat')}}",
+                      beforeSend: false,
+                      success : function(returnData) {
+                          $.each(returnData.data, function (index, value) {
+                          $('#diklat_id').append(
+                              '<option value="'+value.uuid+'">'+value.nama+'</option>'
+                          )
+                      })
+                  }
+              })
+          }
+          getDiklat();
           getPendidikan();    
+    
+    //function hapus pendidikan
+    hapusPendidikan = (uuid, nama)=>{
+    let csrf_token=$('meta[name="csrf_token"]').attr('content');
+    Swal.fire({
+                title: 'apa anda yakin?',
+                text: " Menghapus  Data pendidikan " + nama,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'hapus data',
+                cancelButtonText: 'batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url : "{{ url('/api/pendidikan_karyawan')}}" + '/' + uuid,
+                        type : "POST",
+                        data : {'_method' : 'DELETE', '_token' :csrf_token},
+                        success: function (response) {
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Dihapus',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    $('#tablePendidikan').DataTable().ajax.reload(null, false);
+                },
+            })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                Swal.fire(
+                'Dibatalkan',
+                'data batal dihapus',
+                'error'
+                )
+            }
+        })
+    }
+
+    //function hapus pendidikan
+    hapusDiklat = (uuid, nama)=>{
+    let csrf_token=$('meta[name="csrf_token"]').attr('content');
+    Swal.fire({
+                title: 'apa anda yakin?',
+                text: " Menghapus  Data Diklat " + nama,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'hapus data',
+                cancelButtonText: 'batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url : "{{ url('/api/diklat_karyawan')}}" + '/' + uuid,
+                        type : "POST",
+                        data : {'_method' : 'DELETE', '_token' :csrf_token},
+                        success: function (response) {
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Dihapus',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    $('#tableDiklat').DataTable().ajax.reload(null, false);
+                },
+            })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                Swal.fire(
+                'Dibatalkan',
+                'data batal dihapus',
+                'error'
+                )
+            }
+        })
+    }
         //fungsi render datatable        
         $(document).ready(function() {
-            let karyawan_id = $('#id').val();
+            let karyawan_id = $('#id1').val();
             $('#tablePendidikan').DataTable( {
                 responsive: true,
                 processing: true,
@@ -295,58 +417,79 @@
                 },
                 columns: [
                     {"data": "pendidikan.nama"},
+                    {"data": "keterangan"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
-                        let nama = row.nama;
+                        let nama = row.pendidikan.nama;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                        '<button onClick="hapusPendidikan(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
                     data;
                     }}
                 ]
             });
 
-            $('#tablediklat').DataTable( {
+            $('#tableDiklat').DataTable( {
                 responsive: true,
                 processing: true,
+                serverSide: true,
                 searching : true,
-                paging    : true
+                paging    : true,
+                ajax: {
+                    "type": "GET",
+                    "url": "{{ url('/api/diklat_karyawan')}}" + '/' + karyawan_id,
+                    "dataSrc": "data",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "processData": true
+                },
+                columns: [
+                    {"data": "diklat.nama"},
+                    {"data": "diklat.waktu"},
+                    {data: null , render : function ( data, type, row, meta ) {
+                        let uuid = row.uuid;
+                        let nama = row.diklat.nama;
+                        return type === 'display'  ?
+                        '<button onClick="hapusDiklat(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                    data;
+                    }}
+                ]
             });
+
          });
 
         //event btn klik
         $('#tambahPendidikan').click(function(){
-            $('.modal-title').text('Tambah Data');
-            $('#nama').val('');      
+            $('.modal-title').text('Tambah Data Pendidikan');
+            $('#pendidikan_id').val('');
+            $('#keterangan').val('');            
             $('#btn-form').text('Simpan Data');
-            $('#mediumModal').modal('show');
+            $('#pendidikanModal').modal('show');
         })
 
             //event btn klik
             $('#tambahDiklat').click(function(){
-            $('.modal-title').text('Tambah Data'); 
-            $('#btn-form').text('Simpan Data');
-            $('#mediumModal').modal('show');
+            $('.modal-title').text('Tambah Data Diklat');
+            $('#diklat_id').val(''); 
+            $('#btn-form-diklat').text('Simpan Data');
+            $('#diklatModal').modal('show');
         })
 
             //event form submit
-            $("form").submit(function (e) {
+            $("#form1").submit(function (e) {
             e.preventDefault()
             let form = $('#modal-body form');
-            if($('.modal-title').text() == 'Edit Data'){
-                let url = '{{route("API.kelurahan.update", '')}}'
-                let id = $('#id').val();
                 $.ajax({
-                    url: url+'/'+id,
-                    type: "put",
+                    url: "{{Route('API.diklat_karyawan.create')}}",
+                    type: "post",
                     data: $(this).serialize(),
                     success: function (response) {
                         form.trigger('reset');
-                        $('#mediumModal').modal('hide');
-                        $('#datatable').DataTable().ajax.reload();
+                        $('#diklatModal').modal('hide');
+                        $('#tableDiklat').DataTable().ajax.reload();
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Data Berhasil Tersimpan',
+                            title: 'Data Berhasil Disimpan',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -355,14 +498,19 @@
                         console.log(response);
                     }
                 })
-            }else{
+        } );
+
+          //event form submit
+          $("#form2").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
                 $.ajax({
                     url: "{{Route('API.pendidikan_karyawan.create')}}",
                     type: "post",
                     data: $(this).serialize(),
                     success: function (response) {
                         form.trigger('reset');
-                        $('#mediumModal').modal('hide');
+                        $('#pendidikanModal').modal('hide');
                         $('#tablePendidikan').DataTable().ajax.reload();
                         Swal.fire({
                             position: 'top-end',
@@ -376,7 +524,6 @@
                         console.log(response);
                     }
                 })
-            }
         } );
         
     </script>

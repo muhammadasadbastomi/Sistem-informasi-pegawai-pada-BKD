@@ -10,7 +10,7 @@ class Diklat_karyawan extends Model
         'id','karyawan_id','diklat_id',
     ];
 
-    public function pendidikan()
+    public function diklat()
     {
         return $this->belongsTo('App\Diklat');
     }
