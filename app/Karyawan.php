@@ -28,4 +28,9 @@ class Karyawan extends Model
     {
         return $this->belongsTo('App\Jabatan');
     }
+
+    public function pendidikan_karyawan()
+    {
+    	return $this->belongsToMany('App\Pendidikan_karyawan');
+    }
 }
