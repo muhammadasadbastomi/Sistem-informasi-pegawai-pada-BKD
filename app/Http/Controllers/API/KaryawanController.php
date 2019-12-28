@@ -97,7 +97,7 @@ class KaryawanController extends APIController
         $pendidikan_karyawan = New pendidikan_karyawan;
         
         // decrypt uuid from $req
-        $karyawan_id = HCrypt::decrypt($req->karyawan_id);
+        $karyawan_id = HCrypt::decrypt($req->id);
         $pendidikan_id = HCrypt::decrypt($req->pendidikan_id);
 
         $pendidikan_karyawan->karyawan_id      =  $karyawan_id;
@@ -121,6 +121,19 @@ class KaryawanController extends APIController
         Redis::del("pendidikan_karyawan:all");
         Redis::set("pendidikan_karyawan:all",$pendidikan_karyawan);
         return $this->returnController("ok", $pendidikan_karyawan);
+    }
+
+    public function pendidikan_get($uuid){
+        $karyawan_id = HCrypt::decrypt($uuid);
+        $pendidikan_karyawan = json_decode(redis::get("pendidikan_karyawan::all"));
+        if (!$pendidikan_karyawan) {
+            $pendidikan_karyawan = pendidikan_karyawan::with('pendidikan')->where('karyawan_id', $karyawan_id)->get();
+            if (!$pendidikan_karyawan) {
+                return $this->returnController("error", "failed get pendidikan pendidikan_karyawan data");
+            }
+            Redis::set("pendidikan_karyawan:all", $pendidikan_karyawan);
+        }
+        return $this->returnController("ok", $karyawan);
     }
 
     public function update($uuid, Request $req){

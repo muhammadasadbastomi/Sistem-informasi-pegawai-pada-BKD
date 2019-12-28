@@ -265,7 +265,7 @@
 @endsection
 @section('script')
     <script>
-            getKecamatan = () => {
+            getPendidikan = () => {
               $.ajax({
                       type: "GET",
                       url: "{{ url('/api/pendidikan')}}",
@@ -279,6 +279,7 @@
                   }
               })
           }
+          getPendidikan();
          //fungsi render datatable        
          $(document).ready(function() {
             $('#tablependidikan').DataTable( {
