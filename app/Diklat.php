@@ -13,4 +13,9 @@ class Diklat extends Model
     protected $hidden = [
         'id'
     ];
+
+    public function diklat_karyawan()
+    {
+    	return $this->belongsToMany('App\Diklat_karyawan');
+    }
 }
