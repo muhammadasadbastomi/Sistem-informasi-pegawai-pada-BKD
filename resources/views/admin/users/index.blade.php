@@ -169,7 +169,7 @@
                         let uuid = row.uuid;
                         let username = row.username;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="ti-pencil"> edit</i></button> <button onClick="hapus(\'' + uuid + '\',\'' + username + '\')" class="btn btn-sm btn-outline-danger" > <i class="ti-trash">hapus</i></button>':
+                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"></i></button> <button onClick="hapus(\'' + uuid + '\',\'' + username + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]
