@@ -170,7 +170,7 @@
                         <button class="btn btn-sm btn-primary" id="tambahPendidikan"> + Tambah Pendidikan</button>
                     </div>
                     <br>
-                    <table id="tablePendidikan" class="table table-bordered table-striped text-center">
+                    <table id="tablePendidikan" class="table table-bordered table-striped text-center" width="100%">
                         <thead>
                         <tr>
                             <th>Pendidikan</th>
@@ -195,7 +195,7 @@
                         <button class="btn btn-sm btn-primary" id="tambahDiklat"> + Tambah diklat</button>
                     </div>
                     <br>
-                    <table id="tableDiklat" class="table table-bordered table-striped text-center">
+                    <table id="tableDiklat" class="table table-bordered table-striped text-center" width="100%">
                         <thead>
                         <tr>
                             <th>Diklat</th>
@@ -422,7 +422,7 @@
                         let uuid = row.uuid;
                         let nama = row.pendidikan.nama;
                         return type === 'display'  ?
-                        '<button onClick="hapusPendidikan(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                        '<button onClick="hapusPendidikan(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]
@@ -449,7 +449,7 @@
                         let uuid = row.uuid;
                         let nama = row.diklat.nama;
                         return type === 'display'  ?
-                        '<button onClick="hapusDiklat(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash">hapus</i></button>':
+                        '<button onClick="hapusDiklat(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]
