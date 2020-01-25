@@ -28,14 +28,13 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid "
-                  {{-- "{{ asset('/img/user/'.Auth::user()->foto) }}" --}}
                        src="{{asset('/img/karyawan/'.$karyawan->foto)}}"
                        alt="User profile picture">
                 </div>
 
                 <h3 class="profile-username text-center">{{$karyawan->nama}}</h3>
 
-                <p class="text-muted text-center">{{$karyawan->unit_kerja->nama}} -{{$karyawan->unit_kerja->instansi->nama}}</p>
+                <p class="text-muted text-center">{{$karyawan->NIP}}</p>
 
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -52,29 +51,16 @@
             <!-- About Me Box -->
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Riwayat Pendidikan</h3>
+                <h3 class="card-title">Kepegawaian</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <strong><i class="fas fa-book mr-1"></i> Pendidikan Formal</strong>
+                <strong><i class="fas fa-book mr-1"></i>Instansi</strong>
 
                 <p class="text-muted">
-                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                {{$karyawan->unit_kerja->nama}} -{{$karyawan->unit_kerja->instansi->nama}}
                 </p>
-
                 <hr>
-
-
-                <strong><i class="fas fa-pencil-alt mr-1"></i> Diklat</strong>
-
-                <p class="text-muted">
-                  <span class="tag tag-danger">UI Design</span>
-                  <span class="tag tag-success">Coding</span>
-                  <span class="tag tag-info">Javascript</span>
-                  <span class="tag tag-warning">PHP</span>
-                  <span class="tag tag-primary">Node.js</span>
-                </p>
-
                 <hr>
 
                  </div>
@@ -91,6 +77,8 @@
                   <li class="nav-item"><a class="nav-link " href="#SKP" data-toggle="tab">SKP</a></li>
                   <li class="nav-item"><a class="nav-link" href="#pendidikan" data-toggle="tab">Pendidikan formal</a></li>
                   <li class="nav-item"><a class="nav-link" href="#diklat" data-toggle="tab">DIklat yang diikuti</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#golongan" data-toggle="tab">Riwayat Golongan</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#jabatan" data-toggle="tab">Riwayat Jabatan</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
@@ -123,33 +111,25 @@
                               <td>: {{$karyawan->jk}}</td>
                             </tr>
                             <tr>
-                              <th>Agama</th>
-                              <td>: {{$karyawan->agama}}</td>
-                            </tr>                            <tr>
-                              <th>golongan Darah</th>
-                              <td>: {{$karyawan->golongan_darah}}</td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>
                       <div class="col-xl-6">
                       <table class="table">
                           <tbody>
+                          <th>Agama</th>
+                              <td>: {{$karyawan->agama}}</td>
+                            </tr>                            <tr>
+                              <th>golongan Darah</th>
+                              <td>: {{$karyawan->golongan_darah}}</td>
+                            </tr>
                             <tr>
                               <th>Status Kepegawaian</th>
                               <td>: {{$karyawan->status_pegawai}}</td>
                             </tr>
                             <tr>
-                              <th>golongan</th>
-                              <td>: {{$karyawan->golongan->golongan}}</td>
-                            </tr>
-                            <tr>
                               <th>unit / Dinas</th>
                               <td>: {{$karyawan->unit_kerja->nama}} / {{$karyawan->unit_kerja->instansi->nama}}</td>
-                            </tr> 
-                            <tr>
-                              <th>jabatan</th>
-                              <td>: {{$karyawan->jabatan->jabatan}}</td>
                             </tr>                             
                             <tr>
                               <th>Status Pernikahan</th>
@@ -163,6 +143,58 @@
                   </div>
                   <div class="tab-pane" id="SKP">
                       <label for="">SKP</label>
+                  </div>
+                  <div class="tab-pane" id="golongan">
+                      <label for="">Golongan</label>
+                      <div class="text-right">
+                        <a class="btn btn-sm btn-primary" href="{{Route('riwayatGolongan',['uuid'=> $karyawan->uuid])}}"> <i class="fa fa-print"></i> cetak riwayat golongan</a>
+                        <button class="btn btn-sm btn-primary" id="tambahGolongan"> + Tambah Golongan</button>
+                    </div>
+                    <br>
+                    <table id="tableGolongan" class="table table-bordered table-striped text-center" width="100%">
+                        <thead>
+                        <tr>
+                            <th>gologan</th>
+                            <th>Tahun Kenaikan Pangkat</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            <th>gologan</th>
+                            <th>Tahun Kenaikan Pangkat</th>
+                            <th class="text-center">Aksi</th>
+                            </tr>
+                        </tfoot>
+                </table>
+                  </div>                  
+                  <div class="tab-pane" id="jabatan">
+                      <label for="">Jabatan</label>
+                      <div class="text-right">
+                      <a class="btn btn-sm btn-primary" href="{{Route('riwayatJabatan',['uuid'=> $karyawan->uuid])}}"> <i class="fa fa-print"></i> cetak riwayat Jabatan</a>
+                        <button class="btn btn-sm btn-primary" id="tambahJabatan"> + Tambah Jabatan</button>
+                    </div>
+                    <br>
+                    <table id="tableJabatan" class="table table-bordered table-striped text-center" width="100%">
+                        <thead>
+                        <tr>
+                            <th>jabatan</th>
+                            <th>tahun Pra Jabatan</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            <th>jabatan</th>
+                            <th>tahun Pra Jabatan</th>
+                            <th class="text-center">Aksi</th>
+                            </tr>
+                        </tfoot>
+                </table>
                   </div>
                   <div class="tab-pane" id="pendidikan">
                     <label for=""> pendidikan Formal</label>
@@ -285,10 +317,86 @@
     </div>
     </div>
     </div>  
- </div> 
+ </div>
+ 
+ <!-- modal golongan  -->
+ <div class="modal fade" id="golonganModal"  role="dialog" >
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahPendidikan">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="form3" method="post" action="" enctype="multipart/form-data">
+                <div class="form-group"><input type="hidden" id="id3" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
+                    <div class="form-group"><label  class=" form-control-label">Program Diklat</label>
+                        <select name="golongan_id" id="golongan_id" class="form-control">
+                            <option value="">-- pilih Golongan --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                    <label  class=" form-control-label">Tahun</label>
+                    <input type="text" id="tahun1" name="tahun" class="form-control"/>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
+                <button id="btn-form-golongan" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>  
+ </div>
+ 
+ <!-- modal golongan  -->
+ <div class="modal fade" id="jabatanModal"  role="dialog" >
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tambahPendidikan">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form  id="form4" method="post" action="" enctype="multipart/form-data">
+                <div class="form-group"><input type="hidden" id="id4" name="id"  class="form-control" value="{{$karyawan->uuid}}"></div>
+                    <div class="form-group"><label  class=" form-control-label">Jabatan</label>
+                        <select name="jabatan_id" id="jabatan_id" class="form-control">
+                            <option value="">-- pilih Jabatan --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                    <label  class=" form-control-label">Tahun</label>
+                    <input type="text" id="tahun2" name="tahun" class="form-control"/>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
+                <button id="btn-form-jabatan" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>  
+ </div>    
 @endsection
 @section('script')
     <script>
+    $("#tahun1").datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+$("#tahun2").datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
     //===PENDIDIKAN ===//
             getPendidikan = () => {
               $.ajax({
@@ -319,7 +427,39 @@
               })
           }
           getDiklat();
-          getPendidikan();    
+          getGolongan = () => {
+              $.ajax({
+                      type: "GET",
+                      url: "{{ url('/api/golongan')}}",
+                      beforeSend: false,
+                      success : function(returnData) {
+                          $.each(returnData.data, function (index, value) {
+                          $('#golongan_id').append(
+                              '<option value="'+value.uuid+'">'+value.kode_golongan+'</option>'
+                          )
+                      })
+                  }
+              })
+          }
+          getJabatan = () => {
+              $.ajax({
+                      type: "GET",
+                      url: "{{ url('/api/jabatan')}}",
+                      beforeSend: false,
+                      success : function(returnData) {
+                          $.each(returnData.data, function (index, value) {
+                          $('#jabatan_id').append(
+                              '<option value="'+value.uuid+'">'+value.jabatan+'</option>'
+                          )
+                      })
+                  }
+              })
+          }
+          getDiklat();
+          getJabatan();
+          getPendidikan(); 
+          getGolongan();
+   
     
     //function hapus pendidikan
     hapusPendidikan = (uuid, nama)=>{
@@ -360,7 +500,7 @@
         })
     }
 
-    //function hapus pendidikan
+    //function hapus diklat
     hapusDiklat = (uuid, nama)=>{
     let csrf_token=$('meta[name="csrf_token"]').attr('content');
     Swal.fire({
@@ -398,6 +538,85 @@
             }
         })
     }
+
+      //function hapus pendidikan
+    hapusPangkat = (uuid, nama)=>{
+    let csrf_token=$('meta[name="csrf_token"]').attr('content');
+    Swal.fire({
+                title: 'apa anda yakin?',
+                text: " Menghapus  Data Golongan " + nama,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'hapus data',
+                cancelButtonText: 'batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url : "{{ url('/api/riwayat-pangkat')}}" + '/' + uuid,
+                        type : "POST",
+                        data : {'_method' : 'DELETE', '_token' :csrf_token},
+                        success: function (response) {
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Dihapus',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    $('#tableGolongan').DataTable().ajax.reload(null, false);
+                },
+            })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                Swal.fire(
+                'Dibatalkan',
+                'data batal dihapus',
+                'error'
+                )
+            }
+        })
+    }
+
+    //function hapus pendidikan
+    hapusJabatan = (uuid, nama)=>{
+    let csrf_token=$('meta[name="csrf_token"]').attr('content');
+    Swal.fire({
+                title: 'apa anda yakin?',
+                text: " Menghapus  Data jabatan " + nama,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'hapus data',
+                cancelButtonText: 'batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url : "{{ url('/api/riwayat-jabatan')}}" + '/' + uuid,
+                        type : "POST",
+                        data : {'_method' : 'DELETE', '_token' :csrf_token},
+                        success: function (response) {
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Dihapus',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    $('#tableJabatan').DataTable().ajax.reload(null, false);
+                },
+            })
+            } else if (result.dismiss === swal.DismissReason.cancel) {
+                Swal.fire(
+                'Dibatalkan',
+                'data batal dihapus',
+                'error'
+                )
+            }
+        })
+    }
+
         //fungsi render datatable        
         $(document).ready(function() {
             let karyawan_id = $('#id1').val();
@@ -455,6 +674,60 @@
                 ]
             });
 
+            $('#tableGolongan').DataTable( {
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching : true,
+                paging    : true,
+                ajax: {
+                    "type": "GET",
+                    "url": "{{ url('/api/riwayat-pangkat')}}" + '/' + karyawan_id,
+                    "dataSrc": "data",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "processData": true
+                },
+                columns: [
+                    {"data": "golongan.kode_golongan"},
+                    {"data": "tahun"},
+                    {data: null , render : function ( data, type, row, meta ) {
+                        let uuid = row.uuid;
+                        let nama = row.golongan.golongan;
+                        return type === 'display'  ?
+                        '<button onClick="hapusPangkat(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                    data;
+                    }}
+                ]
+            });
+
+            $('#tableJabatan').DataTable( {
+                responsive: true,
+                processing: true,
+                serverSide: true,
+                searching : true,
+                paging    : true,
+                ajax: {
+                    "type": "GET",
+                    "url": "{{ url('/api/riwayat-jabatan')}}" + '/' + karyawan_id,
+                    "dataSrc": "data",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "processData": true
+                },
+                columns: [
+                    {"data": "jabatan.jabatan"},
+                    {"data": "tahun"},
+                    {data: null , render : function ( data, type, row, meta ) {
+                        let uuid = row.uuid;
+                        let nama = row.jabatan.nama;
+                        return type === 'display'  ?
+                        '<button onClick="hapusJabatan(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                    data;
+                    }}
+                ]
+            });
+
          });
 
         //event btn klik
@@ -472,6 +745,24 @@
             $('#diklat_id').val(''); 
             $('#btn-form-diklat').text('Simpan Data');
             $('#diklatModal').modal('show');
+        })
+
+        //event btn klik
+        $('#tambahGolongan').click(function(){
+            $('.modal-title').text('Tambah Data Diklat');
+            $('#golongan_id').val(''); 
+            $('#tahun').val(''); 
+            $('#btn-form-golongan').text('Simpan Data');
+            $('#golonganModal').modal('show');
+        })
+
+         //event btn klik
+         $('#tambahJabatan').click(function(){
+            $('.modal-title').text('Tambah Data Diklat');
+            $('#jabatan_id').val(''); 
+            $('#tahun').val(''); 
+            $('#btn-form-jabatan').text('Simpan Data');
+            $('#jabatanModal').modal('show');
         })
 
             //event form submit
@@ -525,6 +816,55 @@
                     }
                 })
         } );
-        
+         //event form submit
+         $("#form3").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
+                $.ajax({
+                    url: "{{Route('API.riwayat-pangkat.create')}}",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#golonganModal').modal('hide');
+                        $('#tableGolongan').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+        } );
+         //event form submit
+         $("#form4").submit(function (e) {
+            e.preventDefault()
+            let form = $('#modal-body form');
+                $.ajax({
+                    url: "{{Route('API.riwayat-jabatan.create')}}",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        form.trigger('reset');
+                        $('#jabatanModal').modal('hide');
+                        $('#tableJabatan').DataTable().ajax.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error:function(response){
+                        console.log(response);
+                    }
+                })
+        } );
     </script>
 @endsection

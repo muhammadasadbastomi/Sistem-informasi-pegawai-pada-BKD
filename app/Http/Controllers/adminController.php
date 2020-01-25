@@ -14,6 +14,10 @@ Use App\Diklat;
 Use App\Pendidikan;
 Use App\Karyawan;
 Use App\Berita;
+Use App\Riwayat_pangkat;
+Use App\Riwayat_jabatan;
+
+
 
 
 use Illuminate\Http\Request;
@@ -230,5 +234,25 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.pegawaiDetail', ['pegawai'=>$pegawai,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data pegawai Detail.pdf');
+      }
+
+      public function riwayatGolongan($uuid){
+        $id = HCrypt::decrypt($uuid);
+        $karyawan=karyawan::findOrFail($id);
+        $riwayatPangkat=riwayat_pangkat::where('karyawan_id',$id)->get();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.riwayatPangkat', ['karyawan'=>$karyawan,'riwayatPangkat'=>$riwayatPangkat,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data riwayat pangkat golongan.pdf');
+      }
+
+      public function riwayatJabatan($uuid){
+        $id = HCrypt::decrypt($uuid);
+        $karyawan=karyawan::findOrFail($id);
+        $riwayatJabatan=riwayat_jabatan::where('karyawan_id',$id)->get();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.riwayatJabatan', ['karyawan'=>$karyawan,'riwayatJabatan'=>$riwayatJabatan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data riwayat Jabatan.pdf');
       }
 }

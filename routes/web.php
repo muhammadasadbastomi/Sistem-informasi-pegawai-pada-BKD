@@ -179,6 +179,10 @@ Route::post('/pegawai/filter/unit', 'adminController@pegawaiFilterUnitCetak')
        ->name('pegawaiFilterUnitCetak');
 Route::get('/pegawai/detail/cetak/{uuid}', 'adminController@pegawaiDetailCetak')
        ->name('pegawaiDetailCetak');
+Route::get('/pegawai/riwayat/golongan/{uuid}', 'adminController@riwayatGolongan')
+       ->name('riwayatGolongan');
+Route::get('/pegawai/riwayat/jabatan/{uuid}', 'adminController@riwayatJabatan')
+       ->name('riwayatJabatan');
 
 Route::get('/berita/index', 'adminController@beritaIndex')
        ->name('beritaIndex');
