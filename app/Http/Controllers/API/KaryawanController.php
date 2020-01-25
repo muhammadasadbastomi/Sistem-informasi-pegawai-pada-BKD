@@ -237,6 +237,7 @@ class KaryawanController extends APIController
 
         $riwayat_pangkat->karyawan_id      =  $karyawan_id;
         $riwayat_pangkat->pangkat_id    =  $pangkat_id;
+        $riwayat_pangkat->tahun    =  $tahun;
 
         $riwayat_pangkat->save();
         
