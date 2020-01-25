@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Pendidikan_karyawan;
 use App\Diklat_karyawan;
 use App\Riwayat_pangkat;
+use App\Riwayat_jabatan;
 use App\Pendidikan;
 use App\Karyawan;
 use App\Unit_kerja;
@@ -233,10 +234,10 @@ class KaryawanController extends APIController
         
         // decrypt uuid from $req
         $karyawan_id = HCrypt::decrypt($req->id);
-        $pangkat_id = HCrypt::decrypt($req->pangkat_id);
+        $golongan_id = HCrypt::decrypt($req->golongan_id);
 
         $riwayat_pangkat->karyawan_id      =  $karyawan_id;
-        $riwayat_pangkat->pangkat_id    =  $pangkat_id;
+        $riwayat_pangkat->golongan_id    =  $golongan_id;
         $riwayat_pangkat->tahun    =  $tahun;
 
         $riwayat_pangkat->save();
@@ -293,6 +294,73 @@ class KaryawanController extends APIController
         Redis::del("riwayat_pangkat:$id");
 
         return $this->returnController("ok", "success delete data pangkat karyawan");
+    }
+
+    public function jabatan_create(Request $req){
+        $riwayat_jabatan = New riwayat_jabatan;
+        
+        // decrypt uuid from $req
+        $karyawan_id = HCrypt::decrypt($req->id);
+        $jabatan_id = HCrypt::decrypt($req->jabatan_id);
+
+        $riwayat_jabatan->karyawan_id      =  $karyawan_id;
+        $riwayat_jabatan->jabatan_id    =  $jabatan_id;
+        $riwayat_jabatan->tahun    =  $tahun;
+
+        $riwayat_jabatan->save();
+        
+        $riwayat_jabatan_id= $riwayat_jabatan->id;
+        
+        $uuid = HCrypt::encrypt($riwayat_jabatan_id);
+        $setuuid = riwayat_jabatan::findOrFail($riwayat_jabatan_id);
+        $setuuid->uuid = $uuid;
+            
+        $setuuid->update();
+
+        if (!$riwayat_jabatan) {
+            return $this->returnController("error", "failed create data jabatan karyawan");
+        }
+
+        Redis::del("riwayat_jabatan:all");
+        Redis::set("riwayat_jabatan:all",$riwayat_jabatan);
+        return $this->returnController("ok", $riwayat_jabatan);
+    }
+
+    public function jabatan_get($uuid){
+        $karyawan_id = HCrypt::decrypt($uuid);
+        $riwayat_jabatan = json_decode(redis::get("riwayat_jabatan::all"));
+        if (!$riwayat_jabatan) {
+            $riwayat_jabatan = riwayat_jabatan::with('jabatan')->where('karyawan_id', $karyawan_id)->get();
+            if (!$riwayat_jabatan) {
+                return $this->returnController("error", "failed get jabatan riwayat_jabatan data");
+            }
+            Redis::set("riwayat_jabatan:all", $riwayat_jabatan);
+        }
+        return $this->returnController("ok", $riwayat_jabatan);
+    }
+
+    public function jabatan_delete($uuid){
+        $id = HCrypt::decrypt($uuid);
+        if (!$id) {
+            return $this->returnController("error", "failed decrypt uuid");
+        }
+
+        $riwayat_jabatan = riwayat_jabatan::find($id);
+        if (!$riwayat_jabatan) {
+            return $this->returnController("error", "failed find data jabatan karyawan");
+        }
+
+        // Need to check realational
+        // If there relation to other data, return error with message, this data has relation to other table(s)
+        $delete = $riwayat_jabatan->delete();
+        if (!$delete) {
+            return $this->returnController("error", "failed delete data jabatan karyawan");
+        }
+
+        Redis::del("riwayat_jabatan:all");
+        Redis::del("riwayat_jabatan:$id");
+
+        return $this->returnController("ok", "success delete data jabatan karyawan");
     }
 
     public function update($uuid, Request $req){

@@ -86,6 +86,11 @@ Route::namespace('API')->prefix('api')->name('API.')->group(function(){
               Route::post('', 'KaryawanController@pangkat_create')->name('create');
               Route::delete('{uuid}', 'KaryawanController@pangkat_delete')->name('delete');
        });
+       Route::prefix('riwayat-jabatan')->name('riwayat-jabatan.')->group(function(){
+              Route::get('{uuid}', 'KaryawanController@jabatan_get')->name('get');
+              Route::post('', 'KaryawanController@jabatan_create')->name('create');
+              Route::delete('{uuid}', 'KaryawanController@jabatan_delete')->name('delete');
+       });
        Route::prefix('berita')->name('berita.')->group(function(){
               Route::get('', 'BeritaController@get')->name('get');
               Route::get('{uuid}', 'BeritaController@find')->name('find');

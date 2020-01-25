@@ -18,4 +18,9 @@ class Golongan extends Model
     {
         return $this->HasMany('App\Karyawan');
     }
+
+    public function riwayat_pangkat()
+    {
+    	return $this->belongsToMany('App\Riwayat_pangkat');
+    }
 }

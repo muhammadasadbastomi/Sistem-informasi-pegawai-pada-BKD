@@ -18,4 +18,9 @@ class Jabatan extends Model
     {
         return $this->HasMany('App\Karyawan');
     }
+
+    public function riwayat_jabatan()
+    {
+    	return $this->belongsToMany('App\Riwayat_jabatan');
+    }
 }
