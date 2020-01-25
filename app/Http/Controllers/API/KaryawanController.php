@@ -262,7 +262,7 @@ class KaryawanController extends APIController
         $karyawan_id = HCrypt::decrypt($uuid);
         $riwayat_pangkat = json_decode(redis::get("riwayat_pangkat::all"));
         if (!$riwayat_pangkat) {
-            $riwayat_pangkat = riwayat_pangkat::with('pangkat')->where('karyawan_id', $karyawan_id)->get();
+            $riwayat_pangkat = riwayat_pangkat::with('golongan')->where('karyawan_id', $karyawan_id)->get();
             if (!$riwayat_pangkat) {
                 return $this->returnController("error", "failed get pangkat riwayat_pangkat data");
             }
