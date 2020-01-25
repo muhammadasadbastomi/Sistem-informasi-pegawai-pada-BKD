@@ -18,6 +18,7 @@ class CreateRiwayatPangkatsTable extends Migration
             $table->unsignedBigInteger('karyawan_id');
             $table->unsignedBigInteger('golongan_id');
             $table->text('uuid')->nullable();
+            $table->string('tahun')->length(5);
             $table->timestamps();
             $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
             $table->foreign('golongan_id')->references('id')->on('golongans')->onDelete('cascade');

@@ -18,6 +18,7 @@ class CreateRiwayatJabatansTable extends Migration
             $table->unsignedBigInteger('karyawan_id');
             $table->unsignedBigInteger('jabatan_id');
             $table->text('uuid')->nullable();
+            $table->string('tahun')->length(5);
             $table->timestamps();
             $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
             $table->foreign('jabatan_id')->references('id')->on('jabatans')->onDelete('cascade');
