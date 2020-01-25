@@ -54,8 +54,6 @@ class KaryawanController extends APIController
         $jabatan_id = HCrypt::decrypt($req->jabatan_id);
 
         $karyawan->unit_kerja_id    =  $unit_kerja_id;
-        $karyawan->golongan_id      =  $golongan_id;
-        $karyawan->jabatan_id       =  $jabatan_id;
         $karyawan->NIP              =  $req->NIP;
         $karyawan->nama             =  $req->nama;
         $karyawan->tempat_lahir     =  $req->tempat_lahir;
@@ -381,8 +379,6 @@ class KaryawanController extends APIController
         $jabatan_id = HCrypt::decrypt($req->jabatan_id);
 
         $karyawan->unit_kerja_id    =  $unit_kerja_id;
-        $karyawan->golongan_id      =  $golongan_id;
-        $karyawan->jabatan_id       =  $jabatan_id;
         $karyawan->NIP              =  $req->NIP;
         $karyawan->nama             =  $req->nama;
         $karyawan->tempat_lahir     =  $req->tempat_lahir;
