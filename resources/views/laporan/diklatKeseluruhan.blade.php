@@ -109,12 +109,12 @@
                       <br>
                       <br>
                       <div class="ttd">
-                        <h5> <p>Balangan, {{$tgl}}</p></h5>
+                      <h5> <p>Balangan, {{$tgl}}</p></h5>
                       <h5>Kepala badan kepegawaian Daerah</h5>
                       <br>
                       <br>
-                      <h5 style="text-decoration:underline;">Nama</h5>
-                      <h5>NIP.</h5>
+                      <h5 style="text-decoration:underline;">Sufriannor, S.sos, M.Ap</h5>
+                      <h5>NIP. 19601012 198903 100 9</h5>
                       </div>
                     </div>
                 </div>
