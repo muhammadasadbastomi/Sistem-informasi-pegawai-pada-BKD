@@ -103,7 +103,7 @@
                       <br>
                       <br>
                       <div class="ttd">
-                        <h5> <p>Tapin, {{$tgl}}</p></h5>
+                        <h5> <p>Balangan, {{$tgl}}</p></h5>
                       <h5>Kepala badan kepegawaian Daerah</h5>
                       <br>
                       <br>

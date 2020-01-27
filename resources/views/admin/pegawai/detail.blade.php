@@ -74,7 +74,6 @@
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#biodata" data-toggle="tab">Biodata</a></li>
-                  <li class="nav-item"><a class="nav-link " href="#SKP" data-toggle="tab">SKP</a></li>
                   <li class="nav-item"><a class="nav-link" href="#pendidikan" data-toggle="tab">Pendidikan formal</a></li>
                   <li class="nav-item"><a class="nav-link" href="#diklat" data-toggle="tab">DIklat yang diikuti</a></li>
                   <li class="nav-item"><a class="nav-link" href="#golongan" data-toggle="tab">Riwayat Golongan</a></li>
