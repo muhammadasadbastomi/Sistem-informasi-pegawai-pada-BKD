@@ -5,8 +5,8 @@ use HCrypt;
 use PDF;
 use Carbon\Carbon;
 Use App\kecamatan;
-Use App\kelurahan;
-Use App\instansi;
+Use App\Kelurahan;
+Use App\Instansi;
 Use App\Unit_kerja;
 Use App\Golongan;
 Use App\Jabatan;
@@ -139,7 +139,7 @@ class adminController extends Controller
         $instansi=instansi::where('kelurahan_id', $id)->get();
         $kelurahan = kelurahan::findOrFail($id);        
         $tgl= Carbon::now()->format('d-m-Y');
-        $pdf =PDF::loadView('laporan.instansifilter', ['instansi'=>$instansi,'kelurahan'=>$kelurahan,'tgl'=>$tgl]);
+        $pdf =PDF::loadView('laporan.instansiFilter', ['instansi'=>$instansi,'kelurahan'=>$kelurahan,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Instansi per kelurahan.pdf');
       }
