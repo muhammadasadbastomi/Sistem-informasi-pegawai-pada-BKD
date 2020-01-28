@@ -91,10 +91,7 @@
                         <tbody>
                             @foreach($kelurahan as $p)
                             <tr>
-                                @php
-                                $no=1;
-                                @endphp
-                                <td>{{ $no++ }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $p->kode_kelurahan }}</td>
                                 <td>{{ $p->kelurahan }}</td>
                                 <td>{{ $p->kecamatan->kecamatan }}</td>

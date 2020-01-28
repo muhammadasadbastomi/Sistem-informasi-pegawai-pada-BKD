@@ -78,7 +78,7 @@
     </div>
     <div class="container">
         <div class="isi">
-        <h2 style="text-align:center;text-transform: uppercase;">DATA DIKLAT</h2>
+        <h2 style="text-align:center;text-transform: uppercase;">DATA BERITA</h2>
                 <table  class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -90,10 +90,8 @@
                         <tbody>
                             @foreach($berita as $p)
                             <tr>
-                                @php
-                                $no=1;
-                                @endphp
-                                <td>{{ $no++ }}</td>
+                                
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $p->created_at }}</td>
                                 <td>{{ $p->judul }}</td>
                             </tr>

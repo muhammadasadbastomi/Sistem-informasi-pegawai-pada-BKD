@@ -84,6 +84,7 @@
                 <table  class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Jabatan</th>
                                 <th>Tahun Pra Jabatan</th>
                             </tr>
@@ -91,6 +92,7 @@
                         <tbody>
                             @foreach($riwayatJabatan as $p)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td> {{$p->jabatan->jabatan}}</td>
                                 <td>{{ $p->tahun }}</td>
                             </tr>

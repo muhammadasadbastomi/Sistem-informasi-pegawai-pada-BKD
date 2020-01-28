@@ -90,10 +90,7 @@
                         <tbody>
                             @foreach($kecamatan as $p)
                             <tr>
-                                @php
-                                $no=1;
-                                @endphp
-                                <td>{{ $no++ }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $p->kode_kecamatan }}</td>
                                 <td>{{ $p->kecamatan }}</td>
                             </tr>

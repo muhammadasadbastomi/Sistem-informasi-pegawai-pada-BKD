@@ -84,6 +84,7 @@
          <table  class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Golongan</th>
                                 <th>tahun Kenaikan Pangkat</th>
                             </tr>
@@ -91,6 +92,7 @@
                         <tbody>
                             @foreach($riwayatPangkat as $p)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td> {{$p->golongan->kode_golongan}} / {{ $p->golongan->golongan }}</td>
                                 <td>{{ $p->tahun }}</td>
                             </tr>
