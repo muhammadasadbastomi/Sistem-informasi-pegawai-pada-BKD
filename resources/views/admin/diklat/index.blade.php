@@ -40,6 +40,7 @@
                   <th>Tempat</th>
                   <th>Penyelenggara</th>
                   <th>Waktu</th>
+                  <th>Waktu Selanjutnya</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -52,6 +53,7 @@
                   <th>Tempat</th>
                   <th>Penyelenggara</th>
                   <th>Waktu</th>
+                  <th>Waktu Selanjutnya</th>
                   <th class="text-center">Aksi</th>
                 </tr>
                 </tfoot>
@@ -188,6 +190,7 @@
                     {"data": "tempat"},
                     {"data": "penyelenggara"},
                     {"data": "waktu"},
+                    {"data": "waktu_selanjutnya"},
                     {data: null , render : function ( data, type, row, meta ) {
                         let uuid = row.uuid;
                         let nama = row.nama;
