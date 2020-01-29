@@ -28,7 +28,6 @@
               <div class="info-box-content">
                 <span class="info-box-text">Unit Kerja</span>
                 <span class="info-box-number">
-                  120
                   <small></small>
                 </span>
               </div>
@@ -43,7 +42,6 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">instansi</span>
-                <span class="info-box-number">27</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -60,7 +58,6 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">pegawai</span>
-                <span class="info-box-number">760</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -73,7 +70,6 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Berita Kepegawaian</span>
-                <span class="info-box-number">67</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -86,7 +82,7 @@
           <div class="col-lg-12">
           <div class="callout callout-info">
               <h5><i class="fas fa-info"></i> Note:</h5>
-              This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+              Selamat Datang Admin 
             </div>
 
           </div>

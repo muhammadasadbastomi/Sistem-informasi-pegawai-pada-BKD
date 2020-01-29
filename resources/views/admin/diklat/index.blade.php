@@ -192,7 +192,7 @@
                         let uuid = row.uuid;
                         let nama = row.nama;
                         return type === 'display'  ?
-                        '<button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"> </i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
+                        '<a href="/diklat/detail/'+ uuid +'" class="btn btn-sm btn-outline-info" style="padding-left:12px; padding-right:12px;"><i class="fa fa-info"></i></a> <button onClick="edit(\''+uuid+'\')" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editmodal"><i class="fas fa-edit"> </i></button> <button onClick="hapus(\'' + uuid + '\',\'' + nama + '\')" class="btn btn-sm btn-outline-danger" > <i class="fas fa-trash"></i></button>':
                     data;
                     }}
                 ]

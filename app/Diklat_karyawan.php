@@ -14,4 +14,9 @@ class Diklat_karyawan extends Model
     {
         return $this->belongsTo('App\Diklat');
     }
+
+    public function karyawan()
+    {
+        return $this->belongsTo('App\Karyawan');
+    }
 }

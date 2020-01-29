@@ -155,8 +155,12 @@ Route::get('/jabatan/cetak', 'adminController@jabatanCetak')
 
 Route::get('/diklat/index', 'adminController@diklatIndex')
        ->name('diklatIndex');
+Route::get('/diklat/detail/{uuid}', 'adminController@diklatDetail')
+       ->name('diklatDetail');
 Route::get('/diklat/cetak', 'adminController@diklatCetak')
        ->name('diklatCetak');
+Route::get('/diklat/detail/cetak/{id}', 'adminController@diklatDetailCetak')
+       ->name('diklatDetailCetak');
 
 Route::get('/pendidikan/index', 'adminController@pendidikanIndex')
        ->name('pendidikanIndex');

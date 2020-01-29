@@ -10,6 +10,7 @@ Use App\Instansi;
 Use App\Unit_kerja;
 Use App\Golongan;
 Use App\Jabatan;
+Use App\Diklat_karyawan;
 Use App\Diklat;
 Use App\Pendidikan;
 Use App\Karyawan;
@@ -80,6 +81,13 @@ class adminController extends Controller
     public function diklatIndex(){
         return view('admin.diklat.index');
     }
+
+    public function diklatDetail($uuid){
+      $id = HCrypt::decrypt($uuid);
+      $diklat = Diklat::findOrFail($id);
+      $diklatKaryawan = diklat_karyawan::where('diklat_id',$id)->get();
+      return view('admin.diklat.detail',compact('diklat','diklatKaryawan'));
+  }
 
     public function pendidikanIndex(){
         return view('admin.pendidikan.index');
@@ -252,6 +260,15 @@ class adminController extends Controller
         $riwayatJabatan=riwayat_jabatan::where('karyawan_id',$id)->get();
         $tgl= Carbon::now()->format('d-m-Y');
         $pdf =PDF::loadView('laporan.riwayatJabatan', ['karyawan'=>$karyawan,'riwayatJabatan'=>$riwayatJabatan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data riwayat Jabatan.pdf');
+      }
+
+      public function diklatDetailCetak($id){
+        $diklat=diklat::findOrFail($id);
+        $diklatKaryawan = diklat_karyawan::where('diklat_id',$id)->get();
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.diklatDetail', ['diklat'=>$diklat,'diklatKaryawan'=>$diklatKaryawan,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data riwayat Jabatan.pdf');
       }
