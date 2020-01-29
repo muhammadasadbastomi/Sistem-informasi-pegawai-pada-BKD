@@ -132,7 +132,7 @@
                       <br>
                       <br>
                       <h5 style="text-decoration:underline;">Sufriannor, S.sos, M.Ap</h5>
-                      <h5>NIP. 19601012 198903 100 9</h5>
+                      <h5>NIP. 19681012 198903 100 9</h5>
                       </div>
                     </div>
                  </div>
