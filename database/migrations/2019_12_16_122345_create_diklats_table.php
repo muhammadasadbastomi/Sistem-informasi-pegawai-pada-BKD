@@ -21,6 +21,7 @@ class CreateDiklatsTable extends Migration
             $table->string('tempat')->length(100);
             $table->string('penyelenggara')->length(100);
             $table->date('waktu');
+            $table->date('waktu_selanjutnya')->nullable();
             $table->timestamps();
         });
     }

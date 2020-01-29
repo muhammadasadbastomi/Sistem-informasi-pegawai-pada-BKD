@@ -14,6 +14,8 @@ class Diklat extends Model
         'id'
     ];
 
+    // protected $dates = ['created_at', 'updated_at', 'waktu','waktu_selanjutnya'];
+
     public function diklat_karyawan()
     {
     	return $this->belongsToMany('App\Diklat_karyawan');

@@ -93,11 +93,9 @@
                         <tbody>
                             @foreach($diklat as $p)
                             <tr>
-                                @php
-                                $no=1;
-                                @endphp
-                                <td>{{ $no++ }}</td>
-                                <td>{{ $p->Kode_diklat }}</td>
+                                
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $p->kode_diklat }}</td>
                                 <td>{{ $p->nama }}</td>
                                 <td>{{ $p->tempat }}</td>
                                 <td>{{ $p->penyelenggara }}</td>

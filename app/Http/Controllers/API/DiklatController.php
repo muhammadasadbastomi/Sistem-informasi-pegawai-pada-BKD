@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Diklat;
 use HCrypt;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redis;
 
 class DiklatController extends APIController
@@ -41,9 +42,12 @@ class DiklatController extends APIController
     public function create(Request $req){
         $diklat = diklat::create($req->all());
         //set uuid
+        $date = carbon::parse($req->waktu);
+        $newdate = $date->addYear(1);
         $diklat_id = $diklat->id;
         $uuid = HCrypt::encrypt($diklat_id);
         $setuuid = diklat::findOrFail($diklat_id);
+        $setuuid->waktu_selanjutnya = $newdate;
         $setuuid->uuid = $uuid;
         $setuuid->update();
         if (!$diklat) {
@@ -67,6 +71,13 @@ class DiklatController extends APIController
         }
         
         $diklat->fill($req->all())->save();
+
+        $date = carbon::parse($req->waktu);
+        $newdate = $date->addYear(1);
+        $diklat_id = $diklat->id;
+        $setuuid = diklat::findOrFail($diklat_id);
+        $setuuid->waktu_selanjutnya = $newdate;
+        $setuuid->update();
 
         Redis::del("diklat:all");
         Redis::set("diklat:$id", $diklat);
