@@ -748,7 +748,7 @@ $("#tahun2").datepicker({
 
         //event btn klik
         $('#tambahGolongan').click(function(){
-            $('.modal-title').text('Tambah Data Diklat');
+            $('.modal-title').text('Tambah Data Golongan');
             $('#golongan_id').val(''); 
             $('#tahun').val(''); 
             $('#btn-form-golongan').text('Simpan Data');
@@ -757,7 +757,7 @@ $("#tahun2").datepicker({
 
          //event btn klik
          $('#tambahJabatan').click(function(){
-            $('.modal-title').text('Tambah Data Diklat');
+            $('.modal-title').text('Tambah Data Jabatan');
             $('#jabatan_id').val(''); 
             $('#tahun').val(''); 
             $('#btn-form-jabatan').text('Simpan Data');
