@@ -37,7 +37,7 @@
            style="opacity: .9">
       <span class="brand-text font-weight-light">SIMPEG BKD</span>
     </a>
-    <div class="sidebar"> 
+    <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{ asset('/img/user/'.Auth::user()->foto) }}" class="img-circle elevation-2" alt="User Image">
@@ -122,12 +122,12 @@
                   <p> Pendidikan Formal</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="#" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p> SKP</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
           <li class="nav-item">
