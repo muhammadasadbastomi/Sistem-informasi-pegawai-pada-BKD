@@ -8,26 +8,24 @@
       <ul class="slides">
         <li>
           <article>
-            <p>Lacinia</p>
-            <h3 class="heading">Eleifend tristique lacus</h3>
-            <p>Eleifend sagittis cras convallis nisl eget</p>
-            <footer><a class="btn" href="#">Nullam porttitor</a></footer>
+          <br>
+            <h3 class="heading">BKD Kabupaten Balangan</h3>
+            <p>SISTEM INFORMASI KEPEGAWAIAN</p>
+            <br>
           </article>
         </li>
         <li>
           <article>
-            <p>Pulvinar</p>
-            <h3 class="heading">Ornare tortor quisque</h3>
-            <p>Odio semper sed euismod mi euismod curabitur</p>
-            <footer><a class="btn inverse" href="#">Eget venenatis</a></footer>
+<br>            <h3 class="heading">BKD Kabupaten Balangan</h3>
+            <p>SISTEM INFORMASI KEPEGAWAIAN</p>
+            <br>
           </article>
         </li>
         <li>
           <article>
-            <p>Sagittis</p>
-            <h3 class="heading">Feugiat blandit erat</h3>
-            <p>Convallis nibh nulla nec dictum mi consequat vel</p>
-            <footer><a class="btn" href="#">Facilisis vestibulum</a></footer>
+<br>            <h3 class="heading">BKD Kabupaten Balangan</h3>
+            <p>SISTEM INFORMASI KEPEGAWAIAN</p>
+            <br>
           </article>
         </li>
       </ul>
