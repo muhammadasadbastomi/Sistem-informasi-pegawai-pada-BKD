@@ -92,8 +92,8 @@
         </div>
     </div>
     </div>
-    </div>  
- </div> 
+    </div>
+ </div>
 @endsection
 @section('script')
 
@@ -123,7 +123,7 @@
                     text: " Menghapus  Data kelurahan " + nama,
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',  
+                    cancelButtonColor: '#d33',
                     confirmButtonText: 'hapus data',
                     cancelButtonText: 'batal',
                     reverseButtons: true
@@ -154,12 +154,12 @@
             })
     }
 
-    //event btn tambah 
+    //event btn tambah
     $('#tambah').click(function(){
         $('.modal-title').text('Tambah Data');
         $('#kode_kelurahan').val('');
         $('#kelurahan').val('');
-        $('#kecamatan_id').val('');    
+        $('#kecamatan_id').val('');
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
@@ -175,7 +175,7 @@
                 $('#id').val(returnData.data.uuid);
                 $('#kode_kelurahan').val(returnData.data.kode_kelurahan);
                 $('#nama').val(returnData.data.nama);
-                $('#kecamatan_id').val(returnData.data.kecamatan.uuid);    
+                $('#kecamatan_id').val(returnData.data.kecamatan.uuid);
                 $('#btn-form').text('Ubah Data');
                 $('#mediumModal').modal('show');
             }
@@ -183,8 +183,8 @@
     }
 
     $(document).ready(function() {
-        
-        // function data table render 
+
+        // function data table render
         $('#datatable').DataTable( {
             responsive: true,
             processing: true,
@@ -248,13 +248,27 @@
                         form.trigger('reset');
                         $('#mediumModal').modal('hide');
                         $('#datatable').DataTable().ajax.reload();
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Data Berhasil Disimpan',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                        if (response.Error) {
+
+                                var array = $.map(response, function(value, index) {
+                                                    return [value];
+                                                });
+                                Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: response.Error,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Data Berhasil Disimpan',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
                     },
                     error:function(response){
                         console.log(response);
