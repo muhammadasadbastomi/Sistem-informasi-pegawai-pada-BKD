@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Diklat;
 use HCrypt;
 use Carbon\Carbon;
@@ -40,6 +42,20 @@ class DiklatController extends APIController
     }
 
     public function create(Request $req){
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_diklat' => 'required|unique:diklats',
+
+        ]);
+
+        $message = 'Kode diklat tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $diklat = diklat::create($req->all());
         //set uuid
         $date = carbon::parse($req->waktu);
@@ -69,7 +85,7 @@ class DiklatController extends APIController
         if (!$diklat) {
             return $this->returnController("error", "failed find data diklat");
         }
-        
+
         $diklat->fill($req->all())->save();
 
         $date = carbon::parse($req->waktu);
