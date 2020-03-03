@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Pendidikan_karyawan;
 use App\Diklat_karyawan;
 use App\Riwayat_pangkat;
@@ -46,8 +48,22 @@ class KaryawanController extends APIController
     }
 
     public function create(Request $req){
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'NIP' => 'required|unique:karyawans',
+
+        ]);
+
+        $message = 'NIP tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $karyawan = New Karyawan;
-        
+
         // decrypt uuid from $req
         $unit_kerja_id = HCrypt::decrypt($req->unit_kerja_id);
         $golongan_id = HCrypt::decrypt($req->golongan_id);
@@ -72,17 +88,17 @@ class KaryawanController extends APIController
             $img->move('img/karyawan', $foto);
             $karyawan->foto       = $foto;
         }else{
-            
+
         }
 
         $karyawan->save();
-        
+
         $karyawan_id= $karyawan->id;
-        
+
         $uuid = HCrypt::encrypt($karyawan_id);
         $setuuid = Karyawan::findOrFail($karyawan_id);
         $setuuid->uuid = $uuid;
-            
+
         $setuuid->update();
 
         if (!$karyawan) {
@@ -96,7 +112,7 @@ class KaryawanController extends APIController
 
     public function pendidikan_create(Request $req){
         $pendidikan_karyawan = New pendidikan_karyawan;
-        
+
         // decrypt uuid from $req
         $karyawan_id = HCrypt::decrypt($req->id);
         $pendidikan_id = HCrypt::decrypt($req->pendidikan_id);
@@ -106,13 +122,13 @@ class KaryawanController extends APIController
         $pendidikan_karyawan->keterangan       =  $req->keterangan;
 
         $pendidikan_karyawan->save();
-        
+
         $pendidikan_karyawan_id= $pendidikan_karyawan->id;
-        
+
         $uuid = HCrypt::encrypt($pendidikan_karyawan_id);
         $setuuid = pendidikan_karyawan::findOrFail($pendidikan_karyawan_id);
         $setuuid->uuid = $uuid;
-            
+
         $setuuid->update();
 
         if (!$pendidikan_karyawan) {
@@ -163,7 +179,7 @@ class KaryawanController extends APIController
 
     public function diklat_create(Request $req){
         $diklat_karyawan = New diklat_karyawan;
-        
+
         // decrypt uuid from $req
         $karyawan_id = HCrypt::decrypt($req->id);
         $diklat_id = HCrypt::decrypt($req->diklat_id);
@@ -172,13 +188,13 @@ class KaryawanController extends APIController
         $diklat_karyawan->diklat_id    =  $diklat_id;
 
         $diklat_karyawan->save();
-        
+
         $diklat_karyawan_id= $diklat_karyawan->id;
-        
+
         $uuid = HCrypt::encrypt($diklat_karyawan_id);
         $setuuid = diklat_karyawan::findOrFail($diklat_karyawan_id);
         $setuuid->uuid = $uuid;
-            
+
         $setuuid->update();
 
         if (!$diklat_karyawan) {
@@ -229,7 +245,7 @@ class KaryawanController extends APIController
 
     public function pangkat_create(Request $req){
         $riwayat_pangkat = New riwayat_pangkat;
-        
+
         // decrypt uuid from $req
         $karyawan_id = HCrypt::decrypt($req->id);
         $golongan_id = HCrypt::decrypt($req->golongan_id);
@@ -239,13 +255,13 @@ class KaryawanController extends APIController
         $riwayat_pangkat->tahun    =  $req->tahun;
 
         $riwayat_pangkat->save();
-        
+
         $riwayat_pangkat_id= $riwayat_pangkat->id;
-        
+
         $uuid = HCrypt::encrypt($riwayat_pangkat_id);
         $setuuid = riwayat_pangkat::findOrFail($riwayat_pangkat_id);
         $setuuid->uuid = $uuid;
-            
+
         $setuuid->update();
 
         if (!$riwayat_pangkat) {
@@ -296,7 +312,7 @@ class KaryawanController extends APIController
 
     public function jabatan_create(Request $req){
         $riwayat_jabatan = New riwayat_jabatan;
-        
+
         // decrypt uuid from $req
         $karyawan_id = HCrypt::decrypt($req->id);
         $jabatan_id = HCrypt::decrypt($req->jabatan_id);
@@ -306,13 +322,13 @@ class KaryawanController extends APIController
         $riwayat_jabatan->tahun    =  $req->tahun;
 
         $riwayat_jabatan->save();
-        
+
         $riwayat_jabatan_id= $riwayat_jabatan->id;
-        
+
         $uuid = HCrypt::encrypt($riwayat_jabatan_id);
         $setuuid = riwayat_jabatan::findOrFail($riwayat_jabatan_id);
         $setuuid->uuid = $uuid;
-            
+
         $setuuid->update();
 
         if (!$riwayat_jabatan) {
@@ -369,7 +385,7 @@ class KaryawanController extends APIController
         }
 
         $karyawan = karyawan::findOrFail($id);
-        
+
         if (!$karyawan){
                 return $this->returnController("error", "failed find data pelanggan");
             }
@@ -400,8 +416,8 @@ class KaryawanController extends APIController
         }
 
         $karyawan->update();
-    
-            
+
+
         if (!$karyawan) {
             return $this->returnController("error", "failed find data karyawan");
         }
@@ -409,7 +425,7 @@ class KaryawanController extends APIController
         Redis::del("karyawan:all");
         Redis::set("karyawan:$id", $karyawan);
 
-        return $this->returnController("ok", $karyawan); 
+        return $this->returnController("ok", $karyawan);
     }
 
     public function delete($uuid){
