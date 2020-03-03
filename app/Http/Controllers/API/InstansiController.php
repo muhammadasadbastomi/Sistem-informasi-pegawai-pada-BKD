@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Instansi;
 use HCrypt;
 
@@ -39,7 +41,20 @@ class InstansiController extends APIController
     }
 
     public function create(Request $req){
-        // $seksi = Seksi::create($req->all());
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_instansi' => 'required|unique:instansis',
+
+        ]);
+
+        $message = 'Kode instansi tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $instansi = new instansi;
         // decrypt foreign key id
         $instansi->kelurahan_id = Hcrypt::decrypt($req->kelurahan_id);
