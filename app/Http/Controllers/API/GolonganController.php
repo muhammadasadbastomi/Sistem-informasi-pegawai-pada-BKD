@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Golongan;
 use HCrypt;
 use Illuminate\Support\Facades\Redis;
@@ -39,6 +41,20 @@ class GolonganController extends APIController
     }
 
     public function create(Request $req){
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_golongan' => 'required|unique:golongans',
+
+        ]);
+
+        $message = 'Kode golongan tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $golongan = golongan::create($req->all());
         //set uuid
         $golongan_id = $golongan->id;
@@ -65,7 +81,7 @@ class GolonganController extends APIController
         if (!$golongan) {
             return $this->returnController("error", "failed find data golongan");
         }
-        
+
         $golongan->fill($req->all())->save();
 
         Redis::del("golongan:all");
