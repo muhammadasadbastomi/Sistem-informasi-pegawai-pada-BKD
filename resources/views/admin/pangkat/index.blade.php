@@ -79,8 +79,8 @@
         </div>
     </div>
     </div>
-    </div>  
- </div> 
+    </div>
+ </div>
 @endsection
 @section('script')
 <script>
@@ -126,7 +126,7 @@
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
             $('#kode_golongan').val('');
-            $('#golongan').val('');  
+            $('#golongan').val('');
             $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
@@ -148,7 +148,7 @@
             })
         }
 
-        //fungsi datatable render         
+        //fungsi datatable render
         $(document).ready(function() {
             $('#datatable').DataTable( {
                 responsive: true,
@@ -176,7 +176,7 @@
                     }}
                 ]
             });
-            
+
             //event form submit
             $("form").submit(function (e) {
                 e.preventDefault()
@@ -213,13 +213,27 @@
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
                             $('#datatable').DataTable().ajax.reload();
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Data Berhasil Disimpan',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            if (response.Error) {
+
+                                    var array = $.map(response, function(value, index) {
+                                                        return [value];
+                                                    });
+                                    Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: response.Error,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Data Berhasil Disimpan',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
                         },
                         error:function(response){
                             console.log(response);
