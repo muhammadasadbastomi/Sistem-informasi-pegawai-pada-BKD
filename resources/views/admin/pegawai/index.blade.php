@@ -89,7 +89,7 @@
                     <div class="form-group"><label  class=" form-control-label">Tempat Lahir</label><input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Tanggal Lahir</label><input type="date" id="tanggal_lahir" name="tanggal_lahir" placeholder="penyelenggara Diklat" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Alamat</label><textarea name="alamat" id="alamat" class="form-control"></textarea></div>
-                    <label class="form-control-label" for="jk">Jenis Kelamin</label> 
+                    <label class="form-control-label" for="jk">Jenis Kelamin</label>
 
                         <div class="row" style="margin-left:15px">
                             <div class="col-lg-6">
@@ -118,7 +118,7 @@
                             <option value="Kontrak">Kontrak</option>
 
                         </select>
-                    </div>                    
+                    </div>
                     <div class="form-group"><label  class=" form-control-label">Status Perkawinan</label>
                         <select name="status_kawin" id="status_kawin" class="form-control">
                             <option value="">-- pilih Status Perkawinan --</option>
@@ -134,11 +134,11 @@
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
                 </form>
             </div>
-        </div> 
+        </div>
     </div>
     </div>
-    </div>  
- </div> 
+    </div>
+ </div>
 @endsection
 @section('script')
 <script>
@@ -158,7 +158,7 @@
             }
         })
     }
- 
+
     getUnit();
 
     //fungsi hapus
@@ -199,21 +199,21 @@
                 }
             })
         }
-        
-        //event btn klikx   
+
+        //event btn klikx
         $('#tambah').click(function(){
             $('.modal-title').text('Tambah Data');
             $('#unit_kerja_id').val('');
             $('#NIP').val('');
             $('#nama').val('');
-            $('#tempat_lahir').val('');  
+            $('#tempat_lahir').val('');
             $('#tanggal_lahir').val('');
-            $('#alamat').val('');   
-            $('#status_pegawai').val('');     
-            $('#status_kawin').val('');    
-            $('#golongan_darah').val('');                     
-            $('#agama').val('');                     
-            $('#foto').val('');                                     
+            $('#alamat').val('');
+            $('#status_pegawai').val('');
+            $('#status_kawin').val('');
+            $('#golongan_darah').val('');
+            $('#agama').val('');
+            $('#foto').val('');
             $('#btn-form').text('Simpan Data');
             $('#mediumModal').modal('show');
         })
@@ -229,21 +229,21 @@
                     $('#unit_kerja_id').val(returnData.data.unit_kerja.uuid);
                     $('#NIP').val(returnData.data.NIP);
                     $('#nama').val(returnData.data.nama);
-                    $('#tempat_lahir').val(returnData.data.tempat_lahir);  
+                    $('#tempat_lahir').val(returnData.data.tempat_lahir);
                     $('#tanggal_lahir').val(returnData.data.tanggal_lahir);
                     $('#alamat').val(returnData.data.alamat);
-                    $("input[name=jk][value=" + returnData.data.jk + "]").attr('checked', 'checked');   
-                    $('#status_pegawai').val(returnData.data.status_pegawai);     
-                    $('#status_kawin').val(returnData.data.status_kawin);    
-                    $('#golongan_darah').val(returnData.data.golongan_darah);                     
-                    $('#agama').val(returnData.data.agama);                     
+                    $("input[name=jk][value=" + returnData.data.jk + "]").attr('checked', 'checked');
+                    $('#status_pegawai').val(returnData.data.status_pegawai);
+                    $('#status_kawin').val(returnData.data.status_kawin);
+                    $('#golongan_darah').val(returnData.data.golongan_darah);
+                    $('#agama').val(returnData.data.agama);
                     $('#btn-form').text('Ubah Data');
-                    $('#mediumModal').modal('show'); 
+                    $('#mediumModal').modal('show');
                 }
             })
         }
 
-        //fungsi render datatable        
+        //fungsi render datatable
         $(document).ready(function() {
             $('#datatable').DataTable( {
                 responsive: true,
@@ -277,7 +277,7 @@
                 ]
             });
 
-            //event form submit        
+            //event form submit
             $("form").submit(function (e) {
                 e.preventDefault()
                 let form = $('#modal-body form');
@@ -319,13 +319,27 @@
                             form.trigger('reset');
                             $('#mediumModal').modal('hide');
                             $('#datatable').DataTable().ajax.reload();
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Data Berhasil Disimpan',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            if (response.Error) {
+
+                                    var array = $.map(response, function(value, index) {
+                                                        return [value];
+                                                    });
+                                    Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: response.Error,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Data Berhasil Disimpan',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
                         },
                         error:function(response){
                             console.log(response);
