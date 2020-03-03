@@ -90,8 +90,8 @@
         </div>
     </div>
     </div>
-    </div>  
- </div> 
+    </div>
+ </div>
 @endsection
 @section('script')
 <script>
@@ -158,7 +158,7 @@
         $('#kode_instansi').val('');
         $('#nama').val('');
         $('#alamat').val('');
-        $('#kelurahan_id').val('');    
+        $('#kelurahan_id').val('');
         $('#btn-form').text('Simpan Data');
         $('#mediumModal').modal('show');
     })
@@ -175,7 +175,7 @@
                 $('#kode_instansi').val(returnData.data.kode_instansi);
                 $('#nama').val(returnData.data.nama);
                 $('#alamat').val(returnData.data.alamat);
-                $('#kelurahan_id').val(returnData.data.kelurahan.uuid);    
+                $('#kelurahan_id').val(returnData.data.kelurahan.uuid);
                 $('#btn-form').text('Ubah Data');
                 $('#mediumModal').modal('show');
             }
@@ -248,13 +248,27 @@
                     form.trigger('reset');
                     $('#mediumModal').modal('hide');
                     $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Disimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    if (response.Error) {
+
+                            var array = $.map(response, function(value, index) {
+                                                return [value];
+                                            });
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: response.Error,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }else{
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 },
                 error:function(response){
                     console.log(response);
