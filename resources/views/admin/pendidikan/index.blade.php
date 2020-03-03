@@ -71,7 +71,7 @@
                 <form  method="post" action="">
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Kode Pendidikan</label><input type="text" id="kode_pendidikan" name="kode_pendidikan" placeholder="" class="form-control"></div>
-                    <div class="form-group"><label  class=" form-control-label">Nama Pendidikan</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>              
+                    <div class="form-group"><label  class=" form-control-label">Nama Pendidikan</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
             <div class="modal-footer">
                 <button type="button" class="btn " data-dismiss="modal"> <i class="ti-close"></i> Batal</button>
                 <button id="btn-form" type="submit" class="btn btn-primary"><i class="fasr fa-save"></i> </button>
@@ -80,8 +80,8 @@
         </div>
     </div>
     </div>
-    </div>  
- </div> 
+    </div>
+ </div>
 @endsection
 @section('script')
 <script>
@@ -178,7 +178,7 @@
             ]
         });
 
-    //event form submit    
+    //event form submit
     $("form").submit(function (e) {
         e.preventDefault()
         let form = $('#modal-body form');
@@ -214,13 +214,27 @@
                     form.trigger('reset');
                     $('#mediumModal').modal('hide');
                     $('#datatable').DataTable().ajax.reload();
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Data Berhasil Disimpan',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    if (response.Error) {
+
+                            var array = $.map(response, function(value, index) {
+                                                return [value];
+                                            });
+                            Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: response.Error,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }else{
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 },
                 error:function(response){
                     console.log(response);
