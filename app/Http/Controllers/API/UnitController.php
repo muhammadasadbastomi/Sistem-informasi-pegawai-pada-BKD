@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Unit_kerja;
 use HCrypt;
 
@@ -39,7 +41,20 @@ class UnitController extends APIController
     }
 
     public function create(Request $req){
-        // $seksi = Seksi::create($req->all());
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_unit' => 'required|unique:unit_kerjas',
+
+        ]);
+
+        $message = 'Kode unit tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $unit_kerja = new unit_kerja;
         // decrypt foreign key id
         $unit_kerja->instansi_id = Hcrypt::decrypt($req->instansi_id);
