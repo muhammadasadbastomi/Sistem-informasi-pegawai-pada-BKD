@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Pendidikan;
 use HCrypt;
 use Illuminate\Support\Facades\Redis;
@@ -39,6 +41,20 @@ class PendidikanController extends APIController
     }
 
     public function create(Request $req){
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_pendidikan' => 'required|unique:pendidikans',
+
+        ]);
+
+        $message = 'Kode pendidikan tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $pendidikan = pendidikan::create($req->all());
         //set uuid
         $pendidikan_id = $pendidikan->id;
@@ -65,7 +81,7 @@ class PendidikanController extends APIController
         if (!$pendidikan) {
             return $this->returnController("error", "failed find data pendidikan");
         }
-        
+
         $pendidikan->fill($req->all())->save();
 
         Redis::del("pendidikan:all");
