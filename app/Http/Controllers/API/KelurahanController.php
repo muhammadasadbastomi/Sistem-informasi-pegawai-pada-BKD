@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Request as ApiRequest;
 use App\Kelurahan;
 use HCrypt;
 
@@ -39,7 +41,20 @@ class KelurahanController extends APIController
     }
 
     public function create(Request $req){
-        // $seksi = Seksi::create($req->all());
+
+        $cekValidasi = Validator::make(ApiRequest::all(), [
+
+            'kode_kelurahan' => 'required|unique:kelurahans',
+
+        ]);
+
+        $message = 'Kode kelurahan tidak boleh sama ';
+        if ($cekValidasi->fails()) {
+            return response()->json([
+                'Error' => $message
+            ],202);
+        }
+
         $kelurahan = new kelurahan;
         // decrypt foreign key id
         $kelurahan->kecamatan_id = Hcrypt::decrypt($req->kecamatan_id);
