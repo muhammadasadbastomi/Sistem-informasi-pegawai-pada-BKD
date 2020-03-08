@@ -181,6 +181,10 @@ Route::get('/pegawai/filter/unit', 'adminController@pegawaiFilterUnit')
        ->name('pegawaiFilterUnit');
 Route::post('/pegawai/filter/unit', 'adminController@pegawaiFilterUnitCetak')
        ->name('pegawaiFilterUnitCetak');
+Route::get('/pegawai/filter/golongan', 'adminController@pegawaiFilterGolongan')
+       ->name('pegawaiFilterGolongan');
+Route::post('/pegawai/filter/golongan', 'adminController@pegawaiFilterGolonganCetak')
+       ->name('pegawaiFilterUnitCetak');
 Route::get('/pegawai/detail/cetak/{uuid}', 'adminController@pegawaiDetailCetak')
        ->name('pegawaiDetailCetak');
 Route::get('/pegawai/riwayat/golongan/{uuid}', 'adminController@riwayatGolongan')

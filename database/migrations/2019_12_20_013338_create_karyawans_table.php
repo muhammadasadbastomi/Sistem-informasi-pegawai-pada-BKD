@@ -16,6 +16,7 @@ class CreateKaryawansTable extends Migration
         Schema::create('karyawans', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedbigInteger('unit_kerja_id');
+            $table->unsignedbigInteger('golongan_id')->nullable();
             $table->text('uuid')->nullable();
             $table->string('nama')->length('100');
             $table->string('NIP')->length('25');
@@ -28,6 +29,7 @@ class CreateKaryawansTable extends Migration
             $table->string('status_kawin')->length(25);
             $table->string('golongan_darah')->length(5);
             $table->string('foto')->length('255')->default('default.jpg');
+            $table->foreign('golongan_id')->references('id')->on('golongans')->onDelete('cascade');
             $table->foreign('unit_kerja_id')->references('id')->on('unit_kerjas')->onDelete('cascade');
             $table->timestamps();
         });

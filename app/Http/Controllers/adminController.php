@@ -106,6 +106,11 @@ class adminController extends Controller
       return view('admin.pegawai.filterUnit',compact('unit'));
     }
 
+    public function pegawaiFilterGolongan(){
+      $golongan = golongan::all();
+      return view('admin.pegawai.filterGolongan',compact('golongan'));
+    }
+
   public function pegawaiDetail($uuid){
     $id = HCrypt::decrypt($uuid);
     $karyawan = karyawan::findOrFail($id);
@@ -145,7 +150,7 @@ class adminController extends Controller
     public function instansiFilterCetak(Request $request){
         $id = HCrypt::decrypt($request->kelurahan_id);
         $instansi=instansi::where('kelurahan_id', $id)->get();
-        $kelurahan = kelurahan::findOrFail($id);        
+        $kelurahan = kelurahan::findOrFail($id);
         $tgl= Carbon::now()->format('d-m-Y');
         $pdf =PDF::loadView('laporan.instansiFilter', ['instansi'=>$instansi,'kelurahan'=>$kelurahan,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
@@ -225,6 +230,16 @@ class adminController extends Controller
         $pdf =PDF::loadView('laporan.pegawaiFilterUnit', ['pegawai'=>$pegawai,'unit_kerja'=>$unit_kerja,'tgl'=>$tgl]);
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan data Pegawai Filter Unit Kerja.pdf');
+      }
+
+      public function pegawaiFilterGolonganCetak(Request $request){
+        $id = HCrypt::decrypt($request->golongan_id);
+        $pegawai=karyawan::where('golongan_id', $id)->get();
+        $golongan = golongan::findOrFail($id);
+        $tgl= Carbon::now()->format('d-m-Y');
+        $pdf =PDF::loadView('laporan.pegawaiFilterGolongan', ['pegawai'=>$pegawai,'golongan'=>$golongan,'tgl'=>$tgl]);
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('Laporan data Pegawai Filter Golongan.pdf');
       }
 
       public function beritaCetak(){

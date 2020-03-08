@@ -24,11 +24,13 @@
             <div class="card">
             <div class="card-header">
                 <h5 class="card-title">Tabel Data</h5>
-                <div class="text-right">
+                <br>
+                <div>
                     <button href="" class="btn btn-primary pull-right" id="tambah" ><i class="fas fa-plus"></i> tambah data</button>
                     <a href="{{Route('pegawaiCetak')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data keseluruhan</a>
                     <a href="{{Route('pegawaiFilterStatus')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter status</a>
                     <a href="{{Route('pegawaiFilterUnit')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter unit</a>
+                    <a href="{{Route('pegawaiFilterGolongan')}}" class="btn btn-info pull-right" style="margin-right:5px;"><i class="fas fa-print"></i> cetak data filter pangkat/golongan</a>
 
                 </div>
             </div>
@@ -81,6 +83,11 @@
                     <div class="form-group"><input type="hidden" id="id" name="id"  class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">NIP</label><input type="text" id="NIP" name="NIP" placeholder="" class="form-control"></div>
                     <div class="form-group"><label  class=" form-control-label">Nama</label><input type="text" id="nama" name="nama" placeholder="" class="form-control"></div>
+                    <div class="form-group"><label  class=" form-control-label">Pangkat/Golongan</label>
+                        <select name="golongan_id" id="golongan_id" class="form-control">
+                            <option value="">-- pilih golongan --</option>
+                        </select>
+                    </div>
                     <div class="form-group"><label  class=" form-control-label">Unit Kerja</label>
                         <select name="unit_kerja_id" id="unit_kerja_id" class="form-control">
                             <option value="">-- pilih unit kerja --</option>
@@ -160,6 +167,24 @@
     }
 
     getUnit();
+
+    //function get data kecamatan
+    getGolongan = () => {
+        $.ajax({
+                type: "GET",
+                url: "{{ url('/api/golongan')}}",
+                beforeSend: false,
+                success : function(returnData) {
+                    $.each(returnData.data, function (index, value) {
+                    $('#golongan_id').append(
+                        '<option value="'+value.uuid+'">'+value.golongan+'</option>'
+                    )
+                })
+            }
+        })
+    }
+
+    getGolongan();
 
     //fungsi hapus
     hapus = (uuid, nama)=>{

@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    
+
      <!-- Main content -->
      <section class="content">
       <div class="container-fluid">
@@ -97,14 +97,22 @@
                               <td>: {{$karyawan->NIP}}</td>
                             </tr>
                             <tr>
+                              <th>Pangkat/Golongan</th>
+                              @if(!$karyawan->golongan)
+                              <td>: -</td>
+                              @else
+                              <td>: {{$karyawan->golongan->golongan}}</td>
+                              @endif
+                            </tr>
+                            <tr>
                               <th>Tempat - tanggal Lahir</th>
                               <td>: {{$karyawan->tempat_lahir}} - {{$karyawan->tanggal_lahir}} </td>
-                            </tr>                            
+                            </tr>
                             <tr>
                               <th>Alamat</th>
                               <td>: {{$karyawan->alamat}}</td>
                             </tr>
-                            </tr>                            
+                            </tr>
                             <tr>
                               <th>Jenis kelamin</th>
                               <td>: {{$karyawan->jk}}</td>
@@ -129,12 +137,12 @@
                             <tr>
                               <th>unit / Dinas</th>
                               <td>: {{$karyawan->unit_kerja->nama}} / {{$karyawan->unit_kerja->instansi->nama}}</td>
-                            </tr>                             
+                            </tr>
                             <tr>
                               <th>Status Pernikahan</th>
                               <td>: {{$karyawan->status_kawin}}</td>
                             </tr>
-                           
+
                           </tbody>
                         </table>
                       </div>
@@ -168,7 +176,7 @@
                             </tr>
                         </tfoot>
                 </table>
-                  </div>                  
+                  </div>
                   <div class="tab-pane" id="jabatan">
                       <label for="">Jabatan</label>
                       <div class="text-right">
@@ -287,7 +295,7 @@
         </div>
     </div>
     </div>
-    </div>  
+    </div>
  </div>
  <!-- modal diklat  -->
  <div class="modal fade" id="diklatModal"  role="dialog" >
@@ -315,9 +323,9 @@
         </div>
     </div>
     </div>
-    </div>  
+    </div>
  </div>
- 
+
  <!-- modal golongan  -->
  <div class="modal fade" id="golonganModal"  role="dialog" >
     <div class="modal-dialog modal-lg" >
@@ -348,9 +356,9 @@
         </div>
     </div>
     </div>
-    </div>  
+    </div>
  </div>
- 
+
  <!-- modal golongan  -->
  <div class="modal fade" id="jabatanModal"  role="dialog" >
     <div class="modal-dialog modal-lg" >
@@ -381,19 +389,19 @@
         </div>
     </div>
     </div>
-    </div>  
- </div>    
+    </div>
+ </div>
 @endsection
 @section('script')
     <script>
     $("#tahun1").datepicker({
     format: "yyyy",
-    viewMode: "years", 
+    viewMode: "years",
     minViewMode: "years"
 });
 $("#tahun2").datepicker({
     format: "yyyy",
-    viewMode: "years", 
+    viewMode: "years",
     minViewMode: "years"
 });
     //===PENDIDIKAN ===//
@@ -456,10 +464,10 @@ $("#tahun2").datepicker({
           }
           getDiklat();
           getJabatan();
-          getPendidikan(); 
+          getPendidikan();
           getGolongan();
-   
-    
+
+
     //function hapus pendidikan
     hapusPendidikan = (uuid, nama)=>{
     let csrf_token=$('meta[name="csrf_token"]').attr('content');
@@ -616,7 +624,7 @@ $("#tahun2").datepicker({
         })
     }
 
-        //fungsi render datatable        
+        //fungsi render datatable
         $(document).ready(function() {
             let karyawan_id = $('#id1').val();
             $('#tablePendidikan').DataTable( {
@@ -733,7 +741,7 @@ $("#tahun2").datepicker({
         $('#tambahPendidikan').click(function(){
             $('.modal-title').text('Tambah Data Pendidikan');
             $('#pendidikan_id').val('');
-            $('#keterangan').val('');            
+            $('#keterangan').val('');
             $('#btn-form').text('Simpan Data');
             $('#pendidikanModal').modal('show');
         })
@@ -741,7 +749,7 @@ $("#tahun2").datepicker({
             //event btn klik
             $('#tambahDiklat').click(function(){
             $('.modal-title').text('Tambah Data Diklat');
-            $('#diklat_id').val(''); 
+            $('#diklat_id').val('');
             $('#btn-form-diklat').text('Simpan Data');
             $('#diklatModal').modal('show');
         })
@@ -749,8 +757,8 @@ $("#tahun2").datepicker({
         //event btn klik
         $('#tambahGolongan').click(function(){
             $('.modal-title').text('Tambah Data Golongan');
-            $('#golongan_id').val(''); 
-            $('#tahun').val(''); 
+            $('#golongan_id').val('');
+            $('#tahun').val('');
             $('#btn-form-golongan').text('Simpan Data');
             $('#golonganModal').modal('show');
         })
@@ -758,8 +766,8 @@ $("#tahun2").datepicker({
          //event btn klik
          $('#tambahJabatan').click(function(){
             $('.modal-title').text('Tambah Data Jabatan');
-            $('#jabatan_id').val(''); 
-            $('#tahun').val(''); 
+            $('#jabatan_id').val('');
+            $('#tahun').val('');
             $('#btn-form-jabatan').text('Simpan Data');
             $('#jabatanModal').modal('show');
         })
